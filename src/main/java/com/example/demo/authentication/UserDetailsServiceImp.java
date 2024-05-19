@@ -22,17 +22,10 @@ public class UserDetailsServiceImp implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        try{
-            UserDto user = userMapper.getUserByEmail(email);
-            System.out.println(user);
-            if (user == null) {
-                throw new UsernameNotFoundException(email);
-            }
-            return new CustomUserDetail(user);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-            return null;
+        UserDto user = userMapper.getUserByEmail(email);
+        if (user == null) {
+            throw new UsernameNotFoundException(email);
         }
-
+        return new CustomUserDetail(user);
     }
 }

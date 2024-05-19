@@ -7,7 +7,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.core.SpringVersion;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
-
 public class TechStoreApplication {
 
     public static void main(String[] args) {
