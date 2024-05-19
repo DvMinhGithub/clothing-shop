@@ -1,4 +1,4 @@
-# TechStore
+# TechStore-Mybatis
 
 
 
@@ -15,14 +15,14 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
-git remote add origin https://gitlab.com/loi65732102/techStore.git
+git remote add origin https://gitlab.com/loi65732102/techstore-mybatis.git
 git branch -M main
 git push -uf origin main
 ```
 
 ## Integrate with your tools
 
-- [ ] [Set up project integrations](https://gitlab.com/loi65732102/techStore/-/settings/integrations)
+- [ ] [Set up project integrations](https://gitlab.com/loi65732102/techstore-mybatis/-/settings/integrations)
 
 ## Collaborate with your team
 
