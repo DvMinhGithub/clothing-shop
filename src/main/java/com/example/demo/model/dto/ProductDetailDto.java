@@ -1,0 +1,36 @@
+package com.example.demo.model.dto;
+
+import lombok.Builder;
+import lombok.Data;
+
+import java.util.List;
+
+@Data
+@Builder
+public class ProductDetailDto {
+    private Long id;
+
+    private String name;
+
+    private String description;
+
+    private Integer view;
+
+    private Integer sold;
+
+    private Boolean hasShow;
+
+    private String attribute;
+
+    private Double importPrice;
+
+    private Double price;
+
+    private String productImage;
+
+    private BrandDto brand;
+
+    private Integer quantity;
+
+    private List<CategoryDto> listCategory;
+}

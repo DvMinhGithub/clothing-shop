@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.RoleMapper">
+
+    <resultMap id="RoleDtoResultMap" type="com.example.demo.model.dto.RoleDto" autoMapping="true">
+        <id column="id" property="id"/>
+        <result column="roleName" property="roleName" />
+    </resultMap>
+
+    <select id="getRoleByName" resultMap="RoleDtoResultMap">
+        SELECT r.id as id,
+               r.name as roleName
+        FROM role r
+        WHERE r.name = #{roleName}
+    </select>
+
+    <insert id="setRole">
+        INSERT INTO user_role(user_id, role_id)
+        VALUES (
+                   #{userId},
+                   #{roleId}
+               )
+    </insert>
+</mapper>
