@@ -2,8 +2,10 @@ package com.example.demo.model.dto;
 
 import lombok.*;
 
-@Getter
-@Setter
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductDto {
     private Long id;
 
@@ -11,13 +13,15 @@ public class ProductDto {
 
     private String description;
 
-    private Integer view = 0;
+    private Integer view;
 
-    private Integer sold = 0;
-
-    private String attribute;
+    private Integer sold;
 
     private Double price;
 
     private String productImage;
+
+    private Long brandId;
+
+    private Boolean isDeleted;
 }

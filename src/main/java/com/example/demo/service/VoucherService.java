@@ -10,9 +10,9 @@ import java.util.List;
 public interface VoucherService {
     ResponseEntity<ResponseApi<?>> createVoucher(VoucherRequest voucherRequest);
 
-    ResponseEntity<ResponseApi<List<VoucherDto>>> getListVoucher();
+    ResponseEntity<ResponseApi<List<VoucherDto>>> getVoucherValid();
 
     ResponseEntity<ResponseApi<List<VoucherDto>>> getAllVoucher();
 
-    ResponseEntity<ResponseApi<?>> editVoucher(Long id, VoucherRequest voucherRequest);
+//    ResponseEntity<ResponseApi<?>> editVoucher(Long id, VoucherRequest voucherRequest);
 }

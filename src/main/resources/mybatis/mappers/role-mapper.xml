@@ -4,11 +4,11 @@
 
     <resultMap id="RoleDtoResultMap" type="com.example.demo.model.dto.RoleDto" autoMapping="true">
         <id column="id" property="id"/>
-        <result column="roleName" property="roleName" />
+        <result column="roleName" property="roleName"/>
     </resultMap>
 
-    <select id="getRoleByName" resultMap="RoleDtoResultMap">
-        SELECT r.id as id,
+    <select id="getByName" resultMap="RoleDtoResultMap">
+        SELECT r.id   as id,
                r.name as roleName
         FROM role r
         WHERE r.name = #{roleName}
@@ -16,9 +16,11 @@
 
     <insert id="setRole">
         INSERT INTO user_role(user_id, role_id)
-        VALUES (
-                   #{userId},
-                   #{roleId}
-               )
+        VALUES (#{userId},
+                #{roleId})
     </insert>
+
+    <delete id="deleteUserRole" >
+        DELETE FROM user_role WHERE user_id = #{userId}
+    </delete>
 </mapper>

@@ -3,11 +3,15 @@ package com.example.demo.model.dto;
 import java.sql.Timestamp;
 
 import com.example.demo.enums.DiscountType;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class VoucherDto {
     private Long id;
 
@@ -15,9 +19,9 @@ public class VoucherDto {
 
     private String description;
 
-    private Integer used_quantity;
+    private Integer usedQuantity;
 
-    private Integer total_quantity;
+    private Integer totalQuantity;
 
     private DiscountType discountType;
 
@@ -27,5 +31,5 @@ public class VoucherDto {
 
     private Timestamp endTime;
 
-    private Double condition;
+    private Double voucherCondition;
 }

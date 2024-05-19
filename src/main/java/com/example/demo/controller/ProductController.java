@@ -1,14 +1,13 @@
 //package com.example.demo.controller;
 //
+//import com.github.pagehelper.PageInfo;
 //import io.swagger.v3.oas.annotations.Operation;
 //import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-//import org.springframework.data.domain.Page;
 //import org.springframework.http.ResponseEntity;
 //import org.springframework.security.access.annotation.Secured;
 //import org.springframework.web.bind.annotation.*;
 //
 //import java.io.IOException;
-//import java.util.List;
 //
 //import com.example.demo.model.dto.ProductDetailDto;
 //import com.example.demo.model.dto.ProductDto;
@@ -46,7 +45,7 @@
 //    @Operation(summary = "Get list products", description = "Get list products")
 //    @SecurityRequirement(name = "Bearer Authentication")
 //    @GetMapping("/getListProduct")
-//    public ResponseEntity<ResponseApi<Page<ProductDto>>> getListProducts
+//    public ResponseEntity<ResponseApi<PageInfo<ProductDto>>> getListProducts
 //            (@RequestParam(value = "name", required = false) String name,
 //             @RequestParam(value = "page", defaultValue = "0", required = false) int page,
 //             @RequestParam(value = "limit", defaultValue = "20", required = false) int limit,
@@ -59,7 +58,7 @@
 //    @SecurityRequirement(name = "Bearer Authentication")
 //    @Secured({"EMPLOYEE", "ADMIN"})
 //    @GetMapping("/getAllProduct")
-//    public ResponseEntity<ResponseApi<Page<ProductDto>>> getAllProducts
+//    public ResponseEntity<ResponseApi<PageInfo<ProductDto>>> getAllProducts
 //            (@RequestParam(value = "name", required = false) String name,
 //             @RequestParam(value = "page", defaultValue = "0", required = false) int page,
 //             @RequestParam(value = "limit", defaultValue = "20", required = false) int limit,
@@ -87,19 +86,25 @@
 //    @SecurityRequirement(name = "Bearer Authentication")
 //    @Secured("CUSTOMER")
 //    @GetMapping("/top-sellers")
-//    public ResponseEntity<ResponseApi<Page<ProductDto>>> getTopSellersProducts(
+//    public ResponseEntity<ResponseApi<PageInfo<ProductDto>>> getTopSellersProducts(
+//            @RequestParam(value = "name", required = false) String name,
 //            @RequestParam(value = "page", defaultValue = "0", required = false) int page,
-//            @RequestParam(value = "limit", defaultValue = "5", required = false) int limit) {
-//        return productService.getTopSellersProducts(page, limit);
+//            @RequestParam(value = "limit", defaultValue = "20", required = false) int limit,
+//            @RequestParam(value = "categoryIds", required = false) String categoryIds,
+//            @RequestParam(value = "brandId", required = false) Long brandId) {
+//        return productService.getTopSellersProducts(name, page, limit, categoryIds, brandId);
 //    }
 //
 //    @Operation(summary = "Change product status", description = "Change product status")
 //    @SecurityRequirement(name = "Bearer Authentication")
 //    @Secured("CUSTOMER")
 //    @GetMapping("/top-viewed")
-//    public ResponseEntity<ResponseApi<Page<ProductDto>>> getTopViewedProducts(
+//    public ResponseEntity<ResponseApi<PageInfo<ProductDto>>> getTopViewedProducts(
+//            @RequestParam(value = "name", required = false) String name,
 //            @RequestParam(value = "page", defaultValue = "0", required = false) int page,
-//            @RequestParam(value = "limit", defaultValue = "5", required = false) int limit) {
-//        return productService.getTopViewedProducts(page, limit);
+//            @RequestParam(value = "limit", defaultValue = "20", required = false) int limit,
+//            @RequestParam(value = "categoryIds", required = false) String categoryIds,
+//            @RequestParam(value = "brandId", required = false) Long brandId) {
+//        return productService.getTopViewedProducts(name, page, limit, categoryIds, brandId);
 //    }
 //}

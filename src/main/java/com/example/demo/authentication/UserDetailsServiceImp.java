@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 public class UserDetailsServiceImp implements UserDetailsService {
 
+    @Autowired
     private final UserMapper userMapper;
 
     public UserDetailsServiceImp(UserMapper userMapper) {
@@ -22,7 +23,7 @@ public class UserDetailsServiceImp implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        UserDto user = userMapper.getUserByEmail(email);
+        UserDto user = userMapper.getByEmail(email);
         if (user == null) {
             throw new UsernameNotFoundException(email);
         }

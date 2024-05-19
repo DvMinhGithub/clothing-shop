@@ -11,11 +11,11 @@ import java.util.List;
 public interface BrandMapper {
     Boolean existsByName(@Param("brandName") String brandName);
 
-    void createBrand(@Param("brandInfo") BrandRequest brandRequest);
+    void create(@Param("brandInfo") BrandRequest brandRequest);
 
     List<BrandDto> findAll();
 
-    BrandDto findById(@Param("brandId") Long id);
+    BrandDto findById(@Param("brandId") Long brandId);
 
-    BrandDto updateBrand(@Param("brandId")Long brandId, @Param("brandInfo")BrandRequest brandRequest);
+    void update(@Param("brandId")Long brandId, @Param("brandInfo")BrandRequest brandRequest);
 }

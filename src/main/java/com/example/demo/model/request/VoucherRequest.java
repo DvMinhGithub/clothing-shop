@@ -19,7 +19,7 @@ public class VoucherRequest {
 
     private Double discountLimit;
 
-    private Integer total_quantity;
+    private Integer totalQuantity;
 
     private Timestamp startTime;
 

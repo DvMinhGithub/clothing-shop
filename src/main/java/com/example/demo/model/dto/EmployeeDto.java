@@ -1,13 +1,17 @@
 package com.example.demo.model.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import java.sql.Timestamp;
 
 import com.example.demo.enums.Gender;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class EmployeeDto {
     private Long id;
 

@@ -11,5 +11,7 @@ import java.util.List;
 public interface RoleMapper {
     void setRole(@Param("userId") Long userId, @Param("roleId") Long roleId);
 
-    RoleDto getRoleByName(@Param("roleName")UserRole userRole);
+    RoleDto getByName(@Param("roleName")UserRole userRole);
+
+    void deleteUserRole(@Param("userId") Long userId);
 }

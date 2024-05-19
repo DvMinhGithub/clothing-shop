@@ -19,11 +19,8 @@ import java.util.List;
 public class BrandServiceImpl implements BrandService {
     private final BrandMapper brandMapper;
 
-    private final ModelMapper modelMapper;
-
-    public BrandServiceImpl(BrandMapper brandMapper, ModelMapper modelMapper) {
+    public BrandServiceImpl(BrandMapper brandMapper) {
         this.brandMapper = brandMapper;
-        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -32,9 +29,9 @@ public class BrandServiceImpl implements BrandService {
         try {
             if (brandMapper.existsByName(brandRequest.getName()))
                 throw new BrandNameExistException(String.format("Brand name %s is already exist", brandRequest.getName()));
-            brandMapper.createBrand(brandRequest);
+            brandMapper.create(brandRequest);
             log.info("End API: createBrand");
-            return new ResponseEntity<>(new ResponseApi<>("Create brand success", 201), HttpStatus.CREATED);
+            return new ResponseEntity<>(new ResponseApi<>("Create brand success"), HttpStatus.CREATED);
         } catch (BrandNameExistException e) {
             log.error("Error API: createBrand with message: {}", e.getMessage());
             return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.BAD_REQUEST);
@@ -57,11 +54,12 @@ public class BrandServiceImpl implements BrandService {
     public ResponseEntity<ResponseApi<?>> updateBrand(Long id, BrandRequest brandRequest) {
         log.info("Start API: updateBrand with parameters: (id: {}, {})", id, brandRequest);
         try {
-            if (brandMapper.existsByName(brandRequest.getName()))
+            BrandDto brandDto = brandMapper.findById(id);
+            if (!brandDto.getName().equals(brandRequest.getName()) && brandMapper.existsByName(brandRequest.getName()))
                 throw new BrandNameExistException(String.format("Brand name %s is already exist", brandRequest.getName()));
-            brandMapper.updateBrand(id, brandRequest);
+            brandMapper.update(id, brandRequest);
             log.info("End API: updateBrand");
-            return new ResponseEntity<>(new ResponseApi<>("Update brand success", 200), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseApi<>("Update brand success"), HttpStatus.OK);
         } catch (BrandNameExistException e) {
             log.error("Error API: updateBrand with message: {}", e.getMessage());
             return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.BAD_REQUEST);

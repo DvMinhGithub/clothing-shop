@@ -36,8 +36,6 @@ public class AuthServiceImpl implements AuthService {
 
     private final PasswordEncoder passwordEncoder;
 
-    private final ModelMapper modelMapper;
-
     private final Jedis jedis;
 
     private final MailService mailService;
@@ -49,13 +47,12 @@ public class AuthServiceImpl implements AuthService {
     private final RoleMapper roleMapper;
 
     public AuthServiceImpl(AuthenticationManager authenticationManager, JwtUtility jwtUtility,
-                           PasswordEncoder passwordEncoder, ModelMapper modelMapper,
+                           PasswordEncoder passwordEncoder,
                            Jedis jedis, MailService mailService, UserMapper userMapper,
                            RoleMapper roleMapper) {
         this.authenticationManager = authenticationManager;
         this.jwtUtility = jwtUtility;
         this.passwordEncoder = passwordEncoder;
-        this.modelMapper = modelMapper;
         this.jedis = jedis;
         this.mailService = mailService;
         this.userMapper = userMapper;
@@ -66,10 +63,10 @@ public class AuthServiceImpl implements AuthService {
     public ResponseEntity<ResponseApi<?>> register(RegisterRequest registerRequest) {
         log.info("Start API: register with parameters: ({})", registerRequest);
         try {
-            if (userMapper.getUserByEmail(registerRequest.getEmail()) != null)
+            if (userMapper.getByEmail(registerRequest.getEmail()) != null)
                 throw new EmailExistException(String.format("Email %s is already exist", registerRequest.getEmail()));
 
-            if (userMapper.getUserByPhoneNumber(registerRequest.getPhoneNumber()) != null)
+            if (userMapper.getByPhoneNumber(registerRequest.getPhoneNumber()) != null)
                 throw new PhoneNumberExistException(String.format("Phone number %s is already exist", registerRequest.getPhoneNumber()));
 
             String otp = OtpGenerate.generateNumberOtp(6);
@@ -133,7 +130,7 @@ public class AuthServiceImpl implements AuthService {
                     .password(passwordEncoder.encode(registerRequest.getPassword()))
                     .build();
             userMapper.register(user);
-            RoleDto roleDto = roleMapper.getRoleByName(UserRole.CUSTOMER);
+            RoleDto roleDto = roleMapper.getByName(UserRole.CUSTOMER);
             roleMapper.setRole(user.getId(), roleDto.getId());
             jedis.del(String.format("OTP:%s", registerRequest.getEmail()));
             log.info("End API: verifyUserAccount");

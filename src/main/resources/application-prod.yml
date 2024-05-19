@@ -24,8 +24,16 @@ spring:
           auth: true
           starttls:
             enable: true
+
 mybatis:
   mapper-locations: classpath:mybatis/mappers/*.xml
+
+logging:
+  level:
+    com:
+      example:
+        demo:
+          mapper: DEBUG
 
 server:
   port: 8080
