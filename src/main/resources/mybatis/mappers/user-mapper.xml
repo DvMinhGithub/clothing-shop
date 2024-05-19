@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.demo.mapper.UserMapper">
-
     <resultMap id="UserDtoResultMap" type="com.example.demo.model.dto.UserDto" autoMapping="true">
         <id column="id" property="id"/>
         <result column="address" property="address"/>
@@ -12,25 +11,13 @@
         <result column="name" property="name"/>
         <result column="password" property="password"/>
         <result column="phoneNumber" property="phoneNumber"/>
-        <collection property="listRole" javaType="list" ofType="com.example.demo.enums.UserRole" autoMapping="true">
-            <id column="roleId"/>
+        <collection property="listRole" javaType="list" ofType="com.example.demo.enums.UserRole" autoMapping="true" >
             <result column="roleName"/>
         </collection>
     </resultMap>
 
-    <insert id="register" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO user(address, dob, email, gender, name, password, phone_number)
-        VALUES (#{userInfo.address},
-                #{userInfo.dob},
-                #{userInfo.email},
-                #{userInfo.gender},
-                #{userInfo.name},
-                #{userInfo.password},
-                #{userInfo.phoneNumber})
-    </insert>
-
     <select id="getUserByEmail" resultMap="UserDtoResultMap">
-        SELECT u.id           as userId,
+        SELECT u.id           as id,
                u.address      as address,
                u.avatar       as avatar,
                u.dob          as dob,
@@ -47,6 +34,19 @@
         WHERE u.email = #{email}
     </select>
 
+    <insert id="register" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user(address, dob, email, gender, name, password, phone_number)
+        VALUES (#{userInfo.address},
+                #{userInfo.dob},
+                #{userInfo.email},
+                #{userInfo.gender},
+                #{userInfo.name},
+                #{userInfo.password},
+                #{userInfo.phoneNumber})
+    </insert>
+
+
+
     <select id="getUserByPhoneNumber" resultMap="UserDtoResultMap">
         SELECT u.id           as userId,
                u.address      as address,
@@ -57,7 +57,6 @@
                u.name         as name,
                u.password     as password,
                u.phone_number as phoneNumber,
-               r.id           as roleId,
                r.name         as roleName
         FROM user u
                  INNER JOIN user_role ur ON u.id = ur.user_id

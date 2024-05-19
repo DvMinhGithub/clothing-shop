@@ -16,7 +16,7 @@ public class CreateEmployeeRequest {
 
     private String password;
 
-    private UserRole role = UserRole.EMPLOYEE;
+    private UserRole role;
 
     private String phoneNumber;
 

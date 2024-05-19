@@ -45,11 +45,11 @@ public class SecurityConfig {
         http
                 .cors(c -> c.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/login", "/register", "/brand/get","/product/getListProduct", "/product/detail/**", "/category/get", "Tech-store/**", "verifyUserAccount", "/test", "/image/**").permitAll()
                         .anyRequest().authenticated())
-                .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
