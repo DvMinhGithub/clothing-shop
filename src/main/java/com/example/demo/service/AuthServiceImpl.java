@@ -63,10 +63,10 @@ public class AuthServiceImpl implements AuthService {
     public ResponseEntity<ResponseApi<?>> register(RegisterRequest registerRequest) {
         log.info("Start API: register with parameters: ({})", registerRequest);
         try {
-            if (userMapper.getByEmail(registerRequest.getEmail()) != null)
+            if (userMapper.existsByEmail(registerRequest.getEmail()))
                 throw new EmailExistException(String.format("Email %s is already exist", registerRequest.getEmail()));
 
-            if (userMapper.getByPhoneNumber(registerRequest.getPhoneNumber()) != null)
+            if (userMapper.existsByPhoneNumber(registerRequest.getPhoneNumber()))
                 throw new PhoneNumberExistException(String.format("Phone number %s is already exist", registerRequest.getPhoneNumber()));
 
             String otp = OtpGenerate.generateNumberOtp(6);

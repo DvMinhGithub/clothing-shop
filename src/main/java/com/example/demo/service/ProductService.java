@@ -9,6 +9,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface ProductService {
     ResponseEntity<ResponseApi<?>> createProduct(ProductRequest productRequest);
@@ -23,7 +24,7 @@ public interface ProductService {
 
     ResponseEntity<ResponseApi<?>> changeStatusProduct(Long id, ChangeProductStatusRequest changeProductStatusRequest);
 
-    ResponseEntity<ResponseApi<PageInfo<ProductDto>>> getTopSellersProducts(String name, int page, int limit, String categoryIds, Long brandId);
+    ResponseEntity<ResponseApi<PageInfo<ProductDto>>> getTopSoldProduct(String name, int page, int limit, String categoryIds, Long brandId);
 
-    ResponseEntity<ResponseApi<PageInfo<ProductDto>>> getTopViewedProducts(String name, int page, int limit, String categoryIds, Long brandId);
+    ResponseEntity<ResponseApi<PageInfo<ProductDto>>> getTopViewProduct(String name, int page, int limit, String categoryIds, Long brandId);
 }

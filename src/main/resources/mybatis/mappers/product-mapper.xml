@@ -13,17 +13,69 @@
         <result column="price" property="price"/>
     </resultMap>
 
+    <resultMap id="ProductDetailDtoResultMap" type="com.example.demo.model.dto.ProductDetailDto" autoMapping="true">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="description" property="description"/>
+        <result column="view" property="view"/>
+        <result column="sold" property="sold"/>
+        <result column="productImage" property="productImage"/>
+        <result column="isDeleted" property="isDeleted"/>
+        <result column="importPrice" property="importPrice"/>
+        <result column="price" property="price"/>
+        <result column="quantity" property="quantity"/>
+        <association property="brand" javaType="com.example.demo.model.dto.BrandDto" columnPrefix="b_">
+            <id column="id" property="id"/>
+            <result column="name" property="name"/>
+            <result column="description" property="description"/>
+        </association>
+        <collection property="listCategory" ofType="com.example.demo.model.dto.CategoryDto"
+                    autoMapping="true" columnPrefix="c_">
+            <id column="id" property="id"/>
+            <result column="name" property="name"/>
+            <result column="description" property="description"/>
+        </collection>
+    </resultMap>
+
+    <select id="getById" resultMap="ProductDetailDtoResultMap">
+        SELECT p.id            as id,
+               p.name          as name,
+               p.description   as description,
+               p.product_image as productImage,
+               p.sold          as sold,
+               p.is_deleted    as isDeleted,
+               p.price         as price,
+               p.view as view,
+        pi.import_price as importPrice,
+        pi.quantity as quantity,
+        b.id as b_id,
+        b.name as b_name,
+        b.description as b_description,
+        c.id as c_id,
+        c.name as c_name,
+        c.description as c_description
+        FROM product p
+            LEFT JOIN product_inventory pi
+        ON pi.product_id = p.id
+            LEFT JOIN brand b ON b.id = p.brand_id
+            LEFT JOIN product_category pc ON pc.product_id = p.id
+            LEFT JOIN category c ON c.id = pc.category_id
+        WHERE p.id = #{productId}
+    </select>
+
     <insert id="create" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO product(name,
                             description,
                             price,
                             product_image,
-                            brand_id)
+                            brand_id,
+                            is_deleted)
         VALUES (#{productInfo.name},
                 #{productInfo.description},
                 #{productInfo.price},
                 #{productInfo.productImage},
-                #{productInfo.brandId})
+                #{productInfo.brandId},
+                #{productInfo.isDeleted})
     </insert>
 
     <insert id="setCategory">
@@ -33,5 +85,156 @@
                 #{categoryId})
     </insert>
 
+    <delete id="deleteCategory">
+        DELETE
+        FROM product_category
+        WHERE product_id = #{productId}
+    </delete>
 
+    <insert id="setInventory">
+        INSERT INTO product_inventory(import_price,
+                                      quantity,
+                                      product_id)
+        VALUES (#{importPrice},
+                #{quantity},
+                #{productId})
+    </insert>
+
+    <update id="updateInventory">
+        UPDATE product_inventory
+        SET import_price = #{importPrice},
+            quantity     = #{quantity}
+        WHERE product_id = #{productId}
+    </update>
+
+    <sql id="productFilter">
+        productFilter as(
+        SELECT p.id
+        FROM product p
+        <if test="listCategoryIds.size() > 0">
+            INNER JOIN category_product cp ON p.id = cp.product_id
+            WHERE cp.category_id IN
+            <foreach item="categoryId" collection="listCategoryId" open="(" separator="," close=")">
+                #{categoryId}
+            </foreach>
+            GROUP BY p.id HAVING COUNT(p.id) = #{listCategoryIds.size()}
+        </if>
+        )
+    </sql>
+
+    <select id="getList" resultMap="ProductDtoResultMap">
+        WITH
+        <include refid="productFilter"/>
+        SELECT p.id as id,
+        p.name as name,
+        p.description as description,
+        p.product_image as productImage,
+        p.sold as sold,
+        p.is_deleted as isDeleted,
+        p.price as price,
+        p.view as view
+        FROM product p
+        INNER JOIN productFilter pf ON p.id = pf.id
+        WHERE p.is_deleted = false
+        <if test="productName != null">
+            AND p.name like CONCAT("%", #{productName}, "%")
+        </if>
+        <if test="brandId != null">
+            AND p.brand_id = #{brandId}
+        </if>
+    </select>
+
+    <select id="getAll" resultMap="ProductDtoResultMap">
+        WITH
+        <include refid="productFilter"/>
+        SELECT p.id as id,
+        p.name as name,
+        p.description as description,
+        p.product_image as productImage,
+        p.sold as sold,
+        p.is_deleted as isDeleted,
+        p.price as price,
+        p.view as view
+        FROM product p
+        INNER JOIN productFilter pf ON p.id = pf.id
+        WHERE 1 = 1
+        <if test="productName != null">
+            AND p.name like CONCAT("%", #{productName}, "%")
+        </if>
+        <if test="brandId != null">
+            AND p.brand_id = #{brandId}
+        </if>
+    </select>
+
+    <select id="getTopSold" resultMap="ProductDtoResultMap">
+        WITH
+        <include refid="productFilter"/>
+        SELECT p.id as id,
+        p.name as name,
+        p.description as description,
+        p.product_image as productImage,
+        p.sold as sold,
+        p.is_deleted as isDeleted,
+        p.price as price,
+        p.view as view
+        FROM product p
+        INNER JOIN productFilter pf ON p.id = pf.id
+        WHERE p.is_deleted = false
+        <if test="productName != null">
+            AND p.name like CONCAT("%", #{productName}, "%")
+        </if>
+        <if test="brandId != null">
+            AND p.brand_id = #{brandId}
+        </if>
+        ORDER BY p.sold DESC
+    </select>
+
+
+    <select id="getTopView" resultMap="ProductDtoResultMap">
+        WITH
+        <include refid="productFilter"/>
+        SELECT p.id as id,
+        p.name as name,
+        p.description as description,
+        p.product_image as productImage,
+        p.sold as sold,
+        p.is_deleted as isDeleted,
+        p.price as price,
+        p.view as view
+        FROM product p
+        INNER JOIN productFilter pf ON p.id = pf.id
+        WHERE p.is_deleted = false
+        <if test="productName != null">
+            AND p.name like CONCAT("%", #{productName}, "%")
+        </if>
+        <if test="brandId != null">
+            AND p.brand_id = #{brandId}
+        </if>
+        ORDER BY p.view DESC
+    </select>
+
+    <update id="updateStatus">
+        UPDATE product
+        SET is_deleted = #{productStatus}
+        WHERE id = #{productId}
+    </update>
+
+    <update id="updateView">
+        UPDATE product
+        SET view = view + 1
+        WHERE id = #{productId}
+    </update>
+
+    <update id="updateProduct">
+        UPDATE product
+        SET name = #{productInfo.name},
+        description = #{productInfo.description},
+        <if test="productInfo.productImage != null">
+            product_image = #{productInfo.productImage},
+        </if>
+        price = #{productInfo.price},
+        brand_id = #{productInfo.brandId},
+        is_deleted = #{productInfo.isDeleted}
+        WHERE id = #{productInfo.id}
+    </update>
 </mapper>

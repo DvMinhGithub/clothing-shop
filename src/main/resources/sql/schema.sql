@@ -14,8 +14,8 @@ CREATE TABLE IF NOT EXISTS techStore.`product` (
   `name` varchar(255) DEFAULT NULL,
   `price` double DEFAULT NULL,
   `product_image` varchar(255) DEFAULT NULL,
-  `sold` int DEFAULT 0,
-  `view` int DEFAULT 0,
+  `sold` int NOT NULL DEFAULT 0,
+  `view` int NOT NULL DEFAULT 0,
   `brand_id` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_product_brand_id` FOREIGN KEY (`brand_id`) REFERENCES `brand` (`id`)
@@ -96,8 +96,8 @@ CREATE TABLE IF NOT EXISTS techStore.`product_category` (
 
 CREATE TABLE IF NOT EXISTS techStore.`product_inventory` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `import_price` double DEFAULT 0,
-  `quantity` int DEFAULT 0,
+  `import_price` double NOT NULL DEFAULT 0,
+  `quantity` int NOT NULL DEFAULT 0,
   `product_id` bigint NOT NULL UNIQUE,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_product_inventory_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
@@ -120,14 +120,14 @@ CREATE TABLE IF NOT EXISTS techStore.`user_role` (
 CREATE TABLE IF NOT EXISTS techStore.`voucher` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `code` varchar(255) DEFAULT NULL,
-  `voucher_condition` double DEFAULT 0,
+  `voucher_condition` double NOT NULL DEFAULT 0,
   `description` varchar(255) DEFAULT NULL,
-  `discount_limit` double DEFAULT 0,
+  `discount_limit` double NOT NULL DEFAULT 0,
   `discount_type` enum('AMOUNT_DISCOUNT','PERCENT_DISCOUNT') DEFAULT NULL,
   `end_time` datetime(6) DEFAULT NULL,
   `start_time` datetime(6) DEFAULT NULL,
-  `total_quantity` int DEFAULT 0,
-  `used_quantity` int DEFAULT 0,
+  `total_quantity` int NOT NULL DEFAULT 0,
+  `used_quantity` int NOT NULL DEFAULT 0,
   `created_at` datetime(6) DEFAULT NULL,
   `updated_at` datetime(6) DEFAULT NULL,
   `is_deleted` bit(1) NOT NULL DEFAULT 0,

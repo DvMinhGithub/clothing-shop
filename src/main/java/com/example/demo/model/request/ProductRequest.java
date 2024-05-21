@@ -23,4 +23,6 @@ public class ProductRequest {
     private Integer quantity;
 
     private MultipartFile image;
+
+    private Boolean isDeleted;
 }

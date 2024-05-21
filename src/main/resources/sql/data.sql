@@ -30,3 +30,43 @@ VALUES(1, 'string1123123', 0.0, 'string', 0.0, 'AMOUNT_DISCOUNT', NOW(6), DATE_A
 INSERT INTO techstore.voucher
 (id, code, voucher_condition, description, discount_limit, discount_type, end_time, start_time, total_quantity, used_quantity, created_at, updated_at, is_deleted)
 VALUES(2, 'string1123133', 0.0, 'string', 0.0, 'AMOUNT_DISCOUNT', NOW(6), DATE_ADD(NOW(6), INTERVAL 3 DAY), 0, 0, '2024-05-19 23:15:36', '2024-05-19 23:15:36', 0);
+
+INSERT INTO techstore.product
+(id, description, is_deleted, name, price, product_image, sold, `view`, brand_id)
+VALUES(1, 'description 1', 0, 'product 3', 1200.0, 'https://via.placeholder.com/300', 0, 2, 1);
+
+INSERT INTO techstore.product
+(id, description, is_deleted, name, price, product_image, sold, `view`, brand_id)
+VALUES(2, 'description 1', 0, 'product 3', 1200.0, 'https://via.placeholder.com/300', 0, 15, 1);
+
+INSERT INTO techstore.product
+(id, description, is_deleted, name, price, product_image, sold, `view`, brand_id)
+VALUES(3, 'description 1', 0, 'product 3', 1200.0, 'https://via.placeholder.com/300', 0, 4, 1);
+
+INSERT INTO techstore.product_inventory
+(id, import_price, quantity, product_id)
+VALUES(1, 1000.0, 1000, 1);
+
+INSERT INTO techstore.product_inventory
+(id, import_price, quantity, product_id)
+VALUES(2, 1000.0, 1000, 2);
+
+INSERT INTO techstore.product_inventory
+(id, import_price, quantity, product_id)
+VALUES(3, 1000.0, 1000, 3);
+
+INSERT INTO techstore.product_category
+(product_id, category_id)
+VALUES(1, 1);
+
+INSERT INTO techstore.product_category
+(product_id, category_id)
+VALUES(1, 2);
+
+INSERT INTO techstore.product_category
+(product_id, category_id)
+VALUES(2, 2);
+
+INSERT INTO techstore.product_category
+(product_id, category_id)
+VALUES(3, 3);

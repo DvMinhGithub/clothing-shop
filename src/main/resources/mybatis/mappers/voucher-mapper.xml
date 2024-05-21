@@ -16,7 +16,7 @@
     </resultMap>
 
     <select id="existsByCode" resultType="java.lang.Boolean">
-        SELECT EXISTS(SELECT v.id FROM voucher v WHERE v.code = #{voucherCode})
+        SELECT EXISTS(SELECT 1 FROM voucher v WHERE v.code = #{voucherCode})
     </select>
 
     <insert id="create">

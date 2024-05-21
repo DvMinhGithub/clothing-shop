@@ -15,14 +15,4 @@ public class Convert {
     public static <T> T convertJsonToObject(String jsonString, Class<T> tClass) {
         return new Gson().fromJson(jsonString, tClass);
     }
-
-    public static List<Long> convertJsonToListLong(String json) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode node = mapper.readTree(json);
-        List<Long> list = new ArrayList<>();
-        for (JsonNode element : node) {
-            list.add(element.asLong());
-        }
-        return list;
-    }
 }

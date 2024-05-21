@@ -52,10 +52,10 @@ public class ManageEmployeeServiceImpl implements ManageEmployeeService {
     public ResponseEntity<ResponseApi<?>> createEmployee(CreateEmployeeRequest createEmployeeRequest) {
         log.info("Start API: createEmployee with parameters: ({})", createEmployeeRequest);
         try {
-            if (userMapper.getByEmail(createEmployeeRequest.getEmail()) != null)
+            if (userMapper.existsByEmail(createEmployeeRequest.getEmail()))
                 throw new EmailExistException(String.format("Email %s is already exist", createEmployeeRequest.getEmail()));
 
-            if (userMapper.getByPhoneNumber(createEmployeeRequest.getPhoneNumber()) != null)
+            if (userMapper.existsByPhoneNumber(createEmployeeRequest.getPhoneNumber()) != null)
                 throw new PhoneNumberExistException(String.format("Phone number %s is already exist", createEmployeeRequest.getPhoneNumber()));
 
             UserDto user = UserDto.builder()

@@ -9,7 +9,7 @@
     </resultMap>
 
     <select id="existsByName" resultType="java.lang.Boolean">
-        SELECT EXISTS(SELECT b.id FROM brand b WHERE b.name = #{brandName})
+        SELECT EXISTS(SELECT 1 FROM brand b WHERE b.name = #{brandName})
     </select>
 
     <insert id="create">

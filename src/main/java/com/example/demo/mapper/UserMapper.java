@@ -14,8 +14,6 @@ public interface UserMapper {
 
     UserDto getByEmail(@Param("email") String email);
 
-    UserDto getByPhoneNumber(@Param("phoneNumber") String phoneNumber);
-
     void updateProfile(@Param("userId")Long userId, @Param("userInfo")UserRequest userRequest);
 
     UserDto getById(@Param("userId") Long userId);
@@ -25,4 +23,8 @@ public interface UserMapper {
     List<UserDto> findEmployeeByName(@Param("employeeName")String employeeName);
 
     List<UserDto> findEmployee();
+
+    Boolean existsByPhoneNumber(@Param("phoneNumber") String phoneNumber);
+
+    Boolean existsByEmail(@Param("email") String email);
 }
