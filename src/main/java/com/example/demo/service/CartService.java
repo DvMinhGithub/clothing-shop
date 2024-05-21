@@ -2,7 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.model.dto.CartItemDto;
 import com.example.demo.model.request.AddToCartRequest;
-import com.example.demo.model.request.UpdateCartInformationRequest;
+import com.example.demo.model.request.UpdateCartRequest;
 import com.example.demo.model.response.ResponseApi;
 import org.springframework.http.ResponseEntity;
 
@@ -14,5 +14,5 @@ public interface CartService {
 
     ResponseEntity<ResponseApi<List<CartItemDto>>> getCartInformation(Principal principal);
 
-    ResponseEntity<ResponseApi<?>> updateCartInformation(UpdateCartInformationRequest updateCartInformationRequest);
+    ResponseEntity<ResponseApi<?>> updateCartInformation(UpdateCartRequest updateCartRequest);
 }
