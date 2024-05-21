@@ -14,6 +14,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import redis.clients.jedis.Jedis;
 
 import java.util.*;
@@ -113,31 +114,27 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    @Transactional
     public ResponseEntity<ResponseApi<?>> verifyUserAccount(RegisterRequest registerRequest) {
         log.info("Start API: verifyUserAccount with parameters: ({})", registerRequest);
-        try {
-            String userOTP = jedis.get(String.format("OTP:%s", registerRequest.getEmail()));
-            if (!registerRequest.getOTP().equals(userOTP)) {
-                return new ResponseEntity<>(new ResponseApi<>("OTP is incorrect, try again"), HttpStatus.BAD_REQUEST);
-            }
-            UserDto user = UserDto.builder()
-                    .dob(registerRequest.getDob())
-                    .email(registerRequest.getEmail())
-                    .address(registerRequest.getAddress())
-                    .name(registerRequest.getName())
-                    .gender(registerRequest.getGender())
-                    .phoneNumber(registerRequest.getPhoneNumber())
-                    .password(passwordEncoder.encode(registerRequest.getPassword()))
-                    .build();
-            userMapper.register(user);
-            RoleDto roleDto = roleMapper.getByName(UserRole.CUSTOMER);
-            roleMapper.setRole(user.getId(), roleDto.getId());
-            jedis.del(String.format("OTP:%s", registerRequest.getEmail()));
-            log.info("End API: verifyUserAccount");
-            return new ResponseEntity<>(new ResponseApi<>("Verify success"), HttpStatus.CREATED);
-        } catch (Exception e) {
-            log.error("Error API: verifyUserAccount with message: {}", e.getMessage());
-            return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        String userOTP = jedis.get(String.format("OTP:%s", registerRequest.getEmail()));
+        if (!registerRequest.getOTP().equals(userOTP)) {
+            return new ResponseEntity<>(new ResponseApi<>("OTP is incorrect, try again"), HttpStatus.BAD_REQUEST);
         }
+        UserDto user = UserDto.builder()
+                .dob(registerRequest.getDob())
+                .email(registerRequest.getEmail())
+                .address(registerRequest.getAddress())
+                .name(registerRequest.getName())
+                .gender(registerRequest.getGender())
+                .phoneNumber(registerRequest.getPhoneNumber())
+                .password(passwordEncoder.encode(registerRequest.getPassword()))
+                .build();
+        userMapper.register(user);
+        RoleDto roleDto = roleMapper.getByName(UserRole.CUSTOMER);
+        roleMapper.setRole(user.getId(), roleDto.getId());
+        jedis.del(String.format("OTP:%s", registerRequest.getEmail()));
+        log.info("End API: verifyUserAccount");
+        return new ResponseEntity<>(new ResponseApi<>("Verify success"), HttpStatus.CREATED);
     }
 }

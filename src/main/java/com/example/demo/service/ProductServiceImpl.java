@@ -71,42 +71,37 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public ResponseEntity<ResponseApi<?>> updateProduct(Long id, ProductRequest productRequest) {
         log.info("Start API: updateProduct with parameters: (id: {}, {})", id, productRequest);
-        try {
-            String productImage = null;
-            if (productRequest.getImage() != null) {
-                productImage = uploadService.uploadFile(productRequest.getImage());
-            }
-
-            ProductDto productDto = ProductDto.builder()
-                    .id(id)
-                    .name(productRequest.getName())
-                    .description(productRequest.getDescription())
-                    .price(productRequest.getPrice())
-                    .productImage(productImage)
-                    .brandId(productRequest.getBrandId())
-                    .isDeleted(productRequest.getIsDeleted())
-                    .build();
-            productMapper.updateProduct(productDto);
-
-            productMapper.deleteCategory(productDto.getId());
-            if (productRequest.getCategoryIds() != null) {
-                List<Long> listCategoryIds = new ArrayList<>();
-                String[] arrCategoryIds = productRequest.getCategoryIds().split(",");
-                for (String categoryId : arrCategoryIds) {
-                    listCategoryIds.add(Long.parseLong(categoryId));
-                }
-                for (Long categoryId : listCategoryIds) {
-                    productMapper.setCategory(productDto.getId(), categoryId);
-                }
-            }
-
-            productMapper.updateInventory(productDto.getId(), productRequest.getImportPrice(), productRequest.getQuantity());
-            log.info("End API: updateProduct");
-            return new ResponseEntity<>(new ResponseApi<>("Update product success"), HttpStatus.OK);
-        } catch (Exception e) {
-            log.error("Error API: updateProduct with message: {}", e.getMessage());
-            return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        String productImage = null;
+        if (productRequest.getImage() != null) {
+            productImage = uploadService.uploadFile(productRequest.getImage());
         }
+
+        ProductDto productDto = ProductDto.builder()
+                .id(id)
+                .name(productRequest.getName())
+                .description(productRequest.getDescription())
+                .price(productRequest.getPrice())
+                .productImage(productImage)
+                .brandId(productRequest.getBrandId())
+                .isDeleted(productRequest.getIsDeleted())
+                .build();
+        productMapper.updateProduct(productDto);
+
+        productMapper.deleteCategory(productDto.getId());
+        if (productRequest.getCategoryIds() != null) {
+            List<Long> listCategoryIds = new ArrayList<>();
+            String[] arrCategoryIds = productRequest.getCategoryIds().split(",");
+            for (String categoryId : arrCategoryIds) {
+                listCategoryIds.add(Long.parseLong(categoryId));
+            }
+            for (Long categoryId : listCategoryIds) {
+                productMapper.setCategory(productDto.getId(), categoryId);
+            }
+        }
+
+        productMapper.updateInventory(productDto.getId(), productRequest.getImportPrice(), productRequest.getQuantity());
+        log.info("End API: updateProduct");
+        return new ResponseEntity<>(new ResponseApi<>("Update product success"), HttpStatus.OK);
     }
 
     @Override

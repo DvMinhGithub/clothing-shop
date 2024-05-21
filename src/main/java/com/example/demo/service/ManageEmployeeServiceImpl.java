@@ -3,7 +3,6 @@ package com.example.demo.service;
 import com.example.demo.enums.UserRole;
 import com.example.demo.mapper.RoleMapper;
 import com.example.demo.mapper.UserMapper;
-import com.example.demo.model.dto.EmployeeDto;
 import com.example.demo.model.dto.RoleDto;
 import com.example.demo.model.dto.UserDto;
 import com.github.pagehelper.PageHelper;
@@ -14,13 +13,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 
 import com.example.demo.exception.EmailExistException;
 import com.example.demo.exception.PhoneNumberExistException;
 import com.example.demo.model.request.CreateEmployeeRequest;
 import com.example.demo.model.response.ResponseApi;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
@@ -49,6 +48,7 @@ public class ManageEmployeeServiceImpl implements ManageEmployeeService {
     }
 
     @Override
+    @Transactional
     public ResponseEntity<ResponseApi<?>> createEmployee(CreateEmployeeRequest createEmployeeRequest) {
         log.info("Start API: createEmployee with parameters: ({})", createEmployeeRequest);
         try {
@@ -75,23 +75,16 @@ public class ManageEmployeeServiceImpl implements ManageEmployeeService {
         } catch (EmailExistException | PhoneNumberExistException e) {
             log.error("Error API: createEmployee with message: {}", e.getMessage());
             return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            log.error("Error API: createEmployee with message: {}", e.getMessage());
-            return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @Override
+    @Transactional
     public ResponseEntity<ResponseApi<?>> deleteEmployee(Long id) {
         log.info("Start API: deleteEmployee with parameters: (id: {})", id);
-        try {
-            roleMapper.deleteUserRole(id);
-            userMapper.deleteById(id);
-            log.info("End API: deleteEmployee");
-            return new ResponseEntity<>(new ResponseApi<>("Delete employee success"), HttpStatus.OK);
-        } catch (Exception e) {
-            log.error("Error API: deleteEmployee with message: {}", e.getMessage());
-            return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        roleMapper.deleteUserRole(id);
+        userMapper.deleteById(id);
+        log.info("End API: deleteEmployee");
+        return new ResponseEntity<>(new ResponseApi<>("Delete employee success"), HttpStatus.OK);
     }
 }
