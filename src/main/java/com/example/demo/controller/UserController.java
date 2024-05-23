@@ -1,5 +1,8 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.dto.UserDto;
+import com.example.demo.model.request.UserRequest;
+import com.example.demo.model.response.ResponseApi;
 import com.example.demo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -8,10 +11,6 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-
-import com.example.demo.model.request.UserRequest;
-import com.example.demo.model.response.ResponseApi;
-import com.example.demo.model.dto.UserDto;
 
 @RestController
 @RequestMapping("/user")

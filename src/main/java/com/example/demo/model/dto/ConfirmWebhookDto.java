@@ -5,10 +5,14 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ConfirmWebhookDto{
-    /** Mã lỗi */
+public class ConfirmWebhookDto {
+    /**
+     * Mã lỗi
+     */
     private String code;
 
-    /** Thông tin lỗi */
+    /**
+     * Thông tin lỗi
+     */
     private String desc;
 }

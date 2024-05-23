@@ -2,6 +2,7 @@ package com.example.demo.model.dto;
 
 import lombok.Builder;
 import lombok.Data;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class OrderDto {
 
     @Data
     @Builder
-    public static class ShopOrder{
+    public static class ShopOrder {
         private Long shopId;
         private String nameShop;
         private List<ProductOrder> productOrders;
@@ -26,7 +27,7 @@ public class OrderDto {
 
     @Data
     @Builder
-    public static class ProductOrder{
+    public static class ProductOrder {
         private Long shopId;
         private String nameShop;
         private List<ProductAttributeOrder> productAttributeOrders;
@@ -34,7 +35,7 @@ public class OrderDto {
 
     @Data
     @Builder
-    public static class ProductAttributeOrder{
+    public static class ProductAttributeOrder {
         private Long productAttributeId;
         private String productAttributeName;
     }

@@ -46,7 +46,7 @@ public class SecurityConfig {
                 .cors(c -> c.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/login", "/register", "/brand/get","/product/getListProduct", "/product/detail/**", "/category/get", "Tech-store/**", "verifyUserAccount", "/test", "/image/**").permitAll()
+                        .requestMatchers("/login", "/register", "/brand/get", "/product/getListProduct", "/product/detail/**", "/category/get", "Tech-store/**", "verifyUserAccount", "/test", "/image/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

@@ -1,10 +1,10 @@
 package com.example.demo.model.dto;
 
+import com.example.demo.enums.UserRole;
 import lombok.Builder;
 import lombok.Data;
-import java.util.List;
 
-import com.example.demo.enums.UserRole;
+import java.util.List;
 
 @Data
 @Builder

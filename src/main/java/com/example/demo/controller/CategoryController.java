@@ -1,23 +1,16 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.dto.CategoryDto;
+import com.example.demo.model.request.CategoryRequest;
+import com.example.demo.model.response.ResponseApi;
+import com.example.demo.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import com.example.demo.model.request.CategoryRequest;
-import com.example.demo.service.CategoryService;
-import com.example.demo.model.dto.CategoryDto;
-import com.example.demo.model.response.ResponseApi;
 
 
 @RestController

@@ -1,11 +1,12 @@
 package com.example.demo.model.request;
 
-import jakarta.validation.constraints.*;
-import lombok.*;
-import java.sql.Timestamp;
-
 import com.example.demo.enums.Gender;
 import com.example.demo.enums.UserRole;
+import jakarta.validation.constraints.*;
+import lombok.Builder;
+import lombok.Data;
+
+import java.sql.Timestamp;
 
 @Data
 @Builder
@@ -22,7 +23,7 @@ public class RegisterRequest {
     @NotNull(message = "Password is mandatory")
     @NotBlank(message = "Password is mandatory")
     @Size(min = 6, message = "Password must be 6 characters or more")
-    @Size(max=16, message="Password must be less than 16 characters")
+    @Size(max = 16, message = "Password must be less than 16 characters")
     private String password;
 
     private UserRole role;

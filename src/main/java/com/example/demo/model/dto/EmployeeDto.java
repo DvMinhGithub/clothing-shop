@@ -1,12 +1,12 @@
 package com.example.demo.model.dto;
 
+import com.example.demo.enums.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import java.sql.Timestamp;
-
-import com.example.demo.enums.Gender;
 import lombok.NoArgsConstructor;
+
+import java.sql.Timestamp;
 
 @Data
 @Builder

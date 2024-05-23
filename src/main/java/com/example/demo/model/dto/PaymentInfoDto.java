@@ -2,18 +2,25 @@ package com.example.demo.model.dto;
 
 import lombok.Builder;
 import lombok.Data;
+
 import java.util.List;
 
 @Data
 @Builder
 public class PaymentInfoDto {
-    /** Mã lỗi */
+    /**
+     * Mã lỗi
+     */
     private String code;
 
-    /** Thông tin lỗi */
+    /**
+     * Thông tin lỗi
+     */
     private String desc;
 
-    /** Chữ ký kiểm tra thông tin không bị thay đổi trong qua trình payOS trả kết quả về cho hệ thống của bạn. Bạn cần dùng checksum key từ Kênh thanh toán và HMAC_SHA256 để tạo signature và so sánh signature từ kết quả trả về để kiểm tra dữ liệu. */
+    /**
+     * Chữ ký kiểm tra thông tin không bị thay đổi trong qua trình payOS trả kết quả về cho hệ thống của bạn. Bạn cần dùng checksum key từ Kênh thanh toán và HMAC_SHA256 để tạo signature và so sánh signature từ kết quả trả về để kiểm tra dữ liệu.
+     */
     private String signature;
 
     private PaymentInfoDtoData data;
@@ -21,28 +28,44 @@ public class PaymentInfoDto {
     @Data
     @Builder
     public static class PaymentInfoDtoData {
-        /** Mã link thanh toán */
+        /**
+         * Mã link thanh toán
+         */
         private String id;
 
-        /** Mã đơn hàng từ cửa hàng */
+        /**
+         * Mã đơn hàng từ cửa hàng
+         */
         private Integer orderCode;
 
-        /** Số tiền thanh toán */
+        /**
+         * Số tiền thanh toán
+         */
         private Integer amount;
 
-        /** Số tiền đã thanh toán */
+        /**
+         * Số tiền đã thanh toán
+         */
         private Integer amountPaid;
 
-        /** Số tiền KH cần thanh toán thêm */
+        /**
+         * Số tiền KH cần thanh toán thêm
+         */
         private Integer amountRemaining;
 
-        /** Trạng thái link thanh toán */
+        /**
+         * Trạng thái link thanh toán
+         */
         private String status;
 
-        /** Thời gian khởi tạo link */
+        /**
+         * Thời gian khởi tạo link
+         */
         private String createdAt;
 
-        /** Danh sách giao dịch thanh toán đơn hàng */
+        /**
+         * Danh sách giao dịch thanh toán đơn hàng
+         */
         private List<PaymentInfoDtoTransaction> transactions;
 
         private String canceledAt;
@@ -53,37 +76,59 @@ public class PaymentInfoDto {
     @Data
     @Builder
     public static class PaymentInfoDtoTransaction {
-        /** Số tiền thanh toán */
+        /**
+         * Số tiền thanh toán
+         */
         private Integer amount;
 
-        /** Mô tả thanh toán */
+        /**
+         * Mô tả thanh toán
+         */
         private String description;
 
-        /** Số tài khoản của cửa hàng */
+        /**
+         * Số tài khoản của cửa hàng
+         */
         private String accountNumber;
 
-        /** Mã tham chiếu giao dịch, dùng để tra soát với ngân hàng */
+        /**
+         * Mã tham chiếu giao dịch, dùng để tra soát với ngân hàng
+         */
         private String reference;
 
-        /** Ngày giờ giao dịch thực hiện thành công */
+        /**
+         * Ngày giờ giao dịch thực hiện thành công
+         */
         private String transactionDateTime;
 
-        /** Mã ngân hàng của khách hàng dùng chuyển khoản */
+        /**
+         * Mã ngân hàng của khách hàng dùng chuyển khoản
+         */
         private String counterAccountBankId;
 
-        /** Tên ngân hàng của khách hàng dùng chuyển khoản */
+        /**
+         * Tên ngân hàng của khách hàng dùng chuyển khoản
+         */
         private String counterAccountBankName;
 
-        /** Tên tài khoản của khách hàng */
+        /**
+         * Tên tài khoản của khách hàng
+         */
         private String counterAccountName;
 
-        /** Số tài khoản của khách hàng */
+        /**
+         * Số tài khoản của khách hàng
+         */
         private String counterAccountNumber;
 
-        /** Tên tài khoản ảo */
+        /**
+         * Tên tài khoản ảo
+         */
         private String virtualAccountName;
 
-        /** Số tài khoản ảo */
+        /**
+         * Số tài khoản ảo
+         */
         private String virtualAccountNumber;
     }
 }

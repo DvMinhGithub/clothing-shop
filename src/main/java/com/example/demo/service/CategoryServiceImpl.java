@@ -1,6 +1,10 @@
 package com.example.demo.service;
 
+import com.example.demo.exception.CategoryNameExistException;
 import com.example.demo.mapper.CategoryMapper;
+import com.example.demo.model.dto.CategoryDto;
+import com.example.demo.model.request.CategoryRequest;
+import com.example.demo.model.response.ResponseApi;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,14 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import com.example.demo.model.request.CategoryRequest;
-import com.example.demo.model.response.ResponseApi;
-import com.example.demo.exception.CategoryNameExistException;
-import com.example.demo.model.dto.CategoryDto;
-
 @Service
 @Slf4j
-public class CategoryServiceImpl implements CategoryService{
+public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryMapper categoryMapper;
 

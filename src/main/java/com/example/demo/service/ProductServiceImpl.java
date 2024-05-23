@@ -1,23 +1,21 @@
 package com.example.demo.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.example.demo.mapper.ProductMapper;
 import com.example.demo.model.dto.ProductDetailDto;
+import com.example.demo.model.dto.ProductDto;
 import com.example.demo.model.request.ChangeProductStatusRequest;
+import com.example.demo.model.request.ProductRequest;
+import com.example.demo.model.response.ResponseApi;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import com.example.demo.model.dto.ProductDto;
-import com.example.demo.model.request.ProductRequest;
-import com.example.demo.model.response.ResponseApi;
-
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Slf4j

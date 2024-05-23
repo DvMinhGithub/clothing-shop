@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import com.example.demo.model.request.MailRequest;
+import com.example.demo.model.response.ResponseApi;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -14,20 +16,14 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.io.File;
 
-import com.example.demo.model.request.MailRequest;
-import com.example.demo.model.response.ResponseApi;
-
 @Service
 public class MailServiceImpl implements MailService {
     private final JavaMailSender javaMailSender;
-
+    private final SpringTemplateEngine springTemplateEngine;
     @Value("{spring.mail.username}")
     private String mailUsername;
-
     @Value("{${spring.mail.template}}")
     private String mailTemplate;
-
-    private final SpringTemplateEngine springTemplateEngine;
 
     public MailServiceImpl(JavaMailSender javaMailSender, SpringTemplateEngine springTemplateEngine) {
         this.javaMailSender = javaMailSender;

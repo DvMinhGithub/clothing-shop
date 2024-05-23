@@ -1,13 +1,12 @@
 package com.example.demo.utils;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Convert {
+    private Convert() {
+        // private constructor to hide the implicit public one
+    }
+
     public static String convertToJson(Object object) {
         return new Gson().toJson(object);
     }

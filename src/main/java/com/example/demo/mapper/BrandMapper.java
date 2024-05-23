@@ -17,5 +17,5 @@ public interface BrandMapper {
 
     BrandDto findById(@Param("brandId") Long brandId);
 
-    void update(@Param("brandId")Long brandId, @Param("brandInfo")BrandRequest brandRequest);
+    void update(@Param("brandId") Long brandId, @Param("brandInfo") BrandRequest brandRequest);
 }

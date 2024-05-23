@@ -1,15 +1,15 @@
 package com.example.demo.authentication;
 
-import java.util.Collection;
-import java.util.stream.Collectors;
-
 import com.example.demo.model.dto.UserDto;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @Component

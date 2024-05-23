@@ -1,10 +1,10 @@
 package com.example.demo.model.request;
 
+import com.example.demo.enums.DiscountType;
 import lombok.Builder;
 import lombok.Data;
-import java.sql.Timestamp;
 
-import com.example.demo.enums.DiscountType;
+import java.sql.Timestamp;
 
 @Data
 @Builder
