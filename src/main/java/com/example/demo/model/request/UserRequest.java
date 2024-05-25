@@ -1,9 +1,10 @@
 package com.example.demo.model.request;
 
-import java.sql.Timestamp;
-
 import com.example.demo.enums.Gender;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+
+import java.sql.Timestamp;
 
 @Data
 @Builder

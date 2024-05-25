@@ -1,16 +1,15 @@
 package com.example.demo.service;
 
 import com.example.demo.mapper.UserMapper;
+import com.example.demo.model.dto.UserDto;
+import com.example.demo.model.request.UserRequest;
+import com.example.demo.model.response.ResponseApi;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-
-import com.example.demo.model.request.UserRequest;
-import com.example.demo.model.response.ResponseApi;
-import com.example.demo.model.dto.UserDto;
 
 @Service
 @Slf4j

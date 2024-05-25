@@ -9,7 +9,6 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
-import java.util.List;
 
 public interface ProductService {
     ResponseEntity<ResponseApi<?>> createProduct(ProductRequest productRequest);

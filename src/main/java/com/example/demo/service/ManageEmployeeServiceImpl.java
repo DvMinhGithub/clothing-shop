@@ -1,10 +1,14 @@
 package com.example.demo.service;
 
 import com.example.demo.enums.UserRole;
+import com.example.demo.exception.EmailExistException;
+import com.example.demo.exception.PhoneNumberExistException;
 import com.example.demo.mapper.RoleMapper;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.dto.RoleDto;
 import com.example.demo.model.dto.UserDto;
+import com.example.demo.model.request.CreateEmployeeRequest;
+import com.example.demo.model.response.ResponseApi;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -12,14 +16,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import com.example.demo.exception.EmailExistException;
-import com.example.demo.exception.PhoneNumberExistException;
-import com.example.demo.model.request.CreateEmployeeRequest;
-import com.example.demo.model.response.ResponseApi;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j

@@ -17,5 +17,5 @@ public interface CategoryMapper {
 
     CategoryDto findById(@Param("categoryId") Long categoryId);
 
-    void update(@Param("categoryId")Long categoryId, @Param("categoryInfo")CategoryRequest categoryRequest);
+    void update(@Param("categoryId") Long categoryId, @Param("categoryInfo") CategoryRequest categoryRequest);
 }

@@ -1,15 +1,16 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.model.dto.LoginDto;
+import com.example.demo.model.request.LoginRequest;
+import com.example.demo.model.request.RegisterRequest;
+import com.example.demo.model.request.WebhookRequest;
+import com.example.demo.model.response.ResponseApi;
+import com.example.demo.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import com.example.demo.service.AuthService;
-import com.example.demo.model.dto.LoginDto;
-import com.example.demo.model.request.*;
-import com.example.demo.model.response.ResponseApi;
 
 @RestController
 @RequestMapping("/")
@@ -41,20 +42,12 @@ public class AuthController {
 
     @PostMapping("/getWebhookRequest")
     public ResponseEntity<?> getWebhookRequest(@RequestBody WebhookRequest webhookRequest) {
-        System.out.println(webhookRequest);
         return ResponseEntity.ok("Done");
     }
 
     @Operation(summary = "Test api", description = "Test api")
     @GetMapping("/test")
     public ResponseEntity<?> test() {
-        return ResponseEntity.ok("Thành công");
-    }
-
-    @Operation(summary = "Test api", description = "Test api")
-    @PostMapping("/test")
-    public ResponseEntity<?> test(@ModelAttribute TestRequest testRequest) {
-        System.out.println(testRequest);
         return ResponseEntity.ok("Thành công");
     }
 }

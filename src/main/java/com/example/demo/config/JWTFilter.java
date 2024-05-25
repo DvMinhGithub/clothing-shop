@@ -1,7 +1,11 @@
 package com.example.demo.config;
 
-import java.io.IOException;
-
+import com.example.demo.authentication.UserDetailsServiceImp;
+import com.example.demo.enums.TokenType;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,16 +13,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import lombok.extern.slf4j.Slf4j;
 
-import com.example.demo.authentication.UserDetailsServiceImp;
-import com.example.demo.enums.TokenType;
+import java.io.IOException;
 
-@Slf4j
 @Component
 @EnableMethodSecurity(jsr250Enabled = true)
 public class JWTFilter extends OncePerRequestFilter {
@@ -33,7 +30,8 @@ public class JWTFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
         String jwt;
         String authHeader = request.getHeader("Authorization");
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
@@ -44,7 +42,8 @@ public class JWTFilter extends OncePerRequestFilter {
         if (jwtUtility.validateToken(jwt, TokenType.ACCESS_TOKEN)) {
             String email = jwtUtility.extractClaimsFromJwtToken(jwt, TokenType.ACCESS_TOKEN).getSubject();
             UserDetails userDetails = userDetailsServiceImp.loadUserByUsername(email);
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails,
+                    null, userDetails.getAuthorities());
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }

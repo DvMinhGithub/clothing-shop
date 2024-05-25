@@ -1,29 +1,25 @@
 package com.example.demo.config;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
-
+import com.example.demo.enums.TokenType;
+import com.example.demo.enums.UserRole;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.enums.TokenType;
-import com.example.demo.enums.UserRole;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 @Component
 @Slf4j
 public class JwtUtility implements Serializable {
+    public final static long EXPIRY_TIME_ACCESS_TOKEN = 1000 * 60 * 30 * 24 * 36;
+    public final static long EXPIRY_TIME_REFRESH_TOKEN = 1000 * 60 * 60 * 24;
     @Value("${jwt.secret.accessToken}")
     private String accessTokenSecret;
-
     @Value("${jwt.secret.refreshToken}")
     private String refreshTokenSecret;
-
-    public final static long EXPIRY_TIME_ACCESS_TOKEN = 1000 * 60 * 30 * 24 * 36;
-
-    public final static long EXPIRY_TIME_REFRESH_TOKEN = 1000 * 60 * 60 * 24;
 
     public long getTokenExpiredTime(String token, TokenType tokenType) {
         Claims claims = extractClaimsFromJwtToken(token, tokenType);

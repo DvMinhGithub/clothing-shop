@@ -1,16 +1,16 @@
 package com.example.demo.service;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
 @Service
-public class UploadServiceImpl implements UploadService{
+public class UploadServiceImpl implements UploadService {
 
     @Value("${amazonProperties.bucketName}")
     private String bucketName;

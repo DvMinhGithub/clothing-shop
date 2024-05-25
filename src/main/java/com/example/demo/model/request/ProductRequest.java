@@ -1,6 +1,7 @@
 package com.example.demo.model.request;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 @Data

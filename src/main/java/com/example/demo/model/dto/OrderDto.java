@@ -5,9 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-import java.util.List;
-
 @Data
 @Builder
 @AllArgsConstructor
@@ -17,7 +14,6 @@ public class OrderDto {
     private Double totalPrice;
     private String phoneNumber;
     private String address;
-    private LocalDate createdAt;
     private String voucherCode;
     private Long userId;
 }

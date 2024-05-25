@@ -1,5 +1,11 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.dto.ProductDetailDto;
+import com.example.demo.model.dto.ProductDto;
+import com.example.demo.model.request.ChangeProductStatusRequest;
+import com.example.demo.model.request.ProductRequest;
+import com.example.demo.model.response.ResponseApi;
+import com.example.demo.service.ProductService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -8,14 +14,6 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.List;
-
-import com.example.demo.model.dto.ProductDetailDto;
-import com.example.demo.model.dto.ProductDto;
-import com.example.demo.model.request.ChangeProductStatusRequest;
-import com.example.demo.model.response.ResponseApi;
-import com.example.demo.model.request.ProductRequest;
-import com.example.demo.service.ProductService;
 
 @RestController
 @RequestMapping("/product")
@@ -31,7 +29,7 @@ public class ProductController {
     @SecurityRequirement(name = "Bearer Authentication")
     @Secured({"EMPLOYEE", "ADMIN"})
     @PostMapping(value = "/create")
-    public ResponseEntity<ResponseApi<?>> createProduct(@ModelAttribute ProductRequest productRequest) throws IOException {
+    public ResponseEntity<ResponseApi<?>> createProduct(@ModelAttribute ProductRequest productRequest) {
         return productService.createProduct(productRequest);
     }
 
