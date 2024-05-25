@@ -1,8 +1,10 @@
 package com.example.demo.service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import com.example.demo.enums.UserRole;
 import com.example.demo.mapper.ProductMapper;
 import com.example.demo.model.dto.ProductDetailDto;
 import com.example.demo.model.request.ChangeProductStatusRequest;
@@ -10,6 +12,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.dto.ProductDto;
@@ -142,7 +146,13 @@ public class ProductServiceImpl implements ProductService {
     public ResponseEntity<ResponseApi<ProductDetailDto>> getProductById(Long id) {
         log.info("Start API: getProductById with parameters: (id: {})", id);
         ProductDetailDto productDetailDto = productMapper.getById(id);
-        productMapper.updateView(id);
+        Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+        boolean isCustomer = authorities.stream()
+                .anyMatch(authority -> authority.getAuthority().equals(UserRole.CUSTOMER.name()));
+
+        if (isCustomer) {
+            productMapper.updateView(id);
+        }
         log.info("End API: getProductById");
         return new ResponseEntity<>(new ResponseApi<>("Get product success", productDetailDto), HttpStatus.OK);
     }

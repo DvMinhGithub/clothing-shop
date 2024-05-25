@@ -47,6 +47,15 @@ public class VoucherController {
         return voucherService.getAllVoucher();
     }
 
+    @Operation(summary = "Find voucher by code", description = "Find voucher by code")
+    @SecurityRequirement(name = "Bearer Authentication")
+    @Secured("CUSTOMER")
+    @GetMapping(value = "/getByCode")
+    public ResponseEntity<ResponseApi<VoucherDto>> getVoucherByCode(
+            @RequestParam(value = "code") String code) {
+        return voucherService.getVoucherByCode(code);
+    }
+
 //    @Operation(summary = "Edit voucher", description = "Edit voucher")
 //    @SecurityRequirement(name = "Bearer Authentication")
 //    @Secured({"EMPLOYEE", "ADMIN"})

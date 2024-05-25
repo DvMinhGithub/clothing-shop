@@ -23,6 +23,21 @@
         WHERE ci.user_id = #{userId}
     </select>
 
+    <select id="getByCartItemId">
+        SELECT ci.id           as id,
+               ci.quantity     as quantity,
+               p.product_image as productImage,
+               p.name          as productName,
+               p.price         as productPrice,
+               p.id            as productId
+        FROM cart_item ci
+                 INNER JOIN product p ON p.id = ci.product_id
+        WHERE ci.id IN
+        <foreach item="cartItemId" collection="listCartItemIds" separator="," open="(" close=")">
+            #{cartItemId}
+        </foreach>
+    </select>
+
     <insert id="addToCart">
         INSERT INTO cart_item(quantity, product_id, user_id)
         VALUES (#{addToCartInfo.quantity}, #{addToCartInfo.idProduct}, #{userId})
@@ -37,5 +52,13 @@
     <delete id="deleteCartItem">
         DELETE FROM cart_item
         WHERE id = #{cartItemId}
+    </delete>
+
+    <delete id="deleteListCartItem">
+        DELETE FROM cart_item
+        WHERE id IN
+        <foreach item="cartItemId" collection="listCartItemIds" separator="," open="(" close=")">
+            #{cartItemId}
+        </foreach>
     </delete>
 </mapper>

@@ -19,5 +19,7 @@ public interface VoucherMapper {
 
     VoucherDto findById(@Param("voucherId") Long voucherId);
 
-    void update(@Param("voucherId")Long voucherId, @Param("voucherInfo")VoucherRequest voucherRequest);
+    void update(@Param("voucherId") Long voucherId, @Param("voucherInfo") VoucherRequest voucherRequest);
+
+    VoucherDto findByCode(@Param("voucherCode") String voucherCode);
 }

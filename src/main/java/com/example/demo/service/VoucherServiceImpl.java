@@ -56,6 +56,14 @@ public class VoucherServiceImpl implements VoucherService{
         return new ResponseEntity<>(new ResponseApi<>("Get all voucher success", listVoucher), HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity<ResponseApi<VoucherDto>> getVoucherByCode(String code) {
+        log.info("Start API: getAllVoucher");
+        VoucherDto voucherDto = voucherMapper.findByCode(code);
+        log.info("End API: getAllVoucher");
+        return new ResponseEntity<>(new ResponseApi<>("Get all voucher success", voucherDto), HttpStatus.OK);
+    }
+
 //    @Override
 //    public ResponseEntity<ResponseApi<?>> editVoucher(Long id, VoucherRequest voucherRequest) {
 //        log.info("Start API: editVoucher with parameters: (id: {}, {})", id, voucherRequest);

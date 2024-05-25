@@ -3,7 +3,6 @@ package com.example.demo.service;
 import com.example.demo.mapper.BrandMapper;
 import com.example.demo.model.dto.BrandDto;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

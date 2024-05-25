@@ -14,5 +14,7 @@ public interface VoucherService {
 
     ResponseEntity<ResponseApi<List<VoucherDto>>> getAllVoucher();
 
+    ResponseEntity<ResponseApi<VoucherDto>> getVoucherByCode(String code);
+
 //    ResponseEntity<ResponseApi<?>> editVoucher(Long id, VoucherRequest voucherRequest);
 }

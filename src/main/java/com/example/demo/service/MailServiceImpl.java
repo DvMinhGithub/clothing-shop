@@ -67,9 +67,9 @@ public class MailServiceImpl implements MailService {
             }
 
             javaMailSender.send(message);
-            return new ResponseEntity<>(new ResponseApi<>("Send mail success", 200), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseApi<>("Send mail success"), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(new ResponseApi<>("Internal server error", 500), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ResponseApi<>("Internal server error"), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

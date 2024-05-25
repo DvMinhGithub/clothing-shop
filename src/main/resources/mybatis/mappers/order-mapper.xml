@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.OrderMapper">
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO order_detail(address,
+                                 created_at,
+                                 phone_number,
+                                 status,
+                                 total_price,
+                                 voucher_code,
+                                 user_id)
+        VALUES (#{orderInfo.address},
+                NOW(),
+                #{orderInfo.phoneNumber},
+                'PENDING',
+                #{orderInfo.totalPrice},
+                #{orderInfo.voucherCode},
+                #{orderInfo.userId})
+    </insert>
+
+    <insert id="createOrderItem">
+        INSERT INTO order_item(price_at_order_time,
+                               quantity,
+                               order_id,
+                               product_id)
+        VALUES (#{orderItemInfo.priceAtOrderTime},
+                #{orderItemInfo.quantity},
+                #{orderItemInfo.orderId},
+                #{orderItemInfo.productId})
+    </insert>
+</mapper>

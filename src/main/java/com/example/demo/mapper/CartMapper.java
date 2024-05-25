@@ -11,10 +11,14 @@ import java.util.List;
 public interface CartMapper {
     List<CartItemDto> getByUserId(@Param("userId") Long userId);
 
+    List<CartItemDto> getByCartItemId(@Param("listCartItemIds")List<Long> listCartItemIds);
+
     void addToCart(@Param("userId") Long userId, @Param("addToCartInfo") AddToCartRequest addToCartRequest);
 
     void updateCartItemQuantity(@Param("cartItemId") Long cartItemId,
                                 @Param("quantity") Integer quantity);
 
     void deleteCartItem(@Param("cartItemId") Long cartItemId);
+
+    void deleteListCartItem(@Param("listCartItemIds") List<Long> listCartItemIds);
 }

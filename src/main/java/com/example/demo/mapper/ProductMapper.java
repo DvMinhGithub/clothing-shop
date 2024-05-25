@@ -47,4 +47,8 @@ public interface ProductMapper {
     ProductDetailDto getById(@Param("productId") Long productId);
 
     void updateProduct(@Param("productInfo") ProductDto productDto);
+
+    void updateInventoryAfterOrder(@Param("quantity") Integer quantity, @Param("productId") Long productId);
+
+    void updateSoldQuantity(@Param("quantity") Integer quantity, @Param("productId") Long productId);
 }

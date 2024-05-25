@@ -237,4 +237,16 @@
         is_deleted = #{productInfo.isDeleted}
         WHERE id = #{productInfo.id}
     </update>
+
+    <update id="updateInventoryAfterOrder">
+        UPDATE product_inventory
+        SET quantity = quantity - #{quantity}
+        WHERE product_id = #{productId}
+    </update>
+
+    <update id="updateSoldQuantity">
+        UPDATE product
+        SET sold = sold + #{quantity}
+        WHERE id = #{productId}
+    </update>
 </mapper>

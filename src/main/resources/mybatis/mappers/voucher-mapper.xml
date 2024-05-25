@@ -61,7 +61,7 @@
     <select id="findVoucherValid" resultMap="VoucherDtoResultMap">
         SELECT v.id as id,
                v.code as code,
-               v.voucher_condition as condition,
+               v.voucher_condition as voucherCondition,
                v.description as description,
                v.discount_limit as discountLimit,
                v.discount_type as discountType,
@@ -76,7 +76,7 @@
     <select id="findById" resultMap="VoucherDtoResultMap">
         SELECT v.id as id,
                v.code as code,
-               v.voucher_condition as condition,
+               v.voucher_condition as voucherCondition,
                v.description as description,
                v.discount_limit as discountLimit,
                v.discount_type as discountType,
@@ -86,6 +86,21 @@
                v.used_quantity as usedQuantity
         FROM voucher v
         WHERE v.id = #{voucherId}
+    </select>
+
+    <select id="findByCode" resultMap="VoucherDtoResultMap">
+        SELECT v.id as id,
+               v.code as code,
+               v.voucher_condition as voucherCondition,
+               v.description as description,
+               v.discount_limit as discountLimit,
+               v.discount_type as discountType,
+               v.end_time as endTime,
+               v.start_time as startTime,
+               v.total_quantity as totalQuantity,
+               v.used_quantity as usedQuantity
+        FROM voucher v
+        WHERE v.code = #{voucherCode}
     </select>
 
     <update id="update">
