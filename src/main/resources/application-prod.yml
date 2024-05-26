@@ -45,10 +45,10 @@ server:
   port: 8080
 
 upload:
-  path: '/home/loi/images'
+  path: '/images/'
 
 image:
-  url: 'http://103.170.246.84/'
+  url: 'http://178.128.24.181/'
 
 redis:
   host: redis_db

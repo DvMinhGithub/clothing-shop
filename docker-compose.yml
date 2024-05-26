@@ -17,7 +17,7 @@ services:
     networks:
       - techStore_network
     volumes:
-      - D:\java-project\docker-compose\image:/images
+      - /home/loi/techstore-mybatis/images:/images
   mysql_db:
     image: mysql:8.0.35
     container_name: mysql_db
@@ -28,7 +28,7 @@ services:
       - MYSQL_ROOT_PASSWORD=Loi65732102.1
       - MYSQL_DATABASE=clothes
     volumes:
-      - D:\java-project\docker-compose\mysql:/var/lib/mysql
+      - /home/loi/techstore-mybatis/mysql:/var/lib/mysql
     networks:
       - techStore_network
   redis_db:
@@ -40,7 +40,7 @@ services:
     networks:
       - techStore_network
     volumes:
-      - D:\java-project\docker-compose\redis:/data
+      - /home/loi/techstore-mybatis/redis:/data
 networks:
   techStore_network:
     driver: bridge
