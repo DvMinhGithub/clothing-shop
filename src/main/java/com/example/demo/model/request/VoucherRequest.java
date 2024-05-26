@@ -17,7 +17,7 @@ public class VoucherRequest {
 
     private DiscountType discountType;
 
-    private Double discountLimit;
+    private Double discountPrice;
 
     private Integer totalQuantity;
 

@@ -25,7 +25,7 @@ public class VoucherDto {
 
     private DiscountType discountType;
 
-    private Double discountLimit;
+    private Double discountPrice;
 
     private Timestamp startTime;
 
