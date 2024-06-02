@@ -7,6 +7,7 @@ import com.example.demo.model.request.CreatePaymentRequest;
 import com.example.demo.model.request.QRCodeRequest;
 import com.example.demo.utils.Signature;
 import com.google.gson.Gson;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
 
 @Service
+@Slf4j
 public class PaymentServiceImpl implements PaymentService {
 
     @Value("${VietQR.clientId}")
@@ -64,30 +66,34 @@ public class PaymentServiceImpl implements PaymentService {
 
     //Tạo link thanh toán
     @Override
-    public CreatePaymentDto createPayment(CreatePaymentRequest createPaymentRequest) throws URISyntaxException, IOException, InterruptedException, NoSuchAlgorithmException, InvalidKeyException {
-        String dataFormat = String.format("amount=%s&cancelUrl=%s&description=%s&orderCode=%s&returnUrl=%s", createPaymentRequest.getAmount(), cancelUrl, createPaymentRequest.getDescription(), createPaymentRequest.getOrderCode(), returnUrl);
-        createPaymentRequest.setSignature(Signature.HmacSignatureGenerate(checksumKey, dataFormat));
-        createPaymentRequest.setReturnUrl(returnUrl);
-        createPaymentRequest.setCancelUrl(cancelUrl);
+    public CreatePaymentDto createPayment(CreatePaymentRequest createPaymentRequest) {
+        try {
+            String dataFormat = String.format("amount=%s&cancelUrl=%s&description=%s&orderCode=%s&returnUrl=%s", createPaymentRequest.getAmount(), cancelUrl, createPaymentRequest.getDescription(), createPaymentRequest.getOrderCode(), returnUrl);
+            createPaymentRequest.setSignature(Signature.HmacSignatureGenerate(checksumKey, dataFormat));
+            createPaymentRequest.setReturnUrl(returnUrl);
+            createPaymentRequest.setCancelUrl(cancelUrl);
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, 1);
-        long unixTimeStamp = calendar.getTimeInMillis() / 1000L;
-        createPaymentRequest.setExpiredAt(unixTimeStamp);
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DATE, 1);
+            long unixTimeStamp = calendar.getTimeInMillis() / 1000L;
+            createPaymentRequest.setExpiredAt(unixTimeStamp);
 
-        Gson gson = new Gson();
-        String jsonRequest = gson.toJson(createPaymentRequest);
-        HttpRequest httpRequest = HttpRequest.newBuilder()
-                .uri(new URI("https://api-merchant.payos.vn/v2/payment-requests"))
-                .header("Content-Type", "application/json")
-                .header("x-client-id", payOSClientId)
-                .header("x-api-key", payOSApiKey)
-                .POST(HttpRequest.BodyPublishers.ofString(jsonRequest))
-                .build();
-        HttpClient httpClient = HttpClient.newHttpClient();
-        HttpResponse<String> response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
-        CreatePaymentDto createPaymentDto = gson.fromJson(response.body(), CreatePaymentDto.class);
-        return createPaymentDto;
+            Gson gson = new Gson();
+            String jsonRequest = gson.toJson(createPaymentRequest);
+            HttpRequest httpRequest = HttpRequest.newBuilder()
+                    .uri(new URI("https://api-merchant.payos.vn/v2/payment-requests"))
+                    .header("Content-Type", "application/json")
+                    .header("x-client-id", payOSClientId)
+                    .header("x-api-key", payOSApiKey)
+                    .POST(HttpRequest.BodyPublishers.ofString(jsonRequest))
+                    .build();
+            HttpClient httpClient = HttpClient.newHttpClient();
+            HttpResponse<String> response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString());
+            return gson.fromJson(response.body(), CreatePaymentDto.class);
+        } catch (Exception e) {
+            log.error("Error service: createPayment with message: {}", e.getMessage());
+            return null;
+        }
     }
 
 

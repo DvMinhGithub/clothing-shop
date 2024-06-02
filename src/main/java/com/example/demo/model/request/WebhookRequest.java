@@ -1,10 +1,14 @@
 package com.example.demo.model.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class WebhookRequest {
     /**
      * Mã lỗi
@@ -21,19 +25,19 @@ public class WebhookRequest {
      */
     private String signature;
 
-    private WebhookRequestData data;
+    private WebhookData data;
 
     @Data
-    public static class WebhookRequestData {
+    public static class WebhookData {
         /**
          * Mã đơn hàng từ cửa hàng
          */
-        private Integer orderCode;
+        private Long orderCode;
 
         /**
          * Số tiền thanh toán
          */
-        private Integer amount;
+        private Double amount;
 
         /**
          * Mô tả thanh toán

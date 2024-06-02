@@ -29,4 +29,16 @@
                 #{orderItemInfo.orderId},
                 #{orderItemInfo.productId})
     </insert>
+
+    <update id="setCheckOutUrl">
+        UPDATE order_detail
+        SET checkout_url = #{checkoutUrl}
+        WHERE id = #{orderId}
+    </update>
+
+    <update id="changeOrderStatus">
+        UPDATE order_detail
+        SET status = #{orderStatus}
+        WHERE id = #{orderId}
+    </update>
 </mapper>

@@ -40,11 +40,6 @@ public class AuthController {
         return authService.verifyUserAccount(registerRequest);
     }
 
-    @PostMapping("/getWebhookRequest")
-    public ResponseEntity<?> getWebhookRequest(@RequestBody WebhookRequest webhookRequest) {
-        return ResponseEntity.ok("Done");
-    }
-
     @Operation(summary = "Test api", description = "Test api")
     @GetMapping("/test")
     public ResponseEntity<?> test() {

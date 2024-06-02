@@ -14,8 +14,7 @@ import java.security.NoSuchAlgorithmException;
 public interface PaymentService {
     QRCodeDto generateQRCode(QRCodeRequest qrCodeRequest) throws URISyntaxException, IOException, InterruptedException;
 
-    CreatePaymentDto createPayment(CreatePaymentRequest createPaymentRequest) throws URISyntaxException, IOException,
-            InterruptedException, NoSuchAlgorithmException, InvalidKeyException;
+    CreatePaymentDto createPayment(CreatePaymentRequest createPaymentRequest) ;
 
     ConfirmWebhookDto confirmWebhook(ConfirmWebhookRequest confirmWebhookRequest) throws URISyntaxException, IOException,
             InterruptedException;

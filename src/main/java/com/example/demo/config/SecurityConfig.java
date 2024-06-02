@@ -30,6 +30,21 @@ public class SecurityConfig {
         this.jwtFilter = jwtFilter;
     }
 
+    String[] publicEndpoints = new String[]{
+            "/login",
+            "/payment/**",
+            "/register",
+            "/brand/get",
+            "/product/getListProduct",
+            "/product/detail/**",
+            "/category/get",
+            "/Tech-store/**",
+            "/verifyUserAccount",
+            "/test",
+            "/image/**",
+            "/order/changeOrderStatus"
+    };
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(10);
@@ -46,7 +61,7 @@ public class SecurityConfig {
                 .cors(c -> c.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/login", "/register", "/brand/get", "/product/getListProduct", "/product/detail/**", "/category/get", "Tech-store/**", "verifyUserAccount", "/test", "/image/**").permitAll()
+                        .requestMatchers(publicEndpoints).permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
@@ -56,7 +71,10 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedOrigins(List.of("http://127.0.0.1:5173", "http://localhost:5173", "http://localhost"));
+        corsConfiguration.setAllowedOrigins(List.of(
+                "http://127.0.0.1:5173",
+                "http://localhost:5173",
+                "http://localhost"));
         corsConfiguration.setAllowedMethods(List.of("*"));
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.setAllowedHeaders(List.of("*"));

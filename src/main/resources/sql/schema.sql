@@ -84,6 +84,7 @@ CREATE TABLE IF NOT EXISTS techStore.`order_detail`
     `total_price`  double                              NOT NULL,
     `voucher_code` varchar(255) DEFAULT NULL,
     `user_id`      bigint                              NOT NULL,
+    `checkout_url` varchar(255) DEFAULT NULL,
     PRIMARY KEY (`id`),
     CONSTRAINT `fk_order_detail_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
     CONSTRAINT `fk_order_detail_voucher_code` FOREIGN KEY (voucher_code) REFERENCES `voucher` (code)
