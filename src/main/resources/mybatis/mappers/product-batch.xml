@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.ProductBatchMapper">
+
+    <resultMap id="ProductBatchDtoResultMap" type="com.example.demo.model.dto.ProductBatchDto" autoMapping="true">
+        <id column="id" property="id"/>
+        <result column="productImage" property="productImage"/>
+        <result column="productName" property="productName"/>
+        <result column="supplierName" property="supplierName"/>
+        <result column="quantity" property="quantity"/>
+        <result column="importPrice" property="importPrice"/>
+        <result column="createdAt" property="createdAt"/>
+    </resultMap>
+
+    <select id="getListProductBatch" resultMap="ProductBatchDtoResultMap">
+        SELECT
+        pb.id as id,
+        p.product_image as productImage,
+        p.name as productName,
+        s.name as supplierName,
+        pb.quantity as quantity,
+        pb.import_price as importPrice,
+        pb.created_at as createdAt
+        FROM product_batch pb
+        INNER JOIN product p ON p.id = pb.product_id
+        INNER JOIN supplier s ON s.id = pb.supplier_id
+    </select>
+
+    <insert id="createBatch">
+        INSERT INTO product_batch(import_price, quantity, product_id, supplier_id)
+        VALUES (
+        #{productBatchInfo.importPrice},
+        #{productBatchInfo.quantity},
+        #{productBatchInfo.productId},
+        #{productBatchInfo.supplierId}
+        )
+    </insert>
+</mapper>

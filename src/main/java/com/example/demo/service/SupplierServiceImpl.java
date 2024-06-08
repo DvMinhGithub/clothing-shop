@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 @Slf4j
 @Transactional
-public class SupplierServiceImpl implements SupplierService{
+public class SupplierServiceImpl implements SupplierService {
     private final SupplierMapper supplierMapper;
 
     public SupplierServiceImpl(SupplierMapper supplierMapper) {
@@ -34,7 +34,7 @@ public class SupplierServiceImpl implements SupplierService{
 
     @Override
     public ResponseEntity<ResponseApi<PageInfo<SupplierDto>>> getListSuppliers(String name, int page, int limit) {
-        log.info("Start API: getSupplier");
+        log.info("Start API: getSupplier with parameters: (name: {}, page: {}, limit: {})", name, page, limit);
         PageHelper.startPage(page, limit);
         List<SupplierDto> listSupplier = supplierMapper.getListSupplier();
         log.info("End API: getSupplier");
@@ -42,7 +42,7 @@ public class SupplierServiceImpl implements SupplierService{
     }
 
     @Override
-    public ResponseEntity<ResponseApi<?>> updateSupplier(Long id ,SupplierRequest supplierRequest) {
+    public ResponseEntity<ResponseApi<?>> updateSupplier(Long id, SupplierRequest supplierRequest) {
         log.info("Start API: updateSupplier with parameters: ({})", supplierRequest);
         supplierMapper.updateSupplier(id, supplierRequest);
         log.info("End API: updateSupplier");

@@ -26,8 +26,6 @@ public class ProductDetailDto {
 
     private String attribute;
 
-    private Double importPrice;
-
     private Double price;
 
     private String productImage;
@@ -35,6 +33,10 @@ public class ProductDetailDto {
     private BrandDto brand;
 
     private Integer quantity;
+
+    private Double totalRating;
+
+    private Double userRating;
 
     private List<CategoryDto> listCategory;
 }

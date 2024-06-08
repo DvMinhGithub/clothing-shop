@@ -1,15 +1,19 @@
 package com.example.demo.service;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import com.example.demo.enums.UserRole;
 import com.example.demo.mapper.ProductMapper;
+import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.dto.ProductDetailDto;
 import com.example.demo.model.dto.ProductDto;
+import com.example.demo.model.dto.UserDto;
 import com.example.demo.model.request.ChangeProductStatusRequest;
 import com.example.demo.model.request.ProductRequest;
+import com.example.demo.model.request.RatingRequest;
 import com.example.demo.model.response.ResponseApi;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -29,9 +33,12 @@ public class ProductServiceImpl implements ProductService {
 
     private final UploadService uploadService;
 
-    public ProductServiceImpl(ProductMapper productMapper, UploadServiceImpl uploadService) {
+    private final UserMapper userMapper;
+
+    public ProductServiceImpl(ProductMapper productMapper, UploadServiceImpl uploadService, UserMapper userMapper) {
         this.productMapper = productMapper;
         this.uploadService = uploadService;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -136,9 +143,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<ResponseApi<ProductDetailDto>> getProductById(Long id) {
+    public ResponseEntity<ResponseApi<ProductDetailDto>> getProductById(Principal principal, Long id) {
         log.info("Start API: getProductById with parameters: (id: {})", id);
-        ProductDetailDto productDetailDto = productMapper.getById(id);
+        UserDto userDto = userMapper.getByEmail(principal.getName());
+        ProductDetailDto productDetailDto = productMapper.getById(userDto.getId() ,id);
         Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
         boolean isCustomer = authorities.stream()
                 .anyMatch(authority -> authority.getAuthority().equals(UserRole.CUSTOMER.name()));
@@ -176,7 +184,7 @@ public class ProductServiceImpl implements ProductService {
             }
         }
         listProduct = productMapper.getTopSold(listCategoryIds, name, brandId);
-        log.info("End API: getTopSoldProduct with parameters");
+        log.info("End API: getTopSoldProduct");
         return new ResponseEntity<>(new ResponseApi<>("Get top sold product success", new PageInfo<>(listProduct)), HttpStatus.OK);
     }
 
@@ -193,7 +201,22 @@ public class ProductServiceImpl implements ProductService {
             }
         }
         listProduct = productMapper.getTopView(listCategoryIds, name, brandId);
-        log.info("End API: getTopViewProduct with parameters");
+        log.info("End API: getTopViewProduct");
         return new ResponseEntity<>(new ResponseApi<>("Get top view product success", new PageInfo<>(listProduct)), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<ResponseApi<?>> ratingProduct(Principal principal, RatingRequest ratingRequest) {
+        log.info("Start API: ratingProduct with parameters: ({})", ratingRequest);
+        UserDto userDto = userMapper.getByEmail(principal.getName());
+        Boolean isRating = productMapper.isRating(userDto.getId(), ratingRequest.getProductId());
+        if (isRating) {
+            productMapper.updateRating(userDto.getId(), ratingRequest);
+        } else {
+            productMapper.ratingProduct(userDto.getId(), ratingRequest);
+        }
+
+        log.info("End API: ratingProduct");
+        return new ResponseEntity<>(new ResponseApi<>("Rating product success"), HttpStatus.OK);
     }
 }

@@ -21,8 +21,9 @@
         <result column="sold" property="sold"/>
         <result column="productImage" property="productImage"/>
         <result column="isDeleted" property="isDeleted"/>
-        <result column="importPrice" property="importPrice"/>
         <result column="price" property="price"/>
+        <result column="totalRating" property="totalRating"/>
+        <result column="userRating" property="userRating"/>
         <result column="quantity" property="quantity"/>
         <association property="brand" javaType="com.example.demo.model.dto.BrandDto" columnPrefix="b_">
             <id column="id" property="id"/>
@@ -37,17 +38,49 @@
         </collection>
     </resultMap>
 
+    <sql id="statistic_product_quantity">
+        statistic_product_quantity AS
+        (
+            SELECT product_id as productId,
+            SUM(quantity) as quantity
+            FROM product_batch GROUP BY product_id
+        )
+    </sql>
+
+    <sql id="statistic_product_rating">
+        statistic_product_rating AS
+        (
+            SELECT product_id as productId,
+            AVG(rating) as rating
+            FROM rating r GROUP BY product_id
+        )
+    </sql>
+
+    <sql id="statistic_user_rating">
+        statistic_user_rating AS
+        (
+        SELECT product_id as productId,
+        rating as rating
+        FROM rating r WHERE user_id = #{userId} AND product_id = #{productId}
+        )
+    </sql>
+
     <select id="getById" resultMap="ProductDetailDtoResultMap">
-        SELECT p.id            as id,
-               p.name          as name,
-               p.description   as description,
-               p.product_image as productImage,
-               p.sold          as sold,
-               p.is_deleted    as isDeleted,
-               p.price         as price,
-               p.view as view,
-        pi.import_price as importPrice,
-        pi.quantity as quantity,
+        WITH
+        <include refid="statistic_product_quantity"/>,
+        <include refid="statistic_product_rating"/>,
+        <include refid="statistic_user_rating"/>
+        SELECT p.id as id,
+        p.name as name,
+        p.description as description,
+        p.product_image as productImage,
+        p.sold as sold,
+        p.is_deleted as isDeleted,
+        p.price as price,
+        p.view as view,
+        COALESCE(spq.quantity, 0) as quantity,
+        COALESCE(spr.rating, 0) as totalRating,
+        COALESCE(sur.rating, 0) as userRating,
         b.id as b_id,
         b.name as b_name,
         b.description as b_description,
@@ -55,34 +88,35 @@
         c.name as c_name,
         c.description as c_description
         FROM product p
-            LEFT JOIN product_inventory pi
-        ON pi.product_id = p.id
-            LEFT JOIN brand b ON b.id = p.brand_id
-            LEFT JOIN product_category pc ON pc.product_id = p.id
-            LEFT JOIN category c ON c.id = pc.category_id
+        LEFT JOIN brand b ON b.id = p.brand_id
+        LEFT JOIN product_category pc ON pc.product_id = p.id
+        LEFT JOIN category c ON c.id = pc.category_id
+        LEFT JOIN statistic_product_quantity spq ON spq.productId = p.id
+        LEFT JOIN statistic_product_rating spr ON spr.productId = p.id
+        LEFT JOIN statistic_user_rating sur ON sur.productId = p.id
         WHERE p.id = #{productId}
     </select>
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO product(name,
-                            description,
-                            price,
-                            product_image,
-                            brand_id,
-                            is_deleted)
+        description,
+        price,
+        product_image,
+        brand_id,
+        is_deleted)
         VALUES (#{productInfo.name},
-                #{productInfo.description},
-                #{productInfo.price},
-                #{productInfo.productImage},
-                #{productInfo.brandId},
-                #{productInfo.isDeleted})
+        #{productInfo.description},
+        #{productInfo.price},
+        #{productInfo.productImage},
+        #{productInfo.brandId},
+        #{productInfo.isDeleted})
     </insert>
 
     <insert id="setCategory">
         INSERT INTO product_category(product_id,
-                                     category_id)
+        category_id)
         VALUES (#{productId},
-                #{categoryId})
+        #{categoryId})
     </insert>
 
     <delete id="deleteCategory">
@@ -91,24 +125,8 @@
         WHERE product_id = #{productId}
     </delete>
 
-    <insert id="setInventory">
-        INSERT INTO product_inventory(import_price,
-                                      quantity,
-                                      product_id)
-        VALUES (#{importPrice},
-                #{quantity},
-                #{productId})
-    </insert>
-
-    <update id="updateInventory">
-        UPDATE product_inventory
-        SET import_price = #{importPrice},
-            quantity     = #{quantity}
-        WHERE product_id = #{productId}
-    </update>
-
     <sql id="productFilter">
-        productFilter as(
+        productFilter AS(
         SELECT p.id
         FROM product p
         <if test="listCategoryIds.size() > 0">
@@ -241,5 +259,24 @@
         UPDATE product
         SET sold = sold + #{quantity}
         WHERE id = #{productId}
+    </update>
+
+    <insert id="ratingProduct">
+        INSERT INTO rating(user_id,
+        product_id,
+        rating)
+        VALUES (#{userId},
+        #{ratingInfo.productId},
+        #{ratingInfo.rating})
+    </insert>
+
+    <select id="isRating" resultType="java.lang.Boolean">
+        SELECT EXISTS(SELECT 1 FROM rating r WHERE r.user_id = #{userId} AND r.product_id = #{productId})
+    </select>
+
+    <update id="updateRating">
+        UPDATE rating
+        SET rating = #{ratingInfo.rating}
+        WHERE user_id = #{userId} AND product_id = #{ratingInfo.productId}
     </update>
 </mapper>

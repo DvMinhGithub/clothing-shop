@@ -43,7 +43,6 @@ CREATE TABLE IF NOT EXISTS techStore.`cart_item`
     `quantity`   int    NOT NULL DEFAULT 0,
     `product_id` bigint NOT NULL,
     `user_id`    bigint NOT NULL,
-    `is_deleted`    bit(1) NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
     CONSTRAINT `fk_cart_item_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
     CONSTRAINT `fk_cart_item_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
@@ -131,7 +130,7 @@ CREATE TABLE IF NOT EXISTS techStore.`supplier`
     PRIMARY KEY(`id`)
 );
 
-CREATE TABLE IF NOT EXISTS techStore.`product_inventory`
+CREATE TABLE IF NOT EXISTS techStore.`product_batch`
 (
     `id`           bigint NOT NULL AUTO_INCREMENT,
     `import_price` double NOT NULL DEFAULT 0,
@@ -140,8 +139,8 @@ CREATE TABLE IF NOT EXISTS techStore.`product_inventory`
     `created_at`   datetime(6) DEFAULT CURRENT_TIMESTAMP(6),
     `supplier_id`  bigint NOT NULL ,
     PRIMARY KEY (`id`),
-    CONSTRAINT `fk_product_inventory_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
-    CONSTRAINT `fk_product_inventory_supplier_id` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`id`)
+    CONSTRAINT `fk_product_batch_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
+    CONSTRAINT `fk_product_batch_supplier_id` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`id`)
 );
 
 CREATE TABLE IF NOT EXISTS techStore.`role`
