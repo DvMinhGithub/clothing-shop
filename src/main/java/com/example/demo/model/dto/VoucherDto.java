@@ -1,6 +1,5 @@
 package com.example.demo.model.dto;
 
-import com.example.demo.enums.DiscountType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,8 +21,6 @@ public class VoucherDto {
     private Integer usedQuantity;
 
     private Integer totalQuantity;
-
-    private DiscountType discountType;
 
     private Double discountPrice;
 

@@ -21,4 +21,6 @@ public class CartItemDto {
     private Double productPrice;
 
     private Integer quantity;
+
+    private Double productPriceAfterDiscount;
 }

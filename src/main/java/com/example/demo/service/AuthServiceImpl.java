@@ -35,12 +35,19 @@ import java.util.stream.Collectors;
 @Transactional
 public class AuthServiceImpl implements AuthService {
     private static final String OTP_KEY_FORMAT = "OTP:%s";
+
     private final JwtUtility jwtUtility;
+
     private final PasswordEncoder passwordEncoder;
+
     private final Jedis jedis;
+
     private final MailService mailService;
+
     private final AuthenticationManager authenticationManager;
+
     private final UserMapper userMapper;
+
     private final RoleMapper roleMapper;
 
     public AuthServiceImpl(AuthenticationManager authenticationManager, JwtUtility jwtUtility, PasswordEncoder passwordEncoder, Jedis jedis, MailService mailService, UserMapper userMapper, RoleMapper roleMapper) {

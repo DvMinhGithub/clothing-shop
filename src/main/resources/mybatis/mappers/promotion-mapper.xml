@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.PromotionMapper">
+
+    <resultMap id="PromotionDtoResultMap" type="com.example.demo.model.dto.PromotionDto" autoMapping="true">
+        <id column="id" property="id"/>
+        <result column="productImage" property="productImage"/>
+        <result column="productName" property="productName"/>
+        <result column="endTime" property="endTime"/>
+        <result column="startTime" property="startTime"/>
+        <result column="discountPrice" property="discountPrice"/>
+    </resultMap>
+
+    <select id="getListPromotion" resultMap="PromotionDtoResultMap">
+        SELECT
+        pr.id as id,
+        pr.end_time as endTime,
+        pr.start_time as startTime,
+        pr.discount_price as discountPrice,
+        p.name as productName,
+        p.product_image as productImage
+        FROM promotion pr
+        INNER JOIN product p ON p.id = pr.product_id
+    </select>
+
+    <insert id="create">
+        INSERT INTO promotion
+        (
+        product_id,
+        end_time,
+        start_time,
+        discount_price
+        )
+        VALUES (
+        #{promotionInfo.productId},
+        #{promotionInfo.endTime},
+        #{promotionInfo.startTime},
+        #{promotionInfo.discountPrice}
+        )
+    </insert>
+
+    <update id="update">
+        UPDATE promotion
+        SET
+        product_id        = #{promotionInfo.productId},
+        end_time          = #{promotionInfo.endTime},
+        start_time        = #{promotionInfo.startTime},
+        discount_price    = #{voucherInfo.discountPrice}
+        WHERE id = #{promotionId}
+    </update>
+</mapper>

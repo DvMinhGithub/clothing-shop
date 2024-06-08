@@ -14,7 +14,9 @@ import java.sql.Timestamp;
 public class PromotionDto {
     private Long id;
 
-    private Long productId;
+    private String productImage;
+
+    private String productName;
 
     private Timestamp endTime;
 

@@ -63,7 +63,6 @@ CREATE TABLE IF NOT EXISTS techStore.`voucher`
     `voucher_condition` double       NOT NULL                       DEFAULT 0,
     `description`       varchar(255)                                DEFAULT NULL,
     `discount_price`    double       NOT NULL                       DEFAULT 0,
-    `discount_type`     enum ('AMOUNT_DISCOUNT','PERCENT_DISCOUNT') DEFAULT NULL,
     `end_time`          datetime(6)                                 DEFAULT NULL,
     `start_time`        datetime(6)                                 DEFAULT NULL,
     `total_quantity`    int          NOT NULL                       DEFAULT 0,

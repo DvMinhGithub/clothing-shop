@@ -27,4 +27,6 @@ public class ProductDto {
     private Long brandId;
 
     private Boolean isDeleted;
+
+    private Double priceAfterDiscount;
 }

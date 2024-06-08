@@ -1,6 +1,5 @@
 package com.example.demo.model.request;
 
-import com.example.demo.enums.DiscountType;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,8 +13,6 @@ public class VoucherRequest {
     private String description;
 
     private Integer quantity;
-
-    private DiscountType discountType;
 
     private Double discountPrice;
 

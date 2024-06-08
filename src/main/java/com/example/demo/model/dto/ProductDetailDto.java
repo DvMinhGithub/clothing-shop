@@ -38,5 +38,7 @@ public class ProductDetailDto {
 
     private Double userRating;
 
+    private Double priceAfterDiscount;
+
     private List<CategoryDto> listCategory;
 }

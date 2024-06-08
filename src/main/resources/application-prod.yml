@@ -7,42 +7,6 @@ spring:
     username: root
     url: 'jdbc:mysql://mysql_db:3306/techStore?createDatabaseIfNotExist=true'
     password: Loi65732102.1
-  servlet:
-    multipart:
-      max-request-size: 10MB
-      max-file-size: 10MB
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: loized02112001@gmail.com
-    protocol: smtp
-    password: hzdguookdenljouy
-    template: mail-template.html
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-
-mybatis:
-  mapper-locations: classpath:mybatis/mappers/*.xml
-
-pagehelper:
-  helper-dialect: mysql
-  reasonable: true
-  support-methods-arguments: true
-  params: count=countSql
-
-logging:
-  level:
-    com:
-      example:
-        demo:
-          mapper: DEBUG
-
-server:
-  port: 8080
 
 upload:
   path: '/images/'
@@ -57,38 +21,3 @@ redis:
   username: loi
   database: 0
   isAuth: false
-
-#Swagger
-springdoc:
-  api-docs:
-    path: "/Tech-store/doc"
-  swagger-ui:
-    path: "/Tech-store/ui.html"
-
-#JWT configuration
-jwt:
-  secret:
-    accessToken: "ACCESS_TOKEN"
-    refreshToken: "REFRESH_TOKEN"
-
-#AWS configuration
-amazonProperties:
-  endpointUrl: https://s3.us-east-1.amazonaws.com
-  accessKey: AKIAWY6XIXHBSY24NWHA
-  secretKey: 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
-  bucketName: minhtest123
-
-#VietQR key
-VietQR:
-  clientId: 875ac962-5dc4-4e3d-a246-31006a5cdfb2
-  apiKey: 1a2581c3-ad12-4481-924c-f470ce127be2
-
-#PayOS key
-PayOS:
-  clientId: 90e65cfd-2356-4143-88e6-503a6273df6b
-  apiKey: 81c708f7-e2b3-4989-9a01-5ade55f69b80
-  checkSumKey: 1cc9bf0a0ecf0799a26efb985774c5daca0884ff2b4e0faa146ed09c2b8caec7
-  returnUrl: "https://google.com"
-  cancelUrl: "https://google.com"
-
-

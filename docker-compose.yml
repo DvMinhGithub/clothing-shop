@@ -3,8 +3,6 @@ version: "3"
 services:
   be:
     container_name: be
-    environment:
-      - ENVIRONMENT_NAME=prod
     restart: always
     build:
       context: ./

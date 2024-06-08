@@ -8,7 +8,6 @@
         <result column="description" property="description"/>
         <result column="usedQuantity" property="usedQuantity"/>
         <result column="totalQuantity" property="totalQuantity"/>
-        <result column="discountType" property="discountType"/>
         <result column="discountPrice" property="discountPrice"/>
         <result column="startTime" property="startTime"/>
         <result column="endTime" property="endTime"/>
@@ -24,7 +23,6 @@
                             voucher_condition,
                             description,
                             discount_limit,
-                            discount_type,
                             end_time,
                             start_time,
                             total_quantity,
@@ -35,7 +33,6 @@
                 #{voucherInfo.condition},
                 #{voucherInfo.description},
                 #{voucherInfo.discountPrice},
-                #{voucherInfo.discountType},
                 #{voucherInfo.endTime},
                 #{voucherInfo.startTime},
                 #{voucherInfo.totalQuantity},
@@ -50,7 +47,6 @@
                v.voucher_condition as voucherCondition,
                v.description as description,
                v.discount_limit as discountPrice,
-               v.discount_type as discountType,
                v.end_time as endTime,
                v.start_time as startTime,
                v.total_quantity as totalQuantity,
@@ -64,7 +60,6 @@
                v.voucher_condition as voucherCondition,
                v.description as description,
                v.discount_limit as discountPrice,
-               v.discount_type as discountType,
                v.end_time as endTime,
                v.start_time as startTime,
                v.total_quantity as totalQuantity,
@@ -79,7 +74,6 @@
                v.voucher_condition as voucherCondition,
                v.description as description,
                v.discount_limit as discountPrice,
-               v.discount_type as discountType,
                v.end_time as endTime,
                v.start_time as startTime,
                v.total_quantity as totalQuantity,
@@ -94,7 +88,6 @@
                v.voucher_condition as voucherCondition,
                v.description as description,
                v.discount_limit as discountPrice,
-               v.discount_type as discountType,
                v.end_time as endTime,
                v.start_time as startTime,
                v.total_quantity as totalQuantity,
@@ -109,7 +102,6 @@
             voucher_condition = #{voucherInfo.condition},
             description       = #{voucherInfo.description},
             discount_limit    = #{voucherInfo.discountPrice},
-            discount_type     = #{voucherInfo.discountType},
             end_time          = #{voucherInfo.endTime},
             start_time        = #{voucherInfo.startTime},
             total_quantity    = #{voucherInfo.totalQuantity},
