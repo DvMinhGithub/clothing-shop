@@ -43,6 +43,7 @@ CREATE TABLE IF NOT EXISTS techStore.`cart_item`
     `quantity`   int    NOT NULL DEFAULT 0,
     `product_id` bigint NOT NULL,
     `user_id`    bigint NOT NULL,
+    `is_deleted`    bit(1) NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`),
     CONSTRAINT `fk_cart_item_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
     CONSTRAINT `fk_cart_item_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
@@ -127,7 +128,7 @@ CREATE TABLE IF NOT EXISTS techStore.`supplier`
     `name` varchar(255) NOT NULL,
     `phone_number` varchar(255) NOT NULL,
     `address` varchar(255) DEFAULT NULL,
-    PRIMARY KEY(`id`),
+    PRIMARY KEY(`id`)
 );
 
 CREATE TABLE IF NOT EXISTS techStore.`product_inventory`

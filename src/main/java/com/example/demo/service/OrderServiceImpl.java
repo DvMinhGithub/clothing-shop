@@ -90,9 +90,6 @@ public class OrderServiceImpl implements OrderService {
                     .build();
             orderMapper.createOrderItem(orderItemDto);
 
-            //Cập nhật số lượng trong kho
-            productMapper.updateInventoryAfterOrder(cartItemDto.getQuantity(), cartItemDto.getProductId());
-
             //Update số lượng sản phẩm đã bán
             productMapper.updateSoldQuantity(cartItemDto.getQuantity(), cartItemDto.getProductId());
         }
