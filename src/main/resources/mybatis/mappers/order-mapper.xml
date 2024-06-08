@@ -2,32 +2,53 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.demo.mapper.OrderMapper">
 
+    <resultMap id="OrderDetailDtoResultMap" type="com.example.demo.model.dto.OrderDetailDto" autoMapping="true">
+        <id column="id" property="id"/>
+        <result column="address" property="address"/>
+        <result column="phoneNumber" property="phoneNumber"/>
+        <result column="createdAt" property="createdAt"/>
+        <result column="orderStatus" property="orderStatus"/>
+        <result column="voucherCode" property="voucherCode"/>
+        <result column="totalPrice" property="totalPrice"/>
+        <result column="checkoutUrl" property="checkoutUrl"/>
+        <collection property="listOrderItem" ofType="com.example.demo.model.dto.OrderItemDto"
+                    autoMapping="true" columnPrefix="o_">
+            <id column="id"/>
+            <result column="price" property="priceAtOrderTime"/>
+            <result column="quantity" property="quantity"/>
+            <result column="orderId" property="orderId"/>
+            <result column="productId" property="productId"/>
+            <result column="productName" property="productName"/>
+            <result column="productImage" property="productImage"/>
+        </collection>
+    </resultMap>
+
     <insert id="create" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO order_detail(address,
-                                 created_at,
-                                 phone_number,
-                                 status,
-                                 total_price,
-                                 voucher_code,
-                                 user_id)
+        created_at,
+        phone_number,
+        status,
+        total_price,
+        voucher_code,
+        user_id)
         VALUES (#{orderInfo.address},
-                NOW(),
-                #{orderInfo.phoneNumber},
-                'PENDING',
-                #{orderInfo.totalPrice},
-                #{orderInfo.voucherCode},
-                #{orderInfo.userId})
+        NOW(),
+        #{orderInfo.phoneNumber},
+        'PENDING',
+        #{orderInfo.totalPrice},
+        #{orderInfo.voucherCode},
+        #{orderInfo.userId})
     </insert>
 
     <insert id="createOrderItem">
         INSERT INTO order_item(price_at_order_time,
-                               quantity,
-                               order_id,
-                               product_id)
+        quantity,
+        order_id,
+        product_id)
         VALUES (#{orderItemInfo.priceAtOrderTime},
-                #{orderItemInfo.quantity},
-                #{orderItemInfo.orderId},
-                #{orderItemInfo.productId})
+        #{orderItemInfo.quantity},
+        #{orderItemInfo.orderId},
+        #{orderItemInfo.productId})
     </insert>
 
     <update id="setCheckOutUrl">
@@ -41,4 +62,51 @@
         SET status = #{orderStatus}
         WHERE id = #{orderId}
     </update>
+
+    <select id="getListOrder" resultMap="OrderDetailDtoResultMap">
+        SELECT od.id AS id,
+        od.address AS address,
+        od.phone_number AS phoneNumber,
+        od.created_at AS createdAt,
+        od.status AS orderStatus,
+        od.voucher_code AS voucherCode,
+        od.total_price AS totalPrice,
+        od.checkout_url AS checkoutUrl,
+        oi.id AS o_id,
+        oi.price_at_order_time AS o_price,
+        oi.quantity AS o_quantity,
+        oi.order_id AS o_orderId,
+        oi.product_id AS o_productId,
+        p.name AS o_productName,
+        p.product_image AS productImage
+        FROM order_detail od
+        INNER JOIN order_item oi ON oi.order_id = od.id
+        INNER JOIN product p ON p.id = oi.product_id
+        WHERE od.user_id = #{userId}
+        <if test="orderStatus != null">
+            AND od.status = #{orderStatus}
+        </if>
+    </select>
+
+    <select id="getOrderDetail" resultMap="OrderDetailDtoResultMap">
+        SELECT od.id AS id,
+        od.address AS address,
+        od.phone_number AS phoneNumber,
+        od.created_at AS createdAt,
+        od.status AS orderStatus,
+        od.voucher_code AS voucherCode,
+        od.total_price AS totalPrice,
+        od.checkout_url AS checkoutUrl,
+        oi.id AS o_id,
+        oi.price_at_order_time AS o_price,
+        oi.quantity AS o_quantity,
+        oi.order_id AS o_orderId,
+        oi.product_id AS o_productId,
+        p.name AS o_productName,
+        p.product_image AS productImage
+        FROM order_detail od
+        INNER JOIN order_item oi ON oi.order_id = od.id
+        INNER JOIN product p ON p.id = oi.product_id
+        WHERE od.id = #{orderId}
+    </select>
 </mapper>

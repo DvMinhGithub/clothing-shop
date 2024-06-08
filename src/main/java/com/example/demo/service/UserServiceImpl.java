@@ -8,11 +8,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 
 @Service
 @Slf4j
+@Transactional
 public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
@@ -20,6 +22,7 @@ public class UserServiceImpl implements UserService {
         this.userMapper = userMapper;
     }
 
+    @Override
     public ResponseEntity<ResponseApi<?>> updateProfile(Principal principal, UserRequest userRequest) {
         log.info("Start API: updateProfile with parameters: ({})", userRequest);
         try {
@@ -33,6 +36,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
     public ResponseEntity<ResponseApi<UserDto>> getProfile(Principal principal) {
         log.info("Start API: getProfile");
         UserDto userDto = userMapper.getByEmail(principal.getName());

@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
+@Transactional
 public class ProductServiceImpl implements ProductService {
     private final ProductMapper productMapper;
 
@@ -34,7 +35,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    @Transactional
     public ResponseEntity<ResponseApi<?>> createProduct(ProductRequest productRequest) {
         log.info("Start API: createProduct with parameters: ({})", productRequest);
         String productImage = null;
@@ -48,7 +48,7 @@ public class ProductServiceImpl implements ProductService {
                 .price(productRequest.getPrice())
                 .productImage(productImage)
                 .brandId(productRequest.getBrandId())
-                .isDeleted(productRequest.getIsDeleted())
+                .isDeleted(false)
                 .build();
         productMapper.create(productDto);
 
@@ -63,14 +63,12 @@ public class ProductServiceImpl implements ProductService {
             }
         }
 
-        productMapper.setInventory(productDto.getId(), productRequest.getImportPrice(), productRequest.getQuantity());
         log.info("End API: createProduct");
         return new ResponseEntity<>(new ResponseApi<>("Create product success"), HttpStatus.OK);
     }
 
 
     @Override
-    @Transactional
     public ResponseEntity<ResponseApi<?>> updateProduct(Long id, ProductRequest productRequest) {
         log.info("Start API: updateProduct with parameters: (id: {}, {})", id, productRequest);
         String productImage = null;
@@ -85,7 +83,6 @@ public class ProductServiceImpl implements ProductService {
                 .price(productRequest.getPrice())
                 .productImage(productImage)
                 .brandId(productRequest.getBrandId())
-                .isDeleted(productRequest.getIsDeleted())
                 .build();
         productMapper.updateProduct(productDto);
 
@@ -100,8 +97,6 @@ public class ProductServiceImpl implements ProductService {
                 productMapper.setCategory(productDto.getId(), categoryId);
             }
         }
-
-        productMapper.updateInventory(productDto.getId(), productRequest.getImportPrice(), productRequest.getQuantity());
         log.info("End API: updateProduct");
         return new ResponseEntity<>(new ResponseApi<>("Update product success"), HttpStatus.OK);
     }

@@ -32,6 +32,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@Transactional
 public class AuthServiceImpl implements AuthService {
     private static final String OTP_KEY_FORMAT = "OTP:%s";
     private final JwtUtility jwtUtility;
@@ -101,7 +102,6 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    @Transactional
     public ResponseEntity<ResponseApi<?>> verifyUserAccount(RegisterRequest registerRequest) {
         log.info("Start API: verifyUserAccount with parameters: ({})", registerRequest);
         String userOTP = jedis.get(String.format(OTP_KEY_FORMAT, registerRequest.getEmail()));

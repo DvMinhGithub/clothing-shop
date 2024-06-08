@@ -22,6 +22,7 @@ import java.util.List;
 
 @Service
 @Slf4j
+@Transactional
 public class ManageEmployeeServiceImpl implements ManageEmployeeService {
     private final UserMapper userMapper;
 
@@ -47,7 +48,6 @@ public class ManageEmployeeServiceImpl implements ManageEmployeeService {
     }
 
     @Override
-    @Transactional
     public ResponseEntity<ResponseApi<?>> createEmployee(CreateEmployeeRequest createEmployeeRequest) {
         log.info("Start API: createEmployee with parameters: ({})", createEmployeeRequest);
         try {
@@ -78,7 +78,6 @@ public class ManageEmployeeServiceImpl implements ManageEmployeeService {
     }
 
     @Override
-    @Transactional
     public ResponseEntity<ResponseApi<?>> deleteEmployee(Long id) {
         log.info("Start API: deleteEmployee with parameters: (id: {})", id);
         roleMapper.deleteUserRole(id);

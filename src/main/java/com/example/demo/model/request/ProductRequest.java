@@ -13,17 +13,11 @@ public class ProductRequest {
 
     private String attribute;
 
-    private Double importPrice;
-
     private Double price;
 
     private Long brandId;
 
     private String categoryIds;
 
-    private Integer quantity;
-
     private MultipartFile image;
-
-    private Boolean isDeleted;
 }

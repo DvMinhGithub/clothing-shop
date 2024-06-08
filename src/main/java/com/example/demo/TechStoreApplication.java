@@ -6,8 +6,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.core.SpringVersion;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
+@EnableScheduling
 public class TechStoreApplication {
 
     private static final Logger logger = LoggerFactory.getLogger(TechStoreApplication.class);

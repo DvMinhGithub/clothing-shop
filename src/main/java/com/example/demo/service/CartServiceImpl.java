@@ -11,12 +11,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 import java.util.List;
 
 @Service
 @Slf4j
+@Transactional
 public class CartServiceImpl implements CartService {
     private final CartMapper cartMapper;
 
@@ -63,7 +65,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public ResponseEntity<ResponseApi<?>> updateCartInformation(UpdateCartRequest updateCartRequest) {
-        log.info("Start API: updateCartInformation");
+        log.info("Start API: updateCartInformation with parameters: ({})", updateCartRequest);
         try {
             if (updateCartRequest.getQuantity() == 0) {
                 cartMapper.deleteCartItem(updateCartRequest.getCartItemId());

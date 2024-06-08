@@ -9,11 +9,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @Slf4j
+@Transactional
 public class VoucherServiceImpl implements VoucherService {
     private final VoucherMapper voucherMapper;
 
@@ -57,9 +59,9 @@ public class VoucherServiceImpl implements VoucherService {
 
     @Override
     public ResponseEntity<ResponseApi<VoucherDto>> getVoucherByCode(String code) {
-        log.info("Start API: getAllVoucher");
+        log.info("Start API: getAllVoucher with parameters: (code: {})", code);
         VoucherDto voucherDto = voucherMapper.findByCode(code);
-        log.info("End API: getAllVoucher");
+        log.info("End API: getVoucherByCode");
         return new ResponseEntity<>(new ResponseApi<>("Get all voucher success", voucherDto), HttpStatus.OK);
     }
 

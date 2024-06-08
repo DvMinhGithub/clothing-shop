@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.SupplierMapper">
+
+    <resultMap id="SupplierDtoResultMap" type="com.example.demo.model.dto.SupplierDto" autoMapping="true">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="phoneNumber" property="phoneNumber"/>
+        <result column="address" property="address"/>
+    </resultMap>
+
+    <select id="getListSupplier" resultMap="SupplierDtoResultMap">
+        SELECT s.id as id,
+        s.name as name,
+        s.phone_number as phoneNumber,
+        s.address as address
+        FROM supplier s
+    </select>
+
+    <insert id="addSupplier">
+        INSERT INTO supplier(name, phone_number, address)
+        VALUES (
+        #{supplierInfo.name},
+        #{supplierInfo.phoneNumber},
+        #{supplierInfo.address}
+        )
+    </insert>
+
+    <update id="updateSupplier">
+        UPDATE supplier
+        SET name = #{supplierInfo.name},
+        phone_number = #{supplierInfo.phoneNumber},
+        address = #{supplierInfo.address}
+        WHERE id = #{supplierId}
+    </update>
+</mapper>

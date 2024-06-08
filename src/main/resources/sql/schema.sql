@@ -13,8 +13,8 @@ CREATE TABLE IF NOT EXISTS techStore.`product`
     `id`            bigint NOT NULL AUTO_INCREMENT,
     `description`   varchar(255)    DEFAULT NULL,
     `is_deleted`    bit(1) NOT NULL DEFAULT 0,
-    `name`          varchar(255)    DEFAULT NULL,
-    `price`         double          DEFAULT NULL,
+    `name`          varchar(255)    NOT NULL,
+    `price`         double          DEFAULT 0,
     `product_image` varchar(255)    DEFAULT NULL,
     `sold`          int    NOT NULL DEFAULT 0,
     `view`          int    NOT NULL DEFAULT 0,
@@ -68,8 +68,8 @@ CREATE TABLE IF NOT EXISTS techStore.`voucher`
     `start_time`        datetime(6)                                 DEFAULT NULL,
     `total_quantity`    int          NOT NULL                       DEFAULT 0,
     `used_quantity`     int          NOT NULL                       DEFAULT 0,
-    `created_at`        datetime(6)                                 DEFAULT NULL,
-    `updated_at`        datetime(6)                                 DEFAULT NULL,
+    `created_at`        datetime(6)                                 DEFAULT CURRENT_TIMESTAMP(6),
+    `updated_at`        datetime(6)                                 DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
     `is_deleted`        bit(1)       NOT NULL                       DEFAULT 0,
     PRIMARY KEY (`id`)
 );
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS techStore.`order_detail`
 (
     `id`           bigint                              NOT NULL AUTO_INCREMENT,
     `address`      varchar(255)                        NOT NULL,
-    `created_at`   datetime(6)  DEFAULT NULL,
+    `created_at`   datetime(6)                         DEFAULT CURRENT_TIMESTAMP(6),
     `phone_number` varchar(255)                        NOT NULL,
     `status`       enum ('CANCEL','SUCCESS','PENDING') NOT NULL,
     `total_price`  double                              NOT NULL,
@@ -121,14 +121,26 @@ CREATE TABLE IF NOT EXISTS techStore.`product_category`
     CONSTRAINT `fk_product_category_category_id` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
 );
 
+CREATE TABLE IF NOT EXISTS techStore.`supplier`
+(
+    `id` bigint NOT NULL AUTO_INCREMENT,
+    `name` varchar(255) NOT NULL,
+    `phone_number` varchar(255) NOT NULL,
+    `address` varchar(255) DEFAULT NULL,
+    PRIMARY KEY(`id`),
+);
+
 CREATE TABLE IF NOT EXISTS techStore.`product_inventory`
 (
     `id`           bigint NOT NULL AUTO_INCREMENT,
     `import_price` double NOT NULL DEFAULT 0,
     `quantity`     int    NOT NULL DEFAULT 0,
-    `product_id`   bigint NOT NULL UNIQUE,
+    `product_id`   bigint NOT NULL,
+    `created_at`   datetime(6) DEFAULT CURRENT_TIMESTAMP(6),
+    `supplier_id`  bigint NOT NULL ,
     PRIMARY KEY (`id`),
-    CONSTRAINT `fk_product_inventory_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
+    CONSTRAINT `fk_product_inventory_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
+    CONSTRAINT `fk_product_inventory_supplier_id` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`id`)
 );
 
 CREATE TABLE IF NOT EXISTS techStore.`role`
@@ -145,4 +157,34 @@ CREATE TABLE IF NOT EXISTS techStore.`user_role`
     PRIMARY KEY (`user_id`, `role_id`),
     CONSTRAINT `fk_user_role_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
     CONSTRAINT `fk_user_role_role_id` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
+);
+
+CREATE TABLE IF NOT EXISTS techStore.`rating`
+(
+    `id` bigint NOT NULL AUTO_INCREMENT,
+    `user_id` bigint NOT NULL,
+    `product_id` bigint NOT NULL,
+    `rating` int DEFAULT NULL,
+    PRIMARY KEY(`id`),
+    CONSTRAINT `fk_rating_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+    CONSTRAINT `fk_rating_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
+);
+
+CREATE TABLE IF NOT EXISTS techStore.`promotion`
+(
+    `id` bigint NOT NULL AUTO_INCREMENT,
+    `product_id` bigint NOT NULL,
+    `end_time`   datetime(6) DEFAULT NULL,
+    `start_time` datetime(6) DEFAULT NULL,
+    `discount_price` double NOT NULL DEFAULT 0,
+    PRIMARY KEY(`id`),
+    CONSTRAINT `fk_promotion_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
+);
+
+CREATE TABLE IF NOT EXISTS techStore.`revenue`
+(
+    `id` bigint NOT NULL AUTO_INCREMENT,
+    `date` datetime(6) DEFAULT NULL,
+    `total_revenue` double DEFAULT 0,
+    PRIMARY KEY(`id`)
 );

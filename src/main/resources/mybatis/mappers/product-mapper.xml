@@ -233,8 +233,7 @@
             product_image = #{productInfo.productImage},
         </if>
         price = #{productInfo.price},
-        brand_id = #{productInfo.brandId},
-        is_deleted = #{productInfo.isDeleted}
+        brand_id = #{productInfo.brandId}
         WHERE id = #{productInfo.id}
     </update>
 
