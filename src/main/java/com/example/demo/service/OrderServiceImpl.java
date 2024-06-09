@@ -56,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
         VoucherDto voucherDto = voucherMapper.findByCode(createOrderRequest.getVoucherCode());
 
         double totalPrice = Math.ceil(listCartItem.stream()
-                .mapToDouble(item -> item.getProductPrice() * item.getQuantity())
+                .mapToDouble(item -> item.getProductPriceAfterDiscount() * item.getQuantity())
                 .sum() - voucherDto.getDiscountPrice());
 
         //Tạo order
@@ -83,7 +83,7 @@ public class OrderServiceImpl implements OrderService {
             //Tạo order item
             OrderItemDto orderItemDto = OrderItemDto.builder()
                     .orderId(orderDto.getId())
-                    .priceAtOrderTime(cartItemDto.getProductPrice())
+                    .priceAtOrderTime(cartItemDto.getProductPriceAfterDiscount())
                     .productId(cartItemDto.getProductId())
                     .quantity(cartItemDto.getQuantity())
                     .build();
