@@ -11,6 +11,7 @@
         <result column="discountPrice" property="discountPrice"/>
         <result column="startTime" property="startTime"/>
         <result column="endTime" property="endTime"/>
+        <result column="isActive" property="isActive"/>
         <result column="voucherCondition" property="voucherCondition"/>
     </resultMap>
 
@@ -28,7 +29,7 @@
         total_quantity,
         created_at,
         updated_at,
-        is_deleted)
+        is_active)
         VALUES (#{voucherInfo.code},
         #{voucherInfo.condition},
         #{voucherInfo.description},
@@ -38,7 +39,7 @@
         #{voucherInfo.totalQuantity},
         NOW(),
         NOW(),
-        0)
+        true)
     </insert>
 
     <select id="findAll" resultMap="VoucherDtoResultMap">
@@ -50,7 +51,8 @@
         v.end_time as endTime,
         v.start_time as startTime,
         v.total_quantity as totalQuantity,
-        v.used_quantity as usedQuantity
+        v.used_quantity as usedQuantity,
+        v.is_active as isActive
         FROM voucher v
     </select>
 
@@ -63,9 +65,10 @@
         v.end_time as endTime,
         v.start_time as startTime,
         v.total_quantity as totalQuantity,
-        v.used_quantity as usedQuantity
+        v.used_quantity as usedQuantity,
+        v.is_active as isActive
         FROM voucher v
-        WHERE v.start_time &gt;= NOW() AND v.end_time &lt;= NOW()
+        WHERE v.start_time &gt;= NOW() AND v.end_time &lt;= NOW() AND v.is_active = true
     </select>
 
     <select id="findById" resultMap="VoucherDtoResultMap">
@@ -77,7 +80,8 @@
         v.end_time as endTime,
         v.start_time as startTime,
         v.total_quantity as totalQuantity,
-        v.used_quantity as usedQuantity
+        v.used_quantity as usedQuantity,
+        v.is_active as isActive
         FROM voucher v
         WHERE v.id = #{voucherId}
     </select>
@@ -91,9 +95,10 @@
         v.end_time as endTime,
         v.start_time as startTime,
         v.total_quantity as totalQuantity,
-        v.used_quantity as usedQuantity
+        v.used_quantity as usedQuantity,
+        v.is_active as isActive
         FROM voucher v
-        WHERE v.code = #{voucherCode}
+        WHERE v.code = #{voucherCode} AND v.is_active = true
     </select>
 
     <update id="update">
@@ -106,6 +111,7 @@
         start_time = #{voucherInfo.startTime},
         total_quantity = #{voucherInfo.totalQuantity},
         updated_at = NOW()
+        is_active = #{voucherInfo.isActive}
         WHERE id = #{voucherId}
     </update>
 </mapper>

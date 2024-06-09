@@ -20,7 +20,7 @@
         p.price as productPrice,
         p.id as productId,
         CASE
-        WHEN pr.start_time <![CDATA[<=]]> NOW() AND pr.end_time <![CDATA[>=]]> NOW()
+        WHEN pr.start_time <![CDATA[<=]]> date(NOW()) AND pr.end_time <![CDATA[>=]]> date(NOW()) AND pr.is_active = true
         THEN p.price - pr.discount_price
         ELSE p.price
         END AS productPriceAfterDiscount
@@ -38,7 +38,7 @@
         p.price as productPrice,
         p.id as productId,
         CASE
-        WHEN pr.start_time <![CDATA[<=]]> NOW() AND pr.end_time <![CDATA[>=]]> NOW()
+        WHEN pr.start_time <![CDATA[<=]]> date(NOW()) AND pr.end_time <![CDATA[>=]]> date(NOW()) AND pr.is_active = true
         THEN p.price - pr.discount_price
         ELSE p.price
         END AS productPriceAfterDiscount

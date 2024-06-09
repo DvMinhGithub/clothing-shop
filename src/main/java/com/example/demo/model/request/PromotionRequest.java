@@ -13,4 +13,6 @@ public class PromotionRequest {
     private String endTime;
 
     private Double discountPrice;
+
+    private Boolean isActive;
 }

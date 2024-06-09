@@ -9,6 +9,7 @@
         <result column="endTime" property="endTime"/>
         <result column="startTime" property="startTime"/>
         <result column="discountPrice" property="discountPrice"/>
+        <result column="isActive" property="isActive"/>
     </resultMap>
 
     <select id="getListPromotion" resultMap="PromotionDtoResultMap">
@@ -18,7 +19,8 @@
         pr.start_time as startTime,
         pr.discount_price as discountPrice,
         p.name as productName,
-        p.product_image as productImage
+        p.product_image as productImage,
+        p.is_active as isActive
         FROM promotion pr
         INNER JOIN product p ON p.id = pr.product_id
     </select>
@@ -29,13 +31,15 @@
         product_id,
         end_time,
         start_time,
-        discount_price
+        discount_price,
+        is_active
         )
         VALUES (
         #{promotionInfo.productId},
         #{promotionInfo.endTime},
         #{promotionInfo.startTime},
-        #{promotionInfo.discountPrice}
+        #{promotionInfo.discountPrice},
+        true
         )
     </insert>
 
@@ -45,7 +49,8 @@
         product_id = #{promotionInfo.productId},
         end_time = #{promotionInfo.endTime},
         start_time = #{promotionInfo.startTime},
-        discount_price = #{voucherInfo.discountPrice}
+        discount_price = #{promotionInfo.discountPrice}
+        is_active = #{promotionInfo.isActive}
         WHERE id = #{promotionId}
     </update>
 </mapper>

@@ -22,4 +22,6 @@ public class VoucherRequest {
     private String endTime;
 
     private Double condition;
+
+    private Boolean isActive;
 }

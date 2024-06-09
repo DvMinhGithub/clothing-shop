@@ -29,4 +29,6 @@ public class VoucherDto {
     private Timestamp endTime;
 
     private Double voucherCondition;
+
+    private Boolean isActive;
 }

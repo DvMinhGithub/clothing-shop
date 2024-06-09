@@ -23,4 +23,6 @@ public class PromotionDto {
     private Timestamp startTime;
 
     private Double discountPrice;
+
+    private Boolean isActive;
 }

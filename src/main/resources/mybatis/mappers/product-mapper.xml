@@ -85,7 +85,7 @@
         COALESCE(spr.rating, 0) as totalRating,
         COALESCE(sur.rating, 0) as userRating,
         CASE
-        WHEN pr.start_time <![CDATA[<=]]> NOW() AND pr.end_time <![CDATA[>=]]> NOW()
+        WHEN pr.start_time <![CDATA[<=]]> date(NOW()) AND pr.end_time <![CDATA[>=]]> date(NOW()) AND pr.is_active = true
         THEN p.price - pr.discount_price
         ELSE p.price
         END AS priceAfterDiscount,
@@ -161,7 +161,7 @@
         p.price as price,
         p.view as view,
         CASE
-        WHEN pr.start_time <![CDATA[<=]]> NOW() AND pr.end_time <![CDATA[>=]]> NOW()
+        WHEN pr.start_time <![CDATA[<=]]> date(NOW()) AND pr.end_time <![CDATA[>=]]> date(NOW()) AND pr.is_active = true
         THEN p.price - pr.discount_price
         ELSE p.price
         END AS priceAfterDiscount
@@ -189,7 +189,7 @@
         p.price as price,
         p.view as view,
         CASE
-        WHEN pr.start_time <![CDATA[<=]]> NOW() AND pr.end_time <![CDATA[>=]]> NOW()
+        WHEN pr.start_time <![CDATA[<=]]> date(NOW()) AND pr.end_time <![CDATA[>=]]> date(NOW()) AND pr.is_active = true
         THEN p.price - pr.discount_price
         ELSE p.price
         END AS priceAfterDiscount
@@ -219,7 +219,7 @@
         p.price as price,
         p.view as view,
         CASE
-        WHEN pr.start_time <![CDATA[<=]]> NOW() AND pr.end_time <![CDATA[>=]]> NOW()
+        WHEN pr.start_time <![CDATA[<=]]> date(NOW()) AND pr.end_time <![CDATA[>=]]> date(NOW()) AND pr.is_active = true
         THEN p.price - pr.discount_price
         ELSE p.price
         END AS priceAfterDiscount
