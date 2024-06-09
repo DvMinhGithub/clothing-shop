@@ -8,7 +8,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 @Data
@@ -22,7 +21,7 @@ public class UserDto {
 
     private String avatar;
 
-    private Timestamp dob;
+    private String dob;
 
     private String email;
 

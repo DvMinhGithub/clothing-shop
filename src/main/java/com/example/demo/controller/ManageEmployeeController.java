@@ -24,9 +24,10 @@ public class ManageEmployeeController {
     @SecurityRequirement(name = "Bearer Authentication")
     @Secured("ADMIN")
     @GetMapping("/get")
-    public ResponseEntity<ResponseApi<PageInfo<UserDto>>> getListEmployee(@RequestParam(value = "name", required = false) String name,
-                                                                          @RequestParam(value = "page", defaultValue = "0", required = false) int page,
-                                                                          @RequestParam(value = "limit", defaultValue = "20", required = false) int limit) {
+    public ResponseEntity<ResponseApi<PageInfo<UserDto>>> getListEmployee(
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "page", defaultValue = "0", required = false) int page,
+            @RequestParam(value = "limit", defaultValue = "20", required = false) int limit) {
         return manageEmployeeService.getListEmployee(name, page, limit);
     }
 

@@ -96,7 +96,10 @@ public class AuthServiceImpl implements AuthService {
             List<UserRole> userRoleList = authentication.getAuthorities().stream().map(authority -> UserRole.valueOf(authority.getAuthority())).collect(Collectors.toList());
             String accessToken = jwtUtility.generateToken(loginRequest.getEmail(), TokenType.ACCESS_TOKEN, userRoleList);
             String refreshToken = jwtUtility.generateToken(loginRequest.getEmail(), TokenType.REFRESH_TOKEN, userRoleList);
-            LoginDto loginDto = LoginDto.builder().accessToken(accessToken).refreshToken(refreshToken).build();
+            LoginDto loginDto = LoginDto.builder()
+                    .accessToken(accessToken)
+                    .refreshToken(refreshToken)
+                    .build();
             log.info("End API: login");
             return new ResponseEntity<>(new ResponseApi<>("Login success", loginDto), HttpStatus.OK);
         } catch (BadCredentialsException e) {
@@ -115,7 +118,15 @@ public class AuthServiceImpl implements AuthService {
         if (!registerRequest.getOTP().equals(userOTP)) {
             return new ResponseEntity<>(new ResponseApi<>("OTP is incorrect, try again"), HttpStatus.BAD_REQUEST);
         }
-        UserDto user = UserDto.builder().dob(registerRequest.getDob()).email(registerRequest.getEmail()).address(registerRequest.getAddress()).name(registerRequest.getName()).gender(registerRequest.getGender()).phoneNumber(registerRequest.getPhoneNumber()).password(passwordEncoder.encode(registerRequest.getPassword())).build();
+        UserDto user = UserDto.builder()
+                .dob(registerRequest.getDob())
+                .email(registerRequest.getEmail())
+                .address(registerRequest.getAddress())
+                .name(registerRequest.getName())
+                .gender(registerRequest.getGender())
+                .phoneNumber(registerRequest.getPhoneNumber())
+                .password(passwordEncoder.encode(registerRequest.getPassword()))
+                .build();
         userMapper.register(user);
         RoleDto roleDto = roleMapper.getByName(UserRole.CUSTOMER);
         roleMapper.setRole(user.getId(), roleDto.getId());

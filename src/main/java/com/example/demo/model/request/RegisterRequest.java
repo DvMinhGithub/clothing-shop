@@ -6,8 +6,6 @@ import jakarta.validation.constraints.*;
 import lombok.Builder;
 import lombok.Data;
 
-import java.sql.Timestamp;
-
 @Data
 @Builder
 public class RegisterRequest {
@@ -37,7 +35,7 @@ public class RegisterRequest {
 
     private Gender gender;
 
-    private Timestamp dob;
+    private String dob;
 
     private String OTP;
 }

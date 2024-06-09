@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS techStore.`voucher`
     `used_quantity`     int          NOT NULL                       DEFAULT 0,
     `created_at`        datetime(6)                                 DEFAULT CURRENT_TIMESTAMP(6),
     `updated_at`        datetime(6)                                 DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
-    `is_deleted`        bit(1)       NOT NULL                       DEFAULT 0,
+    `is_active`        bit(1)       NOT NULL                       DEFAULT 0,
     PRIMARY KEY (`id`)
 );
 
@@ -176,6 +176,7 @@ CREATE TABLE IF NOT EXISTS techStore.`promotion`
     `end_time`   date DEFAULT NULL,
     `start_time` date DEFAULT NULL,
     `discount_price` double NOT NULL DEFAULT 0,
+    `is_active`      bit(1) NOT NULL DEFAULT 0,
     PRIMARY KEY(`id`),
     CONSTRAINT `fk_promotion_product_id` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
 );

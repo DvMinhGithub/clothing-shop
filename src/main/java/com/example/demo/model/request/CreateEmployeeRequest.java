@@ -5,8 +5,6 @@ import com.example.demo.enums.UserRole;
 import lombok.Builder;
 import lombok.Data;
 
-import java.sql.Timestamp;
-
 @Data
 @Builder
 public class CreateEmployeeRequest {
@@ -24,5 +22,5 @@ public class CreateEmployeeRequest {
 
     private Gender gender;
 
-    private Timestamp dob;
+    private String dob;
 }

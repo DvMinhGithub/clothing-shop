@@ -32,7 +32,7 @@ public class BrandController {
     @Operation(summary = "Get list brands", description = "Get list brands")
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/get")
-    public ResponseEntity<ResponseApi<List<BrandDto>>> getListCategories() {
+    public ResponseEntity<ResponseApi<List<BrandDto>>> getListBrand() {
         return brandService.getListBrands();
     }
 

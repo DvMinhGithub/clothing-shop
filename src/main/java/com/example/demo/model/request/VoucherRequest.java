@@ -3,8 +3,6 @@ package com.example.demo.model.request;
 import lombok.Builder;
 import lombok.Data;
 
-import java.sql.Timestamp;
-
 @Data
 @Builder
 public class VoucherRequest {
@@ -18,9 +16,9 @@ public class VoucherRequest {
 
     private Integer totalQuantity;
 
-    private Timestamp startTime;
+    private String startTime;
 
-    private Timestamp endTime;
+    private String endTime;
 
     private Double condition;
 }
