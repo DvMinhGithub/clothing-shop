@@ -20,7 +20,7 @@
         pr.discount_price as discountPrice,
         p.name as productName,
         p.product_image as productImage,
-        p.is_active as isActive
+        pr.is_active as isActive
         FROM promotion pr
         INNER JOIN product p ON p.id = pr.product_id
     </select>
