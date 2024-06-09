@@ -11,9 +11,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OrderDto {
     private Long id;
+
     private Double totalPrice;
+
     private String phoneNumber;
+
     private String address;
+
     private String voucherCode;
+    
     private Long userId;
 }

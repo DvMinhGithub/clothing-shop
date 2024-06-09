@@ -9,9 +9,9 @@ import java.util.List;
 
 @Mapper
 public interface SupplierMapper {
-    void addSupplier(@Param("supplierInfo")SupplierRequest supplierRequest);
+    void addSupplier(@Param("supplierInfo") SupplierRequest supplierRequest);
 
     List<SupplierDto> getListSupplier();
 
-    void updateSupplier(@Param("supplierId")Long supplierId, @Param("supplierInfo")SupplierRequest supplierRequest);
+    void updateSupplier(@Param("supplierId") Long supplierId, @Param("supplierInfo") SupplierRequest supplierRequest);
 }

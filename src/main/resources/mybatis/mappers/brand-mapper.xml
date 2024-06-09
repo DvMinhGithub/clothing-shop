@@ -15,28 +15,28 @@
     <insert id="create">
         INSERT INTO brand(name, description)
         VALUES (#{brandInfo.name},
-                #{brandInfo.description})
+        #{brandInfo.description})
     </insert>
 
     <select id="findAll" resultMap="BrandDtoResultMap">
-        SELECT b.id          as id,
-               b.name        as name,
-               b.description as description
+        SELECT b.id as id,
+        b.name as name,
+        b.description as description
         FROM brand b
     </select>
 
     <select id="findById" resultMap="BrandDtoResultMap">
-        SELECT b.id          as id,
-               b.name        as name,
-               b.description as description
+        SELECT b.id as id,
+        b.name as name,
+        b.description as description
         FROM brand b
         WHERE b.id = #{brandId}
     </select>
 
     <update id="update">
         UPDATE brand
-        SET name        = #{brandInfo.name},
-            description = #{brandInfo.description}
+        SET name = #{brandInfo.name},
+        description = #{brandInfo.description}
         WHERE id = #{brandId}
     </update>
 </mapper>

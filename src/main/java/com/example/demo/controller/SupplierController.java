@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.dto.ProductDto;
 import com.example.demo.model.dto.SupplierDto;
 import com.example.demo.model.request.SupplierRequest;
 import com.example.demo.model.response.ResponseApi;

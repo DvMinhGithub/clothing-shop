@@ -42,10 +42,10 @@
     <update id="update">
         UPDATE promotion
         SET
-        product_id        = #{promotionInfo.productId},
-        end_time          = #{promotionInfo.endTime},
-        start_time        = #{promotionInfo.startTime},
-        discount_price    = #{voucherInfo.discountPrice}
+        product_id = #{promotionInfo.productId},
+        end_time = #{promotionInfo.endTime},
+        start_time = #{promotionInfo.startTime},
+        discount_price = #{voucherInfo.discountPrice}
         WHERE id = #{promotionId}
     </update>
 </mapper>

@@ -11,5 +11,5 @@ public interface SupplierService {
 
     ResponseEntity<ResponseApi<PageInfo<SupplierDto>>> getListSuppliers(String name, int page, int limit);
 
-    ResponseEntity<ResponseApi<?>> updateSupplier(Long id ,SupplierRequest supplierRequest);
+    ResponseEntity<ResponseApi<?>> updateSupplier(Long id, SupplierRequest supplierRequest);
 }

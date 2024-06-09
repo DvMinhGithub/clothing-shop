@@ -146,7 +146,7 @@ public class ProductServiceImpl implements ProductService {
     public ResponseEntity<ResponseApi<ProductDetailDto>> getProductById(Principal principal, Long id) {
         log.info("Start API: getProductById with parameters: (id: {})", id);
         UserDto userDto = userMapper.getByEmail(principal.getName());
-        ProductDetailDto productDetailDto = productMapper.getById(userDto.getId() ,id);
+        ProductDetailDto productDetailDto = productMapper.getById(userDto.getId(), id);
         Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
         boolean isCustomer = authorities.stream()
                 .anyMatch(authority -> authority.getAuthority().equals(UserRole.CUSTOMER.name()));

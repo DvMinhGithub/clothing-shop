@@ -37,15 +37,15 @@ public interface ProductMapper {
 
     void updateView(@Param("productId") Long productId);
 
-    ProductDetailDto getById(@Param("userId")Long userId, @Param("productId") Long productId);
+    ProductDetailDto getById(@Param("userId") Long userId, @Param("productId") Long productId);
 
     void updateProduct(@Param("productInfo") ProductDto productDto);
 
     void updateSoldQuantity(@Param("quantity") Integer quantity, @Param("productId") Long productId);
 
-    Boolean isRating(@Param("userId")Long userId, @Param("productId")Long productId);
+    Boolean isRating(@Param("userId") Long userId, @Param("productId") Long productId);
 
-    void updateRating(@Param("userId")Long userId, @Param("ratingInfo")RatingRequest ratingRequest);
+    void updateRating(@Param("userId") Long userId, @Param("ratingInfo") RatingRequest ratingRequest);
 
-    void ratingProduct(@Param("userId")Long userId, @Param("ratingInfo")RatingRequest ratingRequest);
+    void ratingProduct(@Param("userId") Long userId, @Param("ratingInfo") RatingRequest ratingRequest);
 }

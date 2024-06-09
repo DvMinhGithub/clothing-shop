@@ -43,18 +43,18 @@
     <sql id="statistic_product_quantity">
         statistic_product_quantity AS
         (
-            SELECT product_id as productId,
-            SUM(quantity) as quantity
-            FROM product_batch GROUP BY product_id
+        SELECT product_id as productId,
+        SUM(quantity) as quantity
+        FROM product_batch GROUP BY product_id
         )
     </sql>
 
     <sql id="statistic_product_rating">
         statistic_product_rating AS
         (
-            SELECT product_id as productId,
-            AVG(rating) as rating
-            FROM rating r GROUP BY product_id
+        SELECT product_id as productId,
+        AVG(rating) as rating
+        FROM rating r GROUP BY product_id
         )
     </sql>
 

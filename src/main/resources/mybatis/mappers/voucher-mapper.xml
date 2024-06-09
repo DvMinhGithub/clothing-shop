@@ -20,92 +20,92 @@
 
     <insert id="create">
         INSERT INTO voucher(code,
-                            voucher_condition,
-                            description,
-                            discount_limit,
-                            end_time,
-                            start_time,
-                            total_quantity,
-                            created_at,
-                            updated_at,
-                            is_deleted)
+        voucher_condition,
+        description,
+        discount_limit,
+        end_time,
+        start_time,
+        total_quantity,
+        created_at,
+        updated_at,
+        is_deleted)
         VALUES (#{voucherInfo.code},
-                #{voucherInfo.condition},
-                #{voucherInfo.description},
-                #{voucherInfo.discountPrice},
-                #{voucherInfo.endTime},
-                #{voucherInfo.startTime},
-                #{voucherInfo.totalQuantity},
-                NOW(),
-                NOW(),
-                0)
+        #{voucherInfo.condition},
+        #{voucherInfo.description},
+        #{voucherInfo.discountPrice},
+        #{voucherInfo.endTime},
+        #{voucherInfo.startTime},
+        #{voucherInfo.totalQuantity},
+        NOW(),
+        NOW(),
+        0)
     </insert>
 
     <select id="findAll" resultMap="VoucherDtoResultMap">
         SELECT v.id as id,
-               v.code as code,
-               v.voucher_condition as voucherCondition,
-               v.description as description,
-               v.discount_limit as discountPrice,
-               v.end_time as endTime,
-               v.start_time as startTime,
-               v.total_quantity as totalQuantity,
-               v.used_quantity as usedQuantity
+        v.code as code,
+        v.voucher_condition as voucherCondition,
+        v.description as description,
+        v.discount_limit as discountPrice,
+        v.end_time as endTime,
+        v.start_time as startTime,
+        v.total_quantity as totalQuantity,
+        v.used_quantity as usedQuantity
         FROM voucher v
     </select>
 
     <select id="findVoucherValid" resultMap="VoucherDtoResultMap">
         SELECT v.id as id,
-               v.code as code,
-               v.voucher_condition as voucherCondition,
-               v.description as description,
-               v.discount_limit as discountPrice,
-               v.end_time as endTime,
-               v.start_time as startTime,
-               v.total_quantity as totalQuantity,
-               v.used_quantity as usedQuantity
+        v.code as code,
+        v.voucher_condition as voucherCondition,
+        v.description as description,
+        v.discount_limit as discountPrice,
+        v.end_time as endTime,
+        v.start_time as startTime,
+        v.total_quantity as totalQuantity,
+        v.used_quantity as usedQuantity
         FROM voucher v
         WHERE v.start_time &gt;= NOW() AND v.end_time &lt;= NOW()
     </select>
 
     <select id="findById" resultMap="VoucherDtoResultMap">
         SELECT v.id as id,
-               v.code as code,
-               v.voucher_condition as voucherCondition,
-               v.description as description,
-               v.discount_limit as discountPrice,
-               v.end_time as endTime,
-               v.start_time as startTime,
-               v.total_quantity as totalQuantity,
-               v.used_quantity as usedQuantity
+        v.code as code,
+        v.voucher_condition as voucherCondition,
+        v.description as description,
+        v.discount_limit as discountPrice,
+        v.end_time as endTime,
+        v.start_time as startTime,
+        v.total_quantity as totalQuantity,
+        v.used_quantity as usedQuantity
         FROM voucher v
         WHERE v.id = #{voucherId}
     </select>
 
     <select id="findByCode" resultMap="VoucherDtoResultMap">
         SELECT v.id as id,
-               v.code as code,
-               v.voucher_condition as voucherCondition,
-               v.description as description,
-               v.discount_limit as discountPrice,
-               v.end_time as endTime,
-               v.start_time as startTime,
-               v.total_quantity as totalQuantity,
-               v.used_quantity as usedQuantity
+        v.code as code,
+        v.voucher_condition as voucherCondition,
+        v.description as description,
+        v.discount_limit as discountPrice,
+        v.end_time as endTime,
+        v.start_time as startTime,
+        v.total_quantity as totalQuantity,
+        v.used_quantity as usedQuantity
         FROM voucher v
         WHERE v.code = #{voucherCode}
     </select>
 
     <update id="update">
         UPDATE voucher
-        SET code              = #{voucherInfo.code},
-            voucher_condition = #{voucherInfo.condition},
-            description       = #{voucherInfo.description},
-            discount_limit    = #{voucherInfo.discountPrice},
-            end_time          = #{voucherInfo.endTime},
-            start_time        = #{voucherInfo.startTime},
-            total_quantity    = #{voucherInfo.totalQuantity},
-            updated_at        = NOW()
+        SET code = #{voucherInfo.code},
+        voucher_condition = #{voucherInfo.condition},
+        description = #{voucherInfo.description},
+        discount_limit = #{voucherInfo.discountPrice},
+        end_time = #{voucherInfo.endTime},
+        start_time = #{voucherInfo.startTime},
+        total_quantity = #{voucherInfo.totalQuantity},
+        updated_at = NOW()
         WHERE id = #{voucherId}
     </update>
 </mapper>

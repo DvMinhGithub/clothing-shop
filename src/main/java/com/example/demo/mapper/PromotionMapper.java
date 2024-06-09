@@ -9,9 +9,9 @@ import java.util.List;
 
 @Mapper
 public interface PromotionMapper {
-    void create(@Param("promotionInfo")PromotionRequest promotionRequest);
+    void create(@Param("promotionInfo") PromotionRequest promotionRequest);
 
     List<PromotionDto> getListPromotion();
 
-    void update(@Param("promotionId")Long promotionId, @Param("promotionInfo")PromotionRequest promotionRequest);
+    void update(@Param("promotionId") Long promotionId, @Param("promotionInfo") PromotionRequest promotionRequest);
 }

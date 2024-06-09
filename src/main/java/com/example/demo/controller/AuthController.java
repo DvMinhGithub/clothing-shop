@@ -4,7 +4,6 @@ package com.example.demo.controller;
 import com.example.demo.model.dto.LoginDto;
 import com.example.demo.model.request.LoginRequest;
 import com.example.demo.model.request.RegisterRequest;
-import com.example.demo.model.request.WebhookRequest;
 import com.example.demo.model.response.ResponseApi;
 import com.example.demo.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;

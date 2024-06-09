@@ -71,8 +71,8 @@ public class ProductController {
     @Operation(summary = "Get product by id", description = "Get product by id")
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/detail/{id}")
-    public ResponseEntity<ResponseApi<ProductDetailDto>> getProductById(Principal principal,@PathVariable Long id) {
-        return productService.getProductById(principal ,id);
+    public ResponseEntity<ResponseApi<ProductDetailDto>> getProductById(Principal principal, @PathVariable Long id) {
+        return productService.getProductById(principal, id);
     }
 
     @Operation(summary = "Change product status", description = "Change product status")

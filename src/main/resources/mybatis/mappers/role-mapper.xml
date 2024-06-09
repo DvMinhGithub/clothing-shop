@@ -8,8 +8,8 @@
     </resultMap>
 
     <select id="getByName" resultMap="RoleDtoResultMap">
-        SELECT r.id   as id,
-               r.name as roleName
+        SELECT r.id as id,
+        r.name as roleName
         FROM role r
         WHERE r.name = #{roleName}
     </select>
@@ -17,10 +17,10 @@
     <insert id="setRole">
         INSERT INTO user_role(user_id, role_id)
         VALUES (#{userId},
-                #{roleId})
+        #{roleId})
     </insert>
 
-    <delete id="deleteUserRole" >
+    <delete id="deleteUserRole">
         DELETE FROM user_role WHERE user_id = #{userId}
     </delete>
 </mapper>

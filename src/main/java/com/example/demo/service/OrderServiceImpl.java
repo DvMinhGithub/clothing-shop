@@ -1,22 +1,21 @@
 package com.example.demo.service;
 
-import java.security.Principal;
-import java.util.List;
-
 import com.example.demo.enums.OrderStatus;
 import com.example.demo.mapper.*;
 import com.example.demo.model.dto.*;
 import com.example.demo.model.request.CreatePaymentRequest;
 import com.example.demo.model.request.WebhookRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-
 import com.example.demo.model.request.CreateOrderRequest;
 import com.example.demo.model.response.ResponseApi;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.security.Principal;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -128,7 +127,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ResponseEntity<ResponseApi<OrderDetailDto>> getOrderDetail(Long orderId){
+    public ResponseEntity<ResponseApi<OrderDetailDto>> getOrderDetail(Long orderId) {
         log.info("Start API: getOrderDetail with parameters: (id: {})", orderId);
         OrderDetailDto orderDetail = orderMapper.getOrderDetail(orderId);
         log.info("End API: getOrderDetail");

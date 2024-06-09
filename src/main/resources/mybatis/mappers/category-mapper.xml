@@ -15,28 +15,28 @@
     <insert id="create">
         INSERT INTO category(name, description)
         VALUES (#{categoryInfo.name},
-                #{categoryInfo.description})
+        #{categoryInfo.description})
     </insert>
 
     <select id="findAll" resultMap="CategoryDtoResultMap">
-        SELECT c.id          as id,
-               c.name        as name,
-               c.description as description
+        SELECT c.id as id,
+        c.name as name,
+        c.description as description
         FROM category c
     </select>
 
     <select id="findById" resultMap="CategoryDtoResultMap">
-        SELECT c.id          as id,
-               c.name        as name,
-               c.description as description
+        SELECT c.id as id,
+        c.name as name,
+        c.description as description
         FROM category c
         WHERE c.id = #{categoryId}
     </select>
 
     <update id="update">
         UPDATE category
-        SET name        = #{categoryInfo.name},
-            description = #{categoryInfo.description}
+        SET name = #{categoryInfo.name},
+        description = #{categoryInfo.description}
         WHERE id = #{categoryId}
     </update>
 </mapper>

@@ -11,7 +11,7 @@ import java.util.List;
 public interface CartMapper {
     List<CartItemDto> getByUserId(@Param("userId") Long userId);
 
-    List<CartItemDto> getByCartItemId(@Param("listCartItemIds")List<Long> listCartItemIds);
+    List<CartItemDto> getByCartItemId(@Param("listCartItemIds") List<Long> listCartItemIds);
 
     void addToCart(@Param("userId") Long userId, @Param("addToCartInfo") AddToCartRequest addToCartRequest);
 
