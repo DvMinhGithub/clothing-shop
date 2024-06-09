@@ -55,19 +55,6 @@ public class ProductController {
         return productService.getListProducts(name, page, limit, categoryIds, brandId);
     }
 
-    @Operation(summary = "Get all products", description = "Get all products")
-    @SecurityRequirement(name = "Bearer Authentication")
-    @Secured({"EMPLOYEE", "ADMIN"})
-    @GetMapping("/getAllProduct")
-    public ResponseEntity<ResponseApi<PageInfo<ProductDto>>> getAllProducts
-            (@RequestParam(value = "name", required = false) String name,
-             @RequestParam(value = "page", defaultValue = "0", required = false) int page,
-             @RequestParam(value = "limit", defaultValue = "20", required = false) int limit,
-             @RequestParam(value = "categoryIds", required = false) String categoryIds,
-             @RequestParam(value = "brandId", required = false) Long brandId) {
-        return productService.getAllProducts(name, page, limit, categoryIds, brandId);
-    }
-
     @Operation(summary = "Get product by id", description = "Get product by id")
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/detail/{id}")
@@ -78,9 +65,9 @@ public class ProductController {
     @Operation(summary = "Change product status", description = "Change product status")
     @SecurityRequirement(name = "Bearer Authentication")
     @Secured({"EMPLOYEE", "ADMIN"})
-    @PutMapping("/status/{id}")
-    public ResponseEntity<ResponseApi<?>> changeProductStatus(@PathVariable Long id, @RequestBody ChangeProductStatusRequest changeProductStatusRequest) {
-        return productService.changeStatusProduct(id, changeProductStatusRequest);
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<ResponseApi<?>> deleteProduct(@PathVariable Long id) {
+        return productService.deleteProduct(id);
     }
 
     @Operation(summary = "Change product status", description = "Change product status")

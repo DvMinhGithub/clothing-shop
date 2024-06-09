@@ -20,10 +20,6 @@ public interface ProductMapper {
                              @Param("productName") String name,
                              @Param("brandId") Long brandId);
 
-    List<ProductDto> getAll(@Param("listCategoryIds") List<Long> listCategoryIds,
-                            @Param("productName") String name,
-                            @Param("brandId") Long brandId);
-
     List<ProductDto> getTopSold(@Param("listCategoryIds") List<Long> listCategoryIds,
                                 @Param("productName") String name,
                                 @Param("brandId") Long brandId);
@@ -32,8 +28,7 @@ public interface ProductMapper {
                                 @Param("productName") String name,
                                 @Param("brandId") Long brandId);
 
-    void updateStatus(@Param("productId") Long productId,
-                      @Param("productStatus") Boolean productStatus);
+    void deleteProduct(@Param("productId") Long productId);
 
     void updateView(@Param("productId") Long productId);
 

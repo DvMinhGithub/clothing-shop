@@ -177,34 +177,6 @@
         </if>
     </select>
 
-    <select id="getAll" resultMap="ProductDtoResultMap">
-        WITH
-        <include refid="productFilter"/>
-        SELECT p.id as id,
-        p.name as name,
-        p.description as description,
-        p.product_image as productImage,
-        p.sold as sold,
-        p.is_deleted as isDeleted,
-        p.price as price,
-        p.view as view,
-        CASE
-        WHEN pr.start_time <![CDATA[<=]]> NOW() AND pr.end_time <![CDATA[>=]]> NOW()
-        THEN p.price - pr.discount_price
-        ELSE p.price
-        END AS priceAfterDiscount
-        FROM product p
-        INNER JOIN productFilter pf ON p.id = pf.id
-        LEFT JOIN promotion pr ON pr.product_id = p.id
-        WHERE 1 = 1
-        <if test="productName != null">
-            AND p.name like CONCAT("%", #{productName}, "%")
-        </if>
-        <if test="brandId != null">
-            AND p.brand_id = #{brandId}
-        </if>
-    </select>
-
     <select id="getTopSold" resultMap="ProductDtoResultMap">
         WITH
         <include refid="productFilter"/>
@@ -266,7 +238,7 @@
 
     <update id="updateStatus">
         UPDATE product
-        SET is_deleted = #{productStatus}
+        SET is_deleted = true
         WHERE id = #{productId}
     </update>
 

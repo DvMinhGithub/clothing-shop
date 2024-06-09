@@ -19,11 +19,9 @@ public interface ProductService {
 
     ResponseEntity<ResponseApi<PageInfo<ProductDto>>> getListProducts(String name, int page, int limit, String categoryIds, Long brandId);
 
-    ResponseEntity<ResponseApi<PageInfo<ProductDto>>> getAllProducts(String name, int page, int limit, String categoryIds, Long brandId);
-
     ResponseEntity<ResponseApi<ProductDetailDto>> getProductById(Principal principal, Long id);
 
-    ResponseEntity<ResponseApi<?>> changeStatusProduct(Long id, ChangeProductStatusRequest changeProductStatusRequest);
+    ResponseEntity<ResponseApi<?>> deleteProduct(Long id);
 
     ResponseEntity<ResponseApi<PageInfo<ProductDto>>> getTopSoldProduct(String name, int page, int limit, String categoryIds, Long brandId);
 

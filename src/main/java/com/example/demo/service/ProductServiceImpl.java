@@ -126,23 +126,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<ResponseApi<PageInfo<ProductDto>>> getAllProducts(String name, int page, int limit, String categoryIds, Long brandId) {
-        log.info("Start API: getAllProducts with parameters: (name: {}, page: {}, limit: {}, categoryIds: {}, brandId: {})", name, page, limit, categoryIds, brandId);
-        PageHelper.startPage(page, limit);
-        List<ProductDto> listProduct;
-        List<Long> listCategoryIds = new ArrayList<>();
-        if (categoryIds != null) {
-            String[] arrCategoryIds = categoryIds.split(",");
-            for (String categoryId : arrCategoryIds) {
-                listCategoryIds.add(Long.parseLong(categoryId));
-            }
-        }
-        listProduct = productMapper.getAll(listCategoryIds, name, brandId);
-        log.info("End API: getAllProducts with parameters");
-        return new ResponseEntity<>(new ResponseApi<>("Get all products success", new PageInfo<>(listProduct)), HttpStatus.OK);
-    }
-
-    @Override
     public ResponseEntity<ResponseApi<ProductDetailDto>> getProductById(Principal principal, Long id) {
         log.info("Start API: getProductById with parameters: (id: {})", id);
         UserDto userDto = userMapper.getByEmail(principal.getName());
@@ -159,12 +142,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<ResponseApi<?>> changeStatusProduct(Long id, ChangeProductStatusRequest changeProductStatusRequest) {
-        log.info("Start API: changeStatusProduct with parameters: (id: {}, {})", id, changeProductStatusRequest);
+    public ResponseEntity<ResponseApi<?>> deleteProduct(Long id) {
+        log.info("Start API: deleteProduct with parameters: (id: {})", id);
         try {
-            productMapper.updateStatus(id, changeProductStatusRequest.getStatus());
-            log.info("End API: changeStatusProduct");
-            return new ResponseEntity<>(new ResponseApi<>("Change product status success"), HttpStatus.OK);
+            productMapper.deleteProduct(id);
+            log.info("End API: deleteProduct");
+            return new ResponseEntity<>(new ResponseApi<>("deleteProduct product success"), HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error API: changeStatusProduct with message: {}", e.getMessage());
             return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
