@@ -59,6 +59,17 @@
         )
     </sql>
 
+    <sql id="statistic_product_priceAfterDiscount">
+        statistic_product_priceAfterDiscount AS
+        (
+        SELECT p.id as productId,
+        pr.discount_price as discountPrice
+        FROM product p
+        LEFT JOIN promotion pr ON pr.product_id = p.id
+        WHERE pr.start_time <![CDATA[<=]]> date(NOW()) AND pr.end_time <![CDATA[>=]]> date(NOW()) AND pr.is_active = true
+        )
+    </sql>
+
     <sql id="statistic_user_rating">
         statistic_user_rating AS
         (
@@ -72,7 +83,8 @@
         WITH
         <include refid="statistic_product_quantity"/>,
         <include refid="statistic_product_rating"/>,
-        <include refid="statistic_user_rating"/>
+        <include refid="statistic_user_rating"/>,
+        <include refid="statistic_product_priceAfterDiscount"/>
         SELECT p.id as id,
         p.name as name,
         p.description as description,
@@ -84,11 +96,7 @@
         COALESCE(spq.quantity, 0) as quantity,
         COALESCE(spr.rating, 0) as totalRating,
         COALESCE(sur.rating, 0) as userRating,
-        CASE
-        WHEN pr.start_time <![CDATA[<=]]> date(NOW()) AND pr.end_time <![CDATA[>=]]> date(NOW()) AND pr.is_active = true
-        THEN p.price - pr.discount_price
-        ELSE p.price
-        END AS priceAfterDiscount,
+        p.price - COALESCE(spp.discountPrice, 0) as priceAfterDiscount,
         b.id as b_id,
         b.name as b_name,
         b.description as b_description,
@@ -99,7 +107,7 @@
         LEFT JOIN brand b ON b.id = p.brand_id
         LEFT JOIN product_category pc ON pc.product_id = p.id
         LEFT JOIN category c ON c.id = pc.category_id
-        LEFT JOIN promotion pr ON pr.product_id = p.id
+        LEFT JOIN statistic_product_priceAfterDiscount spp ON spp.product_id = p.id
         LEFT JOIN statistic_product_quantity spq ON spq.productId = p.id
         LEFT JOIN statistic_product_rating spr ON spr.productId = p.id
         LEFT JOIN statistic_user_rating sur ON sur.productId = p.id
@@ -151,7 +159,8 @@
 
     <select id="getList" resultMap="ProductDtoResultMap">
         WITH
-        <include refid="productFilter"/>
+        <include refid="productFilter"/>,
+        <include refid="statistic_product_priceAfterDiscount"/>
         SELECT p.id as id,
         p.name as name,
         p.description as description,
@@ -160,14 +169,10 @@
         p.is_deleted as isDeleted,
         p.price as price,
         p.view as view,
-        CASE
-        WHEN pr.start_time <![CDATA[<=]]> date(NOW()) AND pr.end_time <![CDATA[>=]]> date(NOW()) AND pr.is_active = true
-        THEN p.price - pr.discount_price
-        ELSE p.price
-        END AS priceAfterDiscount
+        p.price - COALESCE(spp.discountPrice, 0) as priceAfterDiscount
         FROM product p
         INNER JOIN productFilter pf ON p.id = pf.id
-        LEFT JOIN promotion pr ON pr.product_id = p.id
+        LEFT JOIN statistic_product_priceAfterDiscount spp ON spp.productId = p.id
         WHERE p.is_deleted = false
         <if test="productName != null">
             AND p.name like CONCAT("%", #{productName}, "%")
@@ -179,7 +184,8 @@
 
     <select id="getTopSold" resultMap="ProductDtoResultMap">
         WITH
-        <include refid="productFilter"/>
+        <include refid="productFilter"/>,
+        <include refid="statistic_product_priceAfterDiscount"/>
         SELECT p.id as id,
         p.name as name,
         p.description as description,
@@ -188,14 +194,10 @@
         p.is_deleted as isDeleted,
         p.price as price,
         p.view as view,
-        CASE
-        WHEN pr.start_time <![CDATA[<=]]> date(NOW()) AND pr.end_time <![CDATA[>=]]> date(NOW()) AND pr.is_active = true
-        THEN p.price - pr.discount_price
-        ELSE p.price
-        END AS priceAfterDiscount
+        p.price - COALESCE(spp.discountPrice, 0) as priceAfterDiscount
         FROM product p
         INNER JOIN productFilter pf ON p.id = pf.id
-        LEFT JOIN promotion pr ON pr.product_id = p.id
+        LEFT JOIN statistic_product_priceAfterDiscount spp ON spp.productId = p.id
         WHERE p.is_deleted = false
         <if test="productName != null">
             AND p.name like CONCAT("%", #{productName}, "%")
@@ -209,7 +211,8 @@
 
     <select id="getTopView" resultMap="ProductDtoResultMap">
         WITH
-        <include refid="productFilter"/>
+        <include refid="productFilter"/>,
+        <include refid="statistic_product_priceAfterDiscount"/>
         SELECT p.id as id,
         p.name as name,
         p.description as description,
@@ -218,14 +221,10 @@
         p.is_deleted as isDeleted,
         p.price as price,
         p.view as view,
-        CASE
-        WHEN pr.start_time <![CDATA[<=]]> date(NOW()) AND pr.end_time <![CDATA[>=]]> date(NOW()) AND pr.is_active = true
-        THEN p.price - pr.discount_price
-        ELSE p.price
-        END AS priceAfterDiscount
+        p.price - COALESCE(spp.discountPrice, 0) as priceAfterDiscount
         FROM product p
         INNER JOIN productFilter pf ON p.id = pf.id
-        LEFT JOIN promotion pr ON pr.product_id = p.id
+        LEFT JOIN statistic_product_priceAfterDiscount spp ON spp.productId = p.id
         WHERE p.is_deleted = false
         <if test="productName != null">
             AND p.name like CONCAT("%", #{productName}, "%")
