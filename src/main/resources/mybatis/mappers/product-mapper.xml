@@ -10,6 +10,7 @@
         <result column="sold" property="sold"/>
         <result column="productImage" property="productImage"/>
         <result column="isDeleted" property="isDeleted"/>
+        <result column="quantity" property="quantity"/>
         <result column="price" property="price"/>
         <result column="priceAfterDiscount" property="priceAfterDiscount"/>
     </resultMap>
