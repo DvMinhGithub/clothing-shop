@@ -4,6 +4,7 @@
 
     <resultMap id="PromotionDtoResultMap" type="com.example.demo.model.dto.PromotionDto" autoMapping="true">
         <id column="id" property="id"/>
+        <result column="productId" property="productId"/>
         <result column="productImage" property="productImage"/>
         <result column="productName" property="productName"/>
         <result column="endTime" property="endTime"/>
@@ -15,6 +16,7 @@
     <select id="getListPromotion" resultMap="PromotionDtoResultMap">
         SELECT
         pr.id as id,
+        p.id as productId,
         pr.end_time as endTime,
         pr.start_time as startTime,
         pr.discount_price as discountPrice,

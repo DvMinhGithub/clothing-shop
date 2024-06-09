@@ -16,6 +16,8 @@ public class PromotionDto {
 
     private String productImage;
 
+    private Long productId;
+
     private String productName;
 
     private Timestamp endTime;
