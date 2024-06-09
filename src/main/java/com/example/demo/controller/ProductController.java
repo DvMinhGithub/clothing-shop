@@ -79,7 +79,7 @@ public class ProductController {
     @SecurityRequirement(name = "Bearer Authentication")
     @Secured({"EMPLOYEE", "ADMIN"})
     @PutMapping("/status/{id}")
-    public ResponseEntity<ResponseApi<?>> changeProductStatus(@PathVariable("id") Long id, @RequestBody ChangeProductStatusRequest changeProductStatusRequest) {
+    public ResponseEntity<ResponseApi<?>> changeProductStatus(@PathVariable Long id, @RequestBody ChangeProductStatusRequest changeProductStatusRequest) {
         return productService.changeStatusProduct(id, changeProductStatusRequest);
     }
 
