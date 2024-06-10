@@ -107,7 +107,7 @@
         LEFT JOIN brand b ON b.id = p.brand_id
         LEFT JOIN product_category pc ON pc.product_id = p.id
         LEFT JOIN category c ON c.id = pc.category_id
-        LEFT JOIN statistic_product_priceAfterDiscount spp ON spp.product_id = p.id
+        LEFT JOIN statistic_product_priceAfterDiscount spp ON spp.productId = p.id
         LEFT JOIN statistic_product_quantity spq ON spq.productId = p.id
         LEFT JOIN statistic_product_rating spr ON spr.productId = p.id
         LEFT JOIN statistic_user_rating sur ON sur.productId = p.id

@@ -11,7 +11,6 @@ import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.dto.ProductDetailDto;
 import com.example.demo.model.dto.ProductDto;
 import com.example.demo.model.dto.UserDto;
-import com.example.demo.model.request.ChangeProductStatusRequest;
 import com.example.demo.model.request.ProductRequest;
 import com.example.demo.model.request.RatingRequest;
 import com.example.demo.model.response.ResponseApi;
