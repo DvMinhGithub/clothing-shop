@@ -28,5 +28,7 @@ public class ProductDto {
 
     private Boolean isDeleted;
 
+    private Integer quantity;
+
     private Double priceAfterDiscount;
 }
