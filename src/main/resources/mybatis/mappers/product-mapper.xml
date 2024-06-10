@@ -160,7 +160,8 @@
     <select id="getList" resultMap="ProductDtoResultMap">
         WITH
         <include refid="productFilter"/>,
-        <include refid="statistic_product_priceAfterDiscount"/>
+        <include refid="statistic_product_priceAfterDiscount"/>,
+        <include refid="statistic_product_quantity"/>
         SELECT p.id as id,
         p.name as name,
         p.description as description,
@@ -169,10 +170,12 @@
         p.is_deleted as isDeleted,
         p.price as price,
         p.view as view,
+        COALESCE(spq.quantity, 0) as quantity,
         p.price - COALESCE(spp.discountPrice, 0) as priceAfterDiscount
         FROM product p
         INNER JOIN productFilter pf ON p.id = pf.id
         LEFT JOIN statistic_product_priceAfterDiscount spp ON spp.productId = p.id
+        LEFT JOIN statistic_product_quantity spq ON spq.productId = p.id
         WHERE p.is_deleted = false
         <if test="productName != null">
             AND p.name like CONCAT("%", #{productName}, "%")
