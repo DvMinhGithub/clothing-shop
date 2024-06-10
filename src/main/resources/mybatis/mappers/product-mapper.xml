@@ -183,6 +183,7 @@
         <if test="brandId != null">
             AND p.brand_id = #{brandId}
         </if>
+        ORDER BY p.id desc
     </select>
 
     <select id="getTopSold" resultMap="ProductDtoResultMap">
