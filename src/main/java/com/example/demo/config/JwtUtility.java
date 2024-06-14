@@ -14,11 +14,16 @@ import java.util.List;
 @Component
 @Slf4j
 public class JwtUtility implements Serializable {
-    public final static long EXPIRY_TIME_ACCESS_TOKEN = 1000 * 60 * 30 * 24 * 36;
-    public final static long EXPIRY_TIME_REFRESH_TOKEN = 1000 * 60 * 60 * 24;
-    @Value("${jwt.secret.accessToken}")
+    @Value("${jwt.accessToken.expiredTime}")
+    private long accessTokenExpiredTime;
+
+    @Value("${jwt.refreshToken.expiredTime}")
+    private long refreshTokenExpiredTime;
+
+    @Value("${jwt.accessToken.secretKey}")
     private String accessTokenSecret;
-    @Value("${jwt.secret.refreshToken}")
+
+    @Value("${jwt.refreshToken.secretKey}")
     private String refreshTokenSecret;
 
     public long getTokenExpiredTime(String token, TokenType tokenType) {
@@ -35,8 +40,8 @@ public class JwtUtility implements Serializable {
 
     private long getExpiryTime(TokenType tokenType) {
         return switch (tokenType) {
-            case ACCESS_TOKEN -> System.currentTimeMillis() + EXPIRY_TIME_ACCESS_TOKEN;
-            case REFRESH_TOKEN -> System.currentTimeMillis() + EXPIRY_TIME_REFRESH_TOKEN;
+            case ACCESS_TOKEN -> System.currentTimeMillis() + accessTokenExpiredTime;
+            case REFRESH_TOKEN -> System.currentTimeMillis() + refreshTokenExpiredTime;
         };
     }
 

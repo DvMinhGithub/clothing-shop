@@ -5,11 +5,11 @@ spring:
   datasource:
     driver-class-name: 'com.mysql.cj.jdbc.Driver'
     username: root
-    url: 'jdbc:mysql://localhost:3306/techStore?createDatabaseIfNotExist=true'
+    url: 'jdbc:mysql://localhost:3306/techStore'
     password: Loi65732102.1
 
 upload:
-  path: 'D:\java-project\techStore\static\images\'
+  path: 'D:\Project\TechStore-Mybatis\static\images\'
 
 image:
   url: 'http://localhost:8080/image/'

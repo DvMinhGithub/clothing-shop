@@ -3,17 +3,16 @@ package com.example.demo.service;
 import com.example.demo.mapper.CartMapper;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.dto.CartItemDto;
-import com.example.demo.model.dto.UserDto;
 import com.example.demo.model.request.AddToCartRequest;
 import com.example.demo.model.request.UpdateCartRequest;
 import com.example.demo.model.response.ResponseApi;
+import com.example.demo.utils.SecurityUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.Principal;
 import java.util.List;
 
 @Service
@@ -22,19 +21,19 @@ import java.util.List;
 public class CartServiceImpl implements CartService {
     private final CartMapper cartMapper;
 
-    private final UserMapper userMapper;
+    private final SecurityUtil securityUtil;
 
-    public CartServiceImpl(CartMapper cartMapper, UserMapper userMapper) {
+    public CartServiceImpl(CartMapper cartMapper, SecurityUtil securityUtil) {
         this.cartMapper = cartMapper;
-        this.userMapper = userMapper;
+        this.securityUtil = securityUtil;
     }
 
     @Override
-    public ResponseEntity<ResponseApi<?>> addToCart(Principal principal, AddToCartRequest addToCartRequest) {
+    public ResponseEntity<ResponseApi<?>> addToCart(AddToCartRequest addToCartRequest) {
         log.info("Start API: addToCart with parameters: ({})", addToCartRequest);
         try {
-            UserDto user = userMapper.getByEmail(principal.getName());
-            List<CartItemDto> listCartItem = cartMapper.getByUserId(user.getId());
+            Long userId = securityUtil.getUserLoggedInId();
+            List<CartItemDto> listCartItem = cartMapper.getByUserId(userId);
 
             for (CartItemDto cartItem : listCartItem) {
                 if (cartItem.getProductId().equals(addToCartRequest.getIdProduct())) {
@@ -45,7 +44,7 @@ public class CartServiceImpl implements CartService {
                 }
             }
 
-            cartMapper.addToCart(user.getId(), addToCartRequest);
+            cartMapper.addToCart(userId, addToCartRequest);
             log.info("End API: addToCart");
             return new ResponseEntity<>(new ResponseApi<>("Add to cart success"), HttpStatus.OK);
         } catch (Exception e) {
@@ -55,10 +54,10 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public ResponseEntity<ResponseApi<List<CartItemDto>>> getCartInformation(Principal principal) {
+    public ResponseEntity<ResponseApi<List<CartItemDto>>> getCartInformation() {
         log.info("Start API: getCartInformation");
-        UserDto user = userMapper.getByEmail(principal.getName());
-        List<CartItemDto> listCartItem = cartMapper.getByUserId(user.getId());
+        Long userId = securityUtil.getUserLoggedInId();
+        List<CartItemDto> listCartItem = cartMapper.getByUserId(userId);
         log.info("End API: getCartInformation");
         return new ResponseEntity<>(new ResponseApi<>("Get cart success", listCartItem), HttpStatus.OK);
     }

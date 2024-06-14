@@ -47,9 +47,12 @@ springdoc:
 
 #JWT configuration
 jwt:
-  secret:
-    accessToken: "ACCESS_TOKEN"
-    refreshToken: "REFRESH_TOKEN"
+  accessToken:
+    secretKey: "ACCESS_TOKEN"
+    expiredTime: 31557600000
+  refreshToken:
+    secretKey: "REFRESH_TOKEN"
+    expiredTime: 31557600000
 
 #AWS configuration
 amazonProperties:

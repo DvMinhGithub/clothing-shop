@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import java.security.Principal;
 
 public interface UserService {
-    ResponseEntity<ResponseApi<?>> updateProfile(Principal principal, UserRequest userRequest);
+    ResponseEntity<ResponseApi<?>> updateProfile(UserRequest userRequest);
 
     ResponseEntity<ResponseApi<UserDto>> getProfile(Principal principal);
 }

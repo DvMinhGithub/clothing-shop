@@ -38,10 +38,4 @@ public class AuthController {
     public ResponseEntity<ResponseApi<?>> verifyUserAccount(@RequestBody RegisterRequest registerRequest) {
         return authService.verifyUserAccount(registerRequest);
     }
-
-    @Operation(summary = "Test api", description = "Test api")
-    @GetMapping("/test")
-    public ResponseEntity<?> test() {
-        return ResponseEntity.ok("Thành công");
-    }
 }

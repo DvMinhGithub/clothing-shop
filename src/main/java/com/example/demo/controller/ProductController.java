@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.model.dto.ProductDetailDto;
 import com.example.demo.model.dto.ProductDto;
-import com.example.demo.model.request.ChangeProductStatusRequest;
 import com.example.demo.model.request.ProductRequest;
 import com.example.demo.model.request.RatingRequest;
 import com.example.demo.model.response.ResponseApi;
@@ -15,7 +14,6 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.security.Principal;
 
 @RestController
 @RequestMapping("/product")
@@ -58,8 +56,8 @@ public class ProductController {
     @Operation(summary = "Get product by id", description = "Get product by id")
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/detail/{id}")
-    public ResponseEntity<ResponseApi<ProductDetailDto>> getProductById(Principal principal, @PathVariable Long id) {
-        return productService.getProductById(principal, id);
+    public ResponseEntity<ResponseApi<ProductDetailDto>> getProductById(@PathVariable Long id) {
+        return productService.getProductById(id);
     }
 
     @Operation(summary = "Change product status", description = "Change product status")
@@ -100,7 +98,7 @@ public class ProductController {
     @SecurityRequirement(name = "Bearer Authentication")
     @Secured("CUSTOMER")
     @PostMapping("/rating")
-    public ResponseEntity<ResponseApi<?>> changeProductStatus(Principal principal, @RequestBody RatingRequest ratingRequest) {
-        return productService.ratingProduct(principal, ratingRequest);
+    public ResponseEntity<ResponseApi<?>> changeProductStatus(@RequestBody RatingRequest ratingRequest) {
+        return productService.ratingProduct(ratingRequest);
     }
 }

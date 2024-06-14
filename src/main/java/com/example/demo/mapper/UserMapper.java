@@ -26,4 +26,6 @@ public interface UserMapper {
     Boolean existsByPhoneNumber(@Param("phoneNumber") String phoneNumber);
 
     Boolean existsByEmail(@Param("email") String email);
+
+    Long getUserId(@Param("userEmail") String userEmail);
 }

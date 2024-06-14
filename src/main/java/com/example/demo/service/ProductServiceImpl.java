@@ -1,19 +1,17 @@
 package com.example.demo.service;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import com.example.demo.enums.UserRole;
 import com.example.demo.mapper.ProductMapper;
-import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.dto.ProductDetailDto;
 import com.example.demo.model.dto.ProductDto;
-import com.example.demo.model.dto.UserDto;
 import com.example.demo.model.request.ProductRequest;
 import com.example.demo.model.request.RatingRequest;
 import com.example.demo.model.response.ResponseApi;
+import com.example.demo.utils.SecurityUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -32,12 +30,12 @@ public class ProductServiceImpl implements ProductService {
 
     private final UploadService uploadService;
 
-    private final UserMapper userMapper;
+    private final SecurityUtil securityUtil;
 
-    public ProductServiceImpl(ProductMapper productMapper, UploadServiceImpl uploadService, UserMapper userMapper) {
+    public ProductServiceImpl(ProductMapper productMapper, UploadServiceImpl uploadService, SecurityUtil securityUtil) {
         this.productMapper = productMapper;
         this.uploadService = uploadService;
-        this.userMapper = userMapper;
+        this.securityUtil = securityUtil;
     }
 
     @Override
@@ -125,10 +123,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<ResponseApi<ProductDetailDto>> getProductById(Principal principal, Long id) {
+    public ResponseEntity<ResponseApi<ProductDetailDto>> getProductById(Long id) {
         log.info("Start API: getProductById with parameters: (id: {})", id);
-        UserDto userDto = userMapper.getByEmail(principal.getName());
-        ProductDetailDto productDetailDto = productMapper.getById(userDto.getId(), id);
+        Long userId = securityUtil.getUserLoggedInId();
+        ProductDetailDto productDetailDto = productMapper.getById(userId, id);
         Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
         boolean isCustomer = authorities.stream()
                 .anyMatch(authority -> authority.getAuthority().equals(UserRole.CUSTOMER.name()));
@@ -188,14 +186,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<ResponseApi<?>> ratingProduct(Principal principal, RatingRequest ratingRequest) {
+    public ResponseEntity<ResponseApi<?>> ratingProduct(RatingRequest ratingRequest) {
         log.info("Start API: ratingProduct with parameters: ({})", ratingRequest);
-        UserDto userDto = userMapper.getByEmail(principal.getName());
-        Boolean isRating = productMapper.isRating(userDto.getId(), ratingRequest.getProductId());
+        Long userId = securityUtil.getUserLoggedInId();
+        Boolean isRating = productMapper.isRating(userId, ratingRequest.getProductId());
         if (isRating) {
-            productMapper.updateRating(userDto.getId(), ratingRequest);
+            productMapper.updateRating(userId, ratingRequest);
         } else {
-            productMapper.ratingProduct(userDto.getId(), ratingRequest);
+            productMapper.ratingProduct(userId, ratingRequest);
         }
 
         log.info("End API: ratingProduct");

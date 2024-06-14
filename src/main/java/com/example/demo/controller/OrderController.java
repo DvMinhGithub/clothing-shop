@@ -11,7 +11,6 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -26,8 +25,8 @@ public class OrderController {
     @Operation(summary = "Create order", description = "Create order")
     @SecurityRequirement(name = "Bearer Authentication")
     @PostMapping("/create")
-    public ResponseEntity<ResponseApi<?>> createOrder(Principal principal, @RequestBody CreateOrderRequest createOrderRequest) {
-        return orderService.createOrder(principal, createOrderRequest);
+    public ResponseEntity<ResponseApi<?>> createOrder(@RequestBody CreateOrderRequest createOrderRequest) {
+        return orderService.createOrder(createOrderRequest);
     }
 
     @Operation(summary = "Change order status", description = "Change order status")
@@ -46,10 +45,8 @@ public class OrderController {
     @Operation(summary = "Get list order", description = "Get list order")
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/getAll")
-    public ResponseEntity<ResponseApi<List<OrderDetailDto>>> getListOrder(
-            Principal principal,
-            @RequestParam(value = "status", required = false) OrderStatus orderStatus) {
-        return orderService.getListOrder(principal, orderStatus);
+    public ResponseEntity<ResponseApi<List<OrderDetailDto>>> getListOrder(@RequestParam(value = "status", required = false) OrderStatus orderStatus) {
+        return orderService.getListOrder(orderStatus);
     }
 
     @Operation(summary = "Get order detail", description = "Get order detail")

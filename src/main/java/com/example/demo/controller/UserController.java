@@ -25,8 +25,8 @@ public class UserController {
     @SecurityRequirement(name = "Bearer Authentication")
     @Secured({"EMPLOYEE", "ADMIN", "CUSTOMER"})
     @PutMapping("/update")
-    public ResponseEntity<ResponseApi<?>> updateProfile(Principal principal, @RequestBody UserRequest userRequest) {
-        return userService.updateProfile(principal, userRequest);
+    public ResponseEntity<ResponseApi<?>> updateProfile(@RequestBody UserRequest userRequest) {
+        return userService.updateProfile(userRequest);
     }
 
     @Operation(summary = "Get user", description = "Get user")

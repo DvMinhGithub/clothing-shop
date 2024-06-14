@@ -5,7 +5,7 @@ spring:
   datasource:
     driver-class-name: 'com.mysql.cj.jdbc.Driver'
     username: root
-    url: 'jdbc:mysql://mysql_db:3306/techStore?createDatabaseIfNotExist=true'
+    url: 'jdbc:mysql://mysql_db:3306/techStore'
     password: Loi65732102.1
 
 upload:

@@ -8,13 +8,13 @@ import com.example.demo.model.request.WebhookRequest;
 import com.example.demo.model.request.CreateOrderRequest;
 import com.example.demo.model.response.ResponseApi;
 
+import com.example.demo.utils.SecurityUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.Principal;
 import java.util.List;
 
 @Service
@@ -26,32 +26,32 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderMapper orderMapper;
 
-    private final UserMapper userMapper;
-
     private final ProductMapper productMapper;
 
     private final PaymentService paymentService;
 
     private final VoucherMapper voucherMapper;
 
+    private final SecurityUtil securityUtil;
+
     public OrderServiceImpl(OrderMapper orderMapper,
                             CartMapper cartMapper,
-                            UserMapper userMapper,
                             ProductMapper productMapper,
                             PaymentService paymentService,
-                            VoucherMapper voucherMapper) {
+                            VoucherMapper voucherMapper,
+                            SecurityUtil securityUtil) {
         this.cartMapper = cartMapper;
         this.orderMapper = orderMapper;
-        this.userMapper = userMapper;
         this.productMapper = productMapper;
         this.paymentService = paymentService;
         this.voucherMapper = voucherMapper;
+        this.securityUtil = securityUtil;
     }
 
     @Override
-    public ResponseEntity<ResponseApi<?>> createOrder(Principal principal, CreateOrderRequest createOrderRequest) {
+    public ResponseEntity<ResponseApi<?>> createOrder(CreateOrderRequest createOrderRequest) {
         log.info("Start API: createOrder with parameters: ({})", createOrderRequest);
-        UserDto user = userMapper.getByEmail(principal.getName());
+        Long userId = securityUtil.getUserLoggedInId();
         List<CartItemDto> listCartItem = cartMapper.getByCartItemId(createOrderRequest.getListCartItemId());
         VoucherDto voucherDto = voucherMapper.findByCode(createOrderRequest.getVoucherCode());
 
@@ -65,7 +65,7 @@ public class OrderServiceImpl implements OrderService {
                 .phoneNumber(createOrderRequest.getPhoneNumber())
                 .totalPrice(totalPrice)
                 .voucherCode(createOrderRequest.getVoucherCode())
-                .userId(user.getId())
+                .userId(userId)
                 .build();
         orderMapper.create(orderDto);
 
@@ -118,10 +118,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ResponseEntity<ResponseApi<List<OrderDetailDto>>> getListOrder(Principal principal, OrderStatus orderStatus) {
+    public ResponseEntity<ResponseApi<List<OrderDetailDto>>> getListOrder(OrderStatus orderStatus) {
         log.info("Start API: getListOrder");
-        UserDto user = userMapper.getByEmail(principal.getName());
-        List<OrderDetailDto> listOrder = orderMapper.getListOrder(user.getId(), orderStatus);
+        Long userId = securityUtil.getUserLoggedInId();
+        List<OrderDetailDto> listOrder = orderMapper.getListOrder(userId, orderStatus);
         log.info("End API: getListOrder");
         return new ResponseEntity<>(new ResponseApi<>("Get list order success", listOrder), HttpStatus.OK);
     }

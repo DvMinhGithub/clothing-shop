@@ -53,6 +53,12 @@
         SELECT EXISTS(SELECT 1 FROM user u WHERE u.email = #{email})
     </select>
 
+    <select id="getUserId" resultType="java.lang.Long">
+        SELECT u.id
+        FROM user u
+        WHERE u.email = #{email}
+    </select>
+
     <select id="getById" resultMap="UserDtoResultMap">
         SELECT u.id as id,
         u.address as address,

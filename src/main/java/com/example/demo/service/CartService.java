@@ -6,13 +6,12 @@ import com.example.demo.model.request.UpdateCartRequest;
 import com.example.demo.model.response.ResponseApi;
 import org.springframework.http.ResponseEntity;
 
-import java.security.Principal;
 import java.util.List;
 
 public interface CartService {
-    ResponseEntity<ResponseApi<?>> addToCart(Principal principal, AddToCartRequest addToCartRequest);
+    ResponseEntity<ResponseApi<?>> addToCart(AddToCartRequest addToCartRequest);
 
-    ResponseEntity<ResponseApi<List<CartItemDto>>> getCartInformation(Principal principal);
+    ResponseEntity<ResponseApi<List<CartItemDto>>> getCartInformation();
 
     ResponseEntity<ResponseApi<?>> updateCartInformation(UpdateCartRequest updateCartRequest);
 }
