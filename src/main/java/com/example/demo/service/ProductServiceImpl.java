@@ -127,9 +127,9 @@ public class ProductServiceImpl implements ProductService {
         log.info("Start API: getProductById with parameters: (id: {})", id);
         Long userId = securityUtil.getUserLoggedInId();
         ProductDetailDto productDetailDto = productMapper.getById(userId, id);
-        Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>) SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-        boolean isCustomer = authorities.stream()
-                .anyMatch(authority -> authority.getAuthority().equals(UserRole.CUSTOMER.name()));
+        List<UserRole> listUserRole = securityUtil.getUserLoggedInRoles();
+        boolean isCustomer = listUserRole.stream()
+                .anyMatch(role -> role.equals(UserRole.CUSTOMER));
 
         if (isCustomer) {
             productMapper.updateView(id);
