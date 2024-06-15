@@ -24,7 +24,7 @@
         <result column="productImage" property="productImage"/>
         <result column="isDeleted" property="isDeleted"/>
         <result column="price" property="price"/>
-        <result column="totalRating" property="totalRating"/>
+        <result column="productRating" property="productRating"/>
         <result column="userRating" property="userRating"/>
         <result column="quantity" property="quantity"/>
         <result column="priceAfterDiscount" property="priceAfterDiscount"/>
