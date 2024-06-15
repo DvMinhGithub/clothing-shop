@@ -41,4 +41,6 @@ public class ProductDetailDto {
     private Double priceAfterDiscount;
 
     private List<CategoryDto> listCategory;
+
+    private Integer totalUserRating;
 }

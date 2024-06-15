@@ -28,6 +28,7 @@
         <result column="userRating" property="userRating"/>
         <result column="quantity" property="quantity"/>
         <result column="priceAfterDiscount" property="priceAfterDiscount"/>
+        <result column="totalUserRating" property="totalUserRating"/>
         <association property="brand" javaType="com.example.demo.model.dto.BrandDto" columnPrefix="b_">
             <id column="id" property="id"/>
             <result column="name" property="name"/>
@@ -54,6 +55,7 @@
         statistic_product_rating AS
         (
         SELECT product_id as productId,
+        COUNT(1) as totalUserRating,
         AVG(rating) as rating
         FROM rating r GROUP BY product_id
         )
@@ -94,7 +96,8 @@
         p.price as price,
         p.view as view,
         COALESCE(spq.quantity, 0) as quantity,
-        COALESCE(spr.rating, 0) as totalRating,
+        COALESCE(spr.rating, 0) as productRating,
+        COALESCE(spr.totalUserRating, 0) as totalUserRating,
         COALESCE(sur.rating, 0) as userRating,
         p.price - COALESCE(spp.discountPrice, 0) as priceAfterDiscount,
         b.id as b_id,
