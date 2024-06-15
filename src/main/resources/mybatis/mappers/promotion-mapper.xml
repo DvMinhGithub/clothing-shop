@@ -55,4 +55,15 @@
         is_active = #{promotionInfo.isActive}
         WHERE id = #{promotionId}
     </update>
+
+    <select id="isDuplicatePromotionTime" resultType="java.lang.Boolean">
+        SELECT EXISTS(SELECT 1 FROM promotion WHERE
+        (
+        (#{promotionInfo.startTime} BETWEEN start_time AND end_time) OR
+        (#{promotionInfo.endTime} BETWEEN start_time AND end_time) OR
+        (start_time BETWEEN #{promotionInfo.startTime} AND #{promotionInfo.endTime}) OR
+        (end_time BETWEEN #{promotionInfo.startTime} AND #{promotionInfo.endTime})
+        )AND
+        product_id = #{promotionInfo.productId} )
+    </select>
 </mapper>

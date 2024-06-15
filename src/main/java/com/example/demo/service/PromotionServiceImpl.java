@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.exception.DuplicatePromotionException;
 import com.example.demo.mapper.PromotionMapper;
 import com.example.demo.model.dto.PromotionDto;
 import com.example.demo.model.request.PromotionRequest;
@@ -17,7 +18,7 @@ import java.util.List;
 @Service
 @Slf4j
 @Transactional
-public class PromotionServiceImpl implements PromotionService{
+public class PromotionServiceImpl implements PromotionService {
     private final PromotionMapper promotionMapper;
 
     public PromotionServiceImpl(PromotionMapper promotionMapper) {
@@ -25,15 +26,23 @@ public class PromotionServiceImpl implements PromotionService{
     }
 
     @Override
-    public ResponseEntity<ResponseApi<?>> createPromotion(PromotionRequest promotionRequest){
+    public ResponseEntity<ResponseApi<?>> createPromotion(PromotionRequest promotionRequest) {
         log.info("Start API: createPromotion with parameters: ({})", promotionRequest);
-        promotionMapper.create(promotionRequest);
-        log.info("End API: createPromotion");
-        return new ResponseEntity<>(new ResponseApi<>("Create promotion success"), HttpStatus.OK);
+        try {
+            if (promotionMapper.isDuplicatePromotionTime(promotionRequest)) {
+                throw new DuplicatePromotionException("Duplicate promotion for this product");
+            }
+            promotionMapper.create(promotionRequest);
+            log.info("End API: createPromotion");
+            return new ResponseEntity<>(new ResponseApi<>("Create promotion success"), HttpStatus.OK);
+        } catch (DuplicatePromotionException e) {
+            log.error("Error API: createPromotion with message: {}", e.getMessage());
+            return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override
-    public ResponseEntity<ResponseApi<PageInfo<PromotionDto>>> getListPromotions(int page, int limit){
+    public ResponseEntity<ResponseApi<PageInfo<PromotionDto>>> getListPromotions(int page, int limit) {
         log.info("Start API: getListPromotions with parameters: (page: {}, limit: {})", page, limit);
         PageHelper.startPage(page, limit);
         List<PromotionDto> listPromotion = promotionMapper.getListPromotion();
@@ -42,10 +51,18 @@ public class PromotionServiceImpl implements PromotionService{
     }
 
     @Override
-    public ResponseEntity<ResponseApi<?>> updatePromotion(Long id, PromotionRequest promotionRequest){
+    public ResponseEntity<ResponseApi<?>> updatePromotion(Long id, PromotionRequest promotionRequest) {
         log.info("Start API: updatePromotion with parameters: ({})", promotionRequest);
-        promotionMapper.update(id, promotionRequest);
-        log.info("End API: updatePromotion");
-        return new ResponseEntity<>(new ResponseApi<>("Update promotion success"), HttpStatus.OK);
+        try {
+            if (promotionMapper.isDuplicatePromotionTime(promotionRequest)) {
+                throw new DuplicatePromotionException("Duplicate promotion for this product");
+            }
+            promotionMapper.update(id, promotionRequest);
+            log.info("End API: updatePromotion");
+            return new ResponseEntity<>(new ResponseApi<>("Update promotion success"), HttpStatus.OK);
+        } catch (DuplicatePromotionException e) {
+            log.error("Error API: updatePromotion with message: {}", e.getMessage());
+            return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
     }
 }

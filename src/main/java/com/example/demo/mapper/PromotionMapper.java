@@ -14,4 +14,6 @@ public interface PromotionMapper {
     List<PromotionDto> getListPromotion();
 
     void update(@Param("promotionId") Long promotionId, @Param("promotionInfo") PromotionRequest promotionRequest);
+
+    Boolean isDuplicatePromotionTime(@Param("promotionInfo")PromotionRequest promotionRequest);
 }
