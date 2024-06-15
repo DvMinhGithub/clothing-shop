@@ -45,4 +45,12 @@ public class PromotionController {
     public ResponseEntity<ResponseApi<?>> updatePromotion(@PathVariable Long id, @RequestBody PromotionRequest promotionRequest) {
         return promotionService.updatePromotion(id, promotionRequest);
     }
+
+    @Operation(summary = "Update promotion status", description = "Update promotion status")
+    @SecurityRequirement(name = "Bearer Authentication")
+    @Secured({"EMPLOYEE", "ADMIN"})
+    @PutMapping(value = "/update/status/{id}")
+    public ResponseEntity<ResponseApi<?>> updatePromotionStatus(@PathVariable Long id, @RequestBody PromotionRequest promotionRequest) {
+        return promotionService.updatePromotionStatus(id, promotionRequest);
+    }
 }

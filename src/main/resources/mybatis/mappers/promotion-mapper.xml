@@ -52,7 +52,6 @@
         end_time = #{promotionInfo.endTime},
         start_time = #{promotionInfo.startTime},
         discount_price = #{promotionInfo.discountPrice},
-        is_active = #{promotionInfo.isActive}
         WHERE id = #{promotionId}
     </update>
 
@@ -66,4 +65,11 @@
         )AND
         product_id = #{promotionInfo.productId} )
     </select>
+
+    <update id="updatePromotionStatus">
+        UPDATE promotion
+        SET
+        is_active = #{promotionInfo.isActive}
+        WHERE id = #{promotionId}
+    </update>
 </mapper>

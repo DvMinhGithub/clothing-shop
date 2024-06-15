@@ -287,4 +287,10 @@
         SET rating = #{ratingInfo.rating}
         WHERE user_id = #{userId} AND product_id = #{ratingInfo.productId}
     </update>
+
+    <update id="deleteProduct">
+        UPDATE product
+        SET is_deleted = true
+        WHERE id = #{productId}
+    </update>
 </mapper>

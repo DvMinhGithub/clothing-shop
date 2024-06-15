@@ -52,7 +52,7 @@ public class PromotionServiceImpl implements PromotionService {
 
     @Override
     public ResponseEntity<ResponseApi<?>> updatePromotion(Long id, PromotionRequest promotionRequest) {
-        log.info("Start API: updatePromotion with parameters: ({})", promotionRequest);
+        log.info("Start API: updatePromotion with parameters: (id: {}, {})", id, promotionRequest);
         try {
             if (promotionMapper.isDuplicatePromotionTime(promotionRequest)) {
                 throw new DuplicatePromotionException("Duplicate promotion for this product");
@@ -62,6 +62,19 @@ public class PromotionServiceImpl implements PromotionService {
             return new ResponseEntity<>(new ResponseApi<>("Update promotion success"), HttpStatus.OK);
         } catch (DuplicatePromotionException e) {
             log.error("Error API: updatePromotion with message: {}", e.getMessage());
+            return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public ResponseEntity<ResponseApi<?>> updatePromotionStatus(Long id, PromotionRequest promotionRequest) {
+        log.info("Start API: updatePromotionStatus with parameters: (id: {}, {})", id, promotionRequest);
+        try {
+            promotionMapper.updatePromotionStatus(id, promotionRequest);
+            log.info("End API: updatePromotionStatus");
+            return new ResponseEntity<>(new ResponseApi<>("Update promotion status success"), HttpStatus.OK);
+        } catch (DuplicatePromotionException e) {
+            log.error("Error API: updatePromotionStatus with message: {}", e.getMessage());
             return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }

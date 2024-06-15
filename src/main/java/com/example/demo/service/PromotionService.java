@@ -12,4 +12,6 @@ public interface PromotionService {
     ResponseEntity<ResponseApi<PageInfo<PromotionDto>>> getListPromotions(int page, int limit);
 
     ResponseEntity<ResponseApi<?>> updatePromotion(Long id, PromotionRequest promotionRequest);
+
+    ResponseEntity<ResponseApi<?>> updatePromotionStatus(Long id, PromotionRequest promotionRequest);
 }
