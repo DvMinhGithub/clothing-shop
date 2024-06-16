@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.mapper.CartMapper;
-import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.dto.CartItemDto;
 import com.example.demo.model.request.AddToCartRequest;
 import com.example.demo.model.request.UpdateCartRequest;

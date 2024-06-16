@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import com.example.demo.enums.UserRole;
@@ -17,8 +16,6 @@ import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
