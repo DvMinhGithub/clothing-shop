@@ -26,7 +26,7 @@ public class VoucherController {
     @SecurityRequirement(name = "Bearer Authentication")
     @Secured({"EMPLOYEE", "ADMIN"})
     @PostMapping(value = "/create")
-    public ResponseEntity<ResponseApi<?>> createProduct(@RequestBody VoucherRequest voucherRequest) {
+    public ResponseEntity<ResponseApi<?>> createVoucher(@RequestBody VoucherRequest voucherRequest) {
         return voucherService.createVoucher(voucherRequest);
     }
 
