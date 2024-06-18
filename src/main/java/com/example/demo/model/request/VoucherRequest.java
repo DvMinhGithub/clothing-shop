@@ -11,8 +11,6 @@ public class VoucherRequest {
 
     private String description;
 
-    private Integer quantity;
-
     private Double discountPrice;
 
     private Integer totalQuantity;
