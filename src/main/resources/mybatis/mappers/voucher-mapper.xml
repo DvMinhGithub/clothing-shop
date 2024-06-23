@@ -91,7 +91,7 @@
         v.code as code,
         v.voucher_condition as voucherCondition,
         v.description as description,
-        v.discount_limit as discountPrice,
+        v.discount_price as discountPrice,
         v.end_time as endTime,
         v.start_time as startTime,
         v.total_quantity as totalQuantity,
