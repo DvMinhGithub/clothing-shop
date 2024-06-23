@@ -54,7 +54,7 @@ public class ManageEmployeeServiceImpl implements ManageEmployeeService {
             if (userMapper.existsByEmail(createEmployeeRequest.getEmail()))
                 throw new EmailExistException(String.format("Email %s is already exist", createEmployeeRequest.getEmail()));
 
-            if (userMapper.existsByPhoneNumber(createEmployeeRequest.getPhoneNumber()) != null)
+            if (userMapper.existsByPhoneNumber(createEmployeeRequest.getPhoneNumber()))
                 throw new PhoneNumberExistException(String.format("Phone number %s is already exist", createEmployeeRequest.getPhoneNumber()));
 
             UserDto user = UserDto.builder()
