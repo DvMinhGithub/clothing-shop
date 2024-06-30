@@ -8,8 +8,8 @@ import com.example.demo.model.request.WebhookRequest;
 import com.example.demo.model.request.CreateOrderRequest;
 import com.example.demo.model.response.ResponseApi;
 
-import com.example.demo.utils.MethodUtil;
-import com.example.demo.utils.SecurityUtil;
+import com.example.demo.utils.MethodUtils;
+import com.example.demo.utils.SecurityUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -33,26 +33,26 @@ public class OrderServiceImpl implements OrderService {
 
     private final VoucherMapper voucherMapper;
 
-    private final SecurityUtil securityUtil;
+    private final SecurityUtils securityUtils;
 
     public OrderServiceImpl(OrderMapper orderMapper,
                             CartMapper cartMapper,
                             ProductMapper productMapper,
                             PaymentService paymentService,
                             VoucherMapper voucherMapper,
-                            SecurityUtil securityUtil) {
+                            SecurityUtils securityUtils) {
         this.cartMapper = cartMapper;
         this.orderMapper = orderMapper;
         this.productMapper = productMapper;
         this.paymentService = paymentService;
         this.voucherMapper = voucherMapper;
-        this.securityUtil = securityUtil;
+        this.securityUtils = securityUtils;
     }
 
     @Override
     public ResponseEntity<ResponseApi<?>> createOrder(CreateOrderRequest createOrderRequest) {
         log.info("Start API: createOrder with parameters: ({})", createOrderRequest);
-        Long userId = securityUtil.getUserLoggedInId();
+        Long userId = securityUtils.getUserLoggedInId();
         List<CartItemDto> listCartItem = cartMapper.getByCartItemId(createOrderRequest.getListCartItemId());
         VoucherDto voucherDto = voucherMapper.findByCode(createOrderRequest.getVoucherCode());
 
@@ -72,7 +72,7 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.create(orderDto);
 
         CreatePaymentRequest createPaymentRequest = CreatePaymentRequest.builder()
-                .orderCode(Long.parseLong(MethodUtil.generateOrderCode()))
+                .orderCode(Long.parseLong(MethodUtils.generateOrderCode()))
                 .amount((int) totalPrice)
                 .description(String.format("Payment for orderId %s", orderDto.getId()))
                 .build();
@@ -122,7 +122,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public ResponseEntity<ResponseApi<List<OrderDetailDto>>> getListOrder(OrderStatus orderStatus) {
         log.info("Start API: getListOrder");
-        Long userId = securityUtil.getUserLoggedInId();
+        Long userId = securityUtils.getUserLoggedInId();
         List<OrderDetailDto> listOrder = orderMapper.getListOrder(userId, orderStatus);
         log.info("End API: getListOrder");
         return new ResponseEntity<>(new ResponseApi<>("Get list order success", listOrder), HttpStatus.OK);

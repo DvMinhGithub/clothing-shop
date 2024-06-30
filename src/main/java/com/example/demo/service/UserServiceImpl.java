@@ -4,7 +4,7 @@ import com.example.demo.mapper.UserMapper;
 import com.example.demo.model.dto.UserDto;
 import com.example.demo.model.request.UserRequest;
 import com.example.demo.model.response.ResponseApi;
-import com.example.demo.utils.SecurityUtil;
+import com.example.demo.utils.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,18 +19,18 @@ import java.security.Principal;
 public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
-    private final SecurityUtil securityUtil;
+    private final SecurityUtils securityUtils;
 
-    public UserServiceImpl(UserMapper userMapper, SecurityUtil securityUtil) {
+    public UserServiceImpl(UserMapper userMapper, SecurityUtils securityUtils) {
         this.userMapper = userMapper;
-        this.securityUtil = securityUtil;
+        this.securityUtils = securityUtils;
     }
 
     @Override
     public ResponseEntity<ResponseApi<?>> updateProfile(UserRequest userRequest) {
         log.info("Start API: updateProfile with parameters: ({})", userRequest);
         try {
-            Long userId = securityUtil.getUserLoggedInId();
+            Long userId = securityUtils.getUserLoggedInId();
             userMapper.updateProfile(userId, userRequest);
             log.info("End API: updateProfile");
             return new ResponseEntity<>(new ResponseApi<>("Update profile success"), HttpStatus.OK);

@@ -14,7 +14,7 @@ import com.example.demo.model.request.LoginRequest;
 import com.example.demo.model.request.MailRequest;
 import com.example.demo.model.request.RegisterRequest;
 import com.example.demo.model.response.ResponseApi;
-import com.example.demo.utils.MethodUtil;
+import com.example.demo.utils.MethodUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -70,7 +70,7 @@ public class AuthServiceImpl implements AuthService {
             if (phoneNumberExists)
                 throw new PhoneNumberExistException(String.format("Phone number %s is already exist", registerRequest.getPhoneNumber()));
 
-            String otp = MethodUtil.generateNumberOtp();
+            String otp = MethodUtils.generateNumberOtp();
             MailRequest mailRequest = new MailRequest(registerRequest.getEmail(), "OTP for verification", otp);
             jedis.set(String.format("OTP:%s", registerRequest.getEmail()), otp);
             jedis.expire(String.format("OTP:%s", registerRequest.getEmail()), 1200);

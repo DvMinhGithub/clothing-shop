@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class SecurityUtil {
+public class SecurityUtils {
     private final UserMapper userMapper;
 
-    public SecurityUtil(UserMapper userMapper) {
+    public SecurityUtils(UserMapper userMapper) {
         this.userMapper = userMapper;
     }
 

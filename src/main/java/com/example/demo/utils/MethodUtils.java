@@ -9,7 +9,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
-public class MethodUtil {
+public class MethodUtils {
     public static String generateNumberOtp() {
         Random random = new Random();
         StringBuilder sb = new StringBuilder();

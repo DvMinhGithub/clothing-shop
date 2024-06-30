@@ -10,7 +10,7 @@ import com.example.demo.model.dto.ProductDto;
 import com.example.demo.model.request.ProductRequest;
 import com.example.demo.model.request.RatingRequest;
 import com.example.demo.model.response.ResponseApi;
-import com.example.demo.utils.SecurityUtil;
+import com.example.demo.utils.SecurityUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -27,14 +27,14 @@ public class ProductServiceImpl implements ProductService {
 
     private final UploadService uploadService;
 
-    private final SecurityUtil securityUtil;
+    private final SecurityUtils securityUtils;
 
     public ProductServiceImpl(ProductMapper productMapper,
                               UploadServiceImpl uploadService,
-                              SecurityUtil securityUtil) {
+                              SecurityUtils securityUtils) {
         this.productMapper = productMapper;
         this.uploadService = uploadService;
-        this.securityUtil = securityUtil;
+        this.securityUtils = securityUtils;
     }
 
     @Override
@@ -124,9 +124,9 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResponseEntity<ResponseApi<ProductDetailDto>> getProductById(Long id) {
         log.info("Start API: getProductById with parameters: (id: {})", id);
-        Long userId = securityUtil.getUserLoggedInId();
+        Long userId = securityUtils.getUserLoggedInId();
         ProductDetailDto productDetailDto = productMapper.getById(userId, id);
-        List<UserRole> listUserRole = securityUtil.getUserLoggedInRoles();
+        List<UserRole> listUserRole = securityUtils.getUserLoggedInRoles();
         boolean isCustomer = listUserRole.stream()
                 .anyMatch(role -> role.equals(UserRole.CUSTOMER));
 
@@ -187,7 +187,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResponseEntity<ResponseApi<?>> ratingProduct(RatingRequest ratingRequest) {
         log.info("Start API: ratingProduct with parameters: ({})", ratingRequest);
-        Long userId = securityUtil.getUserLoggedInId();
+        Long userId = securityUtils.getUserLoggedInId();
         Boolean isRating = productMapper.isRating(userId, ratingRequest.getProductId());
         if (isRating) {
             productMapper.updateRating(userId, ratingRequest);

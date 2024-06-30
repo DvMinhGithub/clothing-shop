@@ -5,7 +5,7 @@ import com.example.demo.model.dto.CartItemDto;
 import com.example.demo.model.request.AddToCartRequest;
 import com.example.demo.model.request.UpdateCartRequest;
 import com.example.demo.model.response.ResponseApi;
-import com.example.demo.utils.SecurityUtil;
+import com.example.demo.utils.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,18 +20,18 @@ import java.util.List;
 public class CartServiceImpl implements CartService {
     private final CartMapper cartMapper;
 
-    private final SecurityUtil securityUtil;
+    private final SecurityUtils securityUtils;
 
-    public CartServiceImpl(CartMapper cartMapper, SecurityUtil securityUtil) {
+    public CartServiceImpl(CartMapper cartMapper, SecurityUtils securityUtils) {
         this.cartMapper = cartMapper;
-        this.securityUtil = securityUtil;
+        this.securityUtils = securityUtils;
     }
 
     @Override
     public ResponseEntity<ResponseApi<?>> addToCart(AddToCartRequest addToCartRequest) {
         log.info("Start API: addToCart with parameters: ({})", addToCartRequest);
         try {
-            Long userId = securityUtil.getUserLoggedInId();
+            Long userId = securityUtils.getUserLoggedInId();
             List<CartItemDto> listCartItem = cartMapper.getByUserId(userId);
 
             for (CartItemDto cartItem : listCartItem) {
@@ -55,7 +55,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public ResponseEntity<ResponseApi<List<CartItemDto>>> getCartInformation() {
         log.info("Start API: getCartInformation");
-        Long userId = securityUtil.getUserLoggedInId();
+        Long userId = securityUtils.getUserLoggedInId();
         List<CartItemDto> listCartItem = cartMapper.getByUserId(userId);
         log.info("End API: getCartInformation");
         return new ResponseEntity<>(new ResponseApi<>("Get cart success", listCartItem), HttpStatus.OK);
