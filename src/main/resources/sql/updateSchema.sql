@@ -1,0 +1,1 @@
+ALTER TABLE order_detail ADD COLUMN order_code varchar(255);

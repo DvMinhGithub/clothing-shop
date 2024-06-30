@@ -14,7 +14,7 @@ import com.example.demo.model.request.LoginRequest;
 import com.example.demo.model.request.MailRequest;
 import com.example.demo.model.request.RegisterRequest;
 import com.example.demo.model.response.ResponseApi;
-import com.example.demo.utils.OtpGenerate;
+import com.example.demo.utils.MethodUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,8 +34,6 @@ import java.util.stream.Collectors;
 @Slf4j
 @Transactional
 public class AuthServiceImpl implements AuthService {
-    private static final String OTP_KEY_FORMAT = "OTP:%s";
-
     private final JwtUtility jwtUtility;
 
     private final PasswordEncoder passwordEncoder;
@@ -72,10 +70,10 @@ public class AuthServiceImpl implements AuthService {
             if (phoneNumberExists)
                 throw new PhoneNumberExistException(String.format("Phone number %s is already exist", registerRequest.getPhoneNumber()));
 
-            String otp = OtpGenerate.generateNumberOtp(6);
+            String otp = MethodUtil.generateNumberOtp();
             MailRequest mailRequest = new MailRequest(registerRequest.getEmail(), "OTP for verification", otp);
-            jedis.set(String.format(OTP_KEY_FORMAT, registerRequest.getEmail()), otp);
-            jedis.expire(String.format(OTP_KEY_FORMAT, registerRequest.getEmail()), 1200);
+            jedis.set(String.format("OTP:%s", registerRequest.getEmail()), otp);
+            jedis.expire(String.format("OTP:%s", registerRequest.getEmail()), 1200);
             mailService.sendTextMessage(mailRequest);
             log.info("End API: register");
             return new ResponseEntity<>(new ResponseApi<>("Register success"), HttpStatus.OK);
@@ -114,7 +112,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public ResponseEntity<ResponseApi<?>> verifyUserAccount(RegisterRequest registerRequest) {
         log.info("Start API: verifyUserAccount with parameters: ({})", registerRequest);
-        String userOTP = jedis.get(String.format(OTP_KEY_FORMAT, registerRequest.getEmail()));
+        String userOTP = jedis.get(String.format("OTP:%s", registerRequest.getEmail()));
         if (!registerRequest.getOTP().equals(userOTP)) {
             return new ResponseEntity<>(new ResponseApi<>("OTP is incorrect, try again"), HttpStatus.BAD_REQUEST);
         }
@@ -130,7 +128,7 @@ public class AuthServiceImpl implements AuthService {
         userMapper.register(user);
         RoleDto roleDto = roleMapper.getByName(UserRole.CUSTOMER);
         roleMapper.setRole(user.getId(), roleDto.getId());
-        jedis.del(String.format(OTP_KEY_FORMAT, registerRequest.getEmail()));
+        jedis.del(String.format("OTP:%s", registerRequest.getEmail()));
         log.info("End API: verifyUserAccount");
         return new ResponseEntity<>(new ResponseApi<>("Verify success"), HttpStatus.CREATED);
     }

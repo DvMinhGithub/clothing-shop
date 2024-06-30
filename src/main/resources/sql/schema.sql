@@ -76,6 +76,7 @@ CREATE TABLE IF NOT EXISTS techStore.`voucher`
 CREATE TABLE IF NOT EXISTS techStore.`order_detail`
 (
     `id`           bigint                              NOT NULL AUTO_INCREMENT,
+    `order_code`   varchar(255)                        NOT NULL,
     `address`      varchar(255)                        NOT NULL,
     `created_at`   datetime(6)                         DEFAULT CURRENT_TIMESTAMP(6),
     `phone_number` varchar(255)                        NOT NULL,

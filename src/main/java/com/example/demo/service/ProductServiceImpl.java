@@ -29,7 +29,9 @@ public class ProductServiceImpl implements ProductService {
 
     private final SecurityUtil securityUtil;
 
-    public ProductServiceImpl(ProductMapper productMapper, UploadServiceImpl uploadService, SecurityUtil securityUtil) {
+    public ProductServiceImpl(ProductMapper productMapper,
+                              UploadServiceImpl uploadService,
+                              SecurityUtil securityUtil) {
         this.productMapper = productMapper;
         this.uploadService = uploadService;
         this.securityUtil = securityUtil;
@@ -141,9 +143,9 @@ public class ProductServiceImpl implements ProductService {
         try {
             productMapper.deleteProduct(id);
             log.info("End API: deleteProduct");
-            return new ResponseEntity<>(new ResponseApi<>("deleteProduct product success"), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseApi<>("Delete product success"), HttpStatus.OK);
         } catch (Exception e) {
-            log.error("Error API: changeStatusProduct with message: {}", e.getMessage());
+            log.error("Error API: deleteProduct with message: {}", e.getMessage());
             return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

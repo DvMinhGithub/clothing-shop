@@ -8,6 +8,7 @@ import com.example.demo.model.request.WebhookRequest;
 import com.example.demo.model.request.CreateOrderRequest;
 import com.example.demo.model.response.ResponseApi;
 
+import com.example.demo.utils.MethodUtil;
 import com.example.demo.utils.SecurityUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -55,9 +56,10 @@ public class OrderServiceImpl implements OrderService {
         List<CartItemDto> listCartItem = cartMapper.getByCartItemId(createOrderRequest.getListCartItemId());
         VoucherDto voucherDto = voucherMapper.findByCode(createOrderRequest.getVoucherCode());
 
+        double discountPrice = voucherDto == null ? 0 : voucherDto.getDiscountPrice();
         double totalPrice = Math.ceil(listCartItem.stream()
                 .mapToDouble(item -> item.getProductPriceAfterDiscount() * item.getQuantity())
-                .sum() - voucherDto.getDiscountPrice());
+                .sum() - discountPrice);
 
         //Tạo order
         OrderDto orderDto = OrderDto.builder()
@@ -70,7 +72,7 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.create(orderDto);
 
         CreatePaymentRequest createPaymentRequest = CreatePaymentRequest.builder()
-                .orderCode(orderDto.getId())
+                .orderCode(Long.parseLong(MethodUtil.generateOrderCode()))
                 .amount((int) totalPrice)
                 .description(String.format("Payment for orderId %s", orderDto.getId()))
                 .build();

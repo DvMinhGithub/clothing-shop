@@ -5,7 +5,7 @@ import com.example.demo.model.request.CancelPaymentRequest;
 import com.example.demo.model.request.ConfirmWebhookRequest;
 import com.example.demo.model.request.CreatePaymentRequest;
 import com.example.demo.model.request.QRCodeRequest;
-import com.example.demo.utils.Signature;
+import com.example.demo.utils.MethodUtil;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -67,7 +67,7 @@ public class PaymentServiceImpl implements PaymentService {
     public CreatePaymentDto createPayment(CreatePaymentRequest createPaymentRequest) {
         try {
             String dataFormat = String.format("amount=%s&cancelUrl=%s&description=%s&orderCode=%s&returnUrl=%s", createPaymentRequest.getAmount(), cancelUrl, createPaymentRequest.getDescription(), createPaymentRequest.getOrderCode(), returnUrl);
-            createPaymentRequest.setSignature(Signature.HmacSignatureGenerate(checksumKey, dataFormat));
+            createPaymentRequest.setSignature(MethodUtil.HmacSignatureGenerate(checksumKey, dataFormat));
             createPaymentRequest.setReturnUrl(returnUrl);
             createPaymentRequest.setCancelUrl(cancelUrl);
 
