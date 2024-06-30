@@ -185,7 +185,7 @@ CREATE TABLE IF NOT EXISTS techStore.`promotion`
 CREATE TABLE IF NOT EXISTS techStore.`revenue`
 (
     `id` bigint NOT NULL AUTO_INCREMENT,
-    `date` date,
+    `date` date NOT NULL UNIQUE,
     `total_revenue` double DEFAULT 0,
     PRIMARY KEY(`id`)
 );
