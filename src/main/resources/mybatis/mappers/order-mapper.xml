@@ -109,4 +109,27 @@
         INNER JOIN product p ON p.id = oi.product_id
         WHERE od.id = #{orderId}
     </select>
+
+    <select id="getTotalOrder" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM order_detail od
+    </select>
+
+    <select id="getOrderPending" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM order_detail od
+        WHERE od.status = 'PENDING'
+    </select>
+
+    <select id="getOrderSuccess" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM order_detail od
+        WHERE od.status = 'SUCCESS'
+    </select>
+
+    <select id="getOrderCancel" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM order_detail od
+        WHERE od.status = 'CANCEL'
+    </select>
 </mapper>

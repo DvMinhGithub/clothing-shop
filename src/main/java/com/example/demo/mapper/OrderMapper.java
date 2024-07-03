@@ -23,4 +23,12 @@ public interface OrderMapper {
     List<OrderDetailDto> getListOrder(@Param("userId") Long userId, @Param("orderStatus") OrderStatus orderStatus);
 
     OrderDetailDto getOrderDetail(@Param("orderId") Long orderId);
+
+    Integer getTotalOrder();
+
+    Integer getOrderPending();
+
+    Integer getOrderSuccess();
+
+    Integer getOrderCancel();
 }

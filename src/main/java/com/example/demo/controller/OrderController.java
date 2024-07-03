@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.enums.OrderStatus;
 import com.example.demo.model.dto.OrderDetailDto;
+import com.example.demo.model.dto.StatisticOrderDto;
 import com.example.demo.model.request.CreateOrderRequest;
 import com.example.demo.model.request.WebhookRequest;
 import com.example.demo.model.response.ResponseApi;
@@ -54,5 +55,12 @@ public class OrderController {
     @GetMapping("/detail/{orderId}")
     public ResponseEntity<ResponseApi<OrderDetailDto>> getListOrder(@PathVariable("orderId") Long orderId) {
         return orderService.getOrderDetail(orderId);
+    }
+
+    @Operation(summary = "Get statistic order", description = "Get statistic order")
+    @SecurityRequirement(name = "Bearer Authentication")
+    @GetMapping("/statistic/order")
+    public ResponseEntity<ResponseApi<StatisticOrderDto>> getStatisticOrder() {
+        return orderService.getStatisticOrder();
     }
 }

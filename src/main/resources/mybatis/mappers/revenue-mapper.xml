@@ -39,7 +39,7 @@
        <foreach item="day" collection="days" separator="," >
            (#{day.day}, #{day.revenue})
        </foreach>
-       AS NEW ON DUPLICATE KEY
+       AS new ON DUPLICATE KEY
        UPDATE total_revenue = new.total_revenue
    </insert>
 

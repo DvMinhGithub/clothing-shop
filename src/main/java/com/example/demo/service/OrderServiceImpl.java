@@ -135,4 +135,16 @@ public class OrderServiceImpl implements OrderService {
         log.info("End API: getOrderDetail");
         return new ResponseEntity<>(new ResponseApi<>("Get order detail success", orderDetail), HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<ResponseApi<StatisticOrderDto>> getStatisticOrder(){
+        log.info("Start API: getStatisticOrder");
+        StatisticOrderDto statisticOrderDto = new StatisticOrderDto();
+        statisticOrderDto.setTotalOrder(orderMapper.getTotalOrder());
+        statisticOrderDto.setOrderPending(orderMapper.getOrderPending());
+        statisticOrderDto.setOrderSuccess(orderMapper.getOrderSuccess());
+        statisticOrderDto.setOrderCancel(orderMapper.getOrderCancel());
+        log.info("End API: getStatisticOrder");
+        return new ResponseEntity<>(new ResponseApi<>("Get statistic order success", statisticOrderDto), HttpStatus.OK);
+    }
 }
