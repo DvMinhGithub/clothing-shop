@@ -44,7 +44,11 @@
    </insert>
 
     <insert id="createDayForRevenue">
-        INSERT IGNORE INTO revenue(date)
+        INSERT INTO revenue(date)
         VALUES (current_timestamp)
     </insert>
+
+    <select id="isDuplicateDayForRevenue" resultType="java.lang.Boolean">
+        SELECT EXISTS(SELECT 1 FROM revenue r WHERE r.date = date(current_timestamp))
+    </select>
 </mapper>

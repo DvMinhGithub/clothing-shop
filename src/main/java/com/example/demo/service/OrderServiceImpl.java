@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.enums.OrderStatus;
+import com.example.demo.exception.ProductNotAvailableToBuyException;
 import com.example.demo.mapper.*;
 import com.example.demo.model.dto.*;
 import com.example.demo.model.request.CreatePaymentRequest;
@@ -54,6 +55,12 @@ public class OrderServiceImpl implements OrderService {
         log.info("Start API: createOrder with parameters: ({})", createOrderRequest);
         Long userId = securityUtils.getUserLoggedInId();
         List<CartItemDto> listCartItem = cartMapper.getByCartItemId(createOrderRequest.getListCartItemId());
+        listCartItem.forEach(item -> {
+            if(item.getProductSold() + item.getQuantity() > item.getQuantityInStock()){
+                throw new ProductNotAvailableToBuyException(String.format("Product id%s is not enough to order", item.getProductId()));
+            }
+        });
+
         VoucherDto voucherDto = voucherMapper.findByCode(createOrderRequest.getVoucherCode());
 
         double discountPrice = voucherDto == null ? 0 : voucherDto.getDiscountPrice();

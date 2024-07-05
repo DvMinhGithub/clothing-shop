@@ -27,7 +27,9 @@ public class RevenueTask {
 
     public void createDayForRevenue(){
         log.info("Start schedule task for createDayForRevenue");
-        revenueMapper.createDayForRevenue();
+        if(!revenueMapper.isDuplicateDayForRevenue()){
+            revenueMapper.createDayForRevenue();
+        }
         log.info("End schedule task for createDayForRevenue");
     }
 }

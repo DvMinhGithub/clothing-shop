@@ -9,16 +9,31 @@
         <result column="productImage" property="productImage"/>
         <result column="productName" property="productName"/>
         <result column="productPrice" property="productPrice"/>
+        <result column="quantityInStock" property="quantityInStock"/>
+        <result column="productSold" property="productSold"/>
         <result column="productPriceAfterDiscount" property="productPriceAfterDiscount"/>
     </resultMap>
 
+    <sql id="statistic_total_product">
+        statistic_total_product AS
+        (
+        SELECT pb.product_id AS productId,
+        sum(pb.quantity) AS totalProductQuantity
+        FROM product_batch pb
+        GROUP BY pb.product_id
+        )
+    </sql>
+
     <select id="getByUserId" resultMap="CartItemDtoResultMap">
+        WITH <include refid="statistic_total_product"/>
         SELECT ci.id as id,
         ci.quantity as quantity,
         p.product_image as productImage,
         p.name as productName,
         p.price as productPrice,
         p.id as productId,
+        p.sold as productSold,
+        stp.totalProductQuantity as quantityInStock
         CASE
         WHEN pr.start_time <![CDATA[<=]]> date(NOW()) AND pr.end_time <![CDATA[>=]]> date(NOW()) AND pr.is_active = true
         THEN p.price - pr.discount_price
@@ -26,17 +41,21 @@
         END AS productPriceAfterDiscount
         FROM cart_item ci
         INNER JOIN product p ON p.id = ci.product_id
+        LEFT JOIN statistic_total_product stp ON stp.productId = p.id
         LEFT JOIN promotion pr ON pr.product_id = p.id
         WHERE ci.user_id = #{userId}
     </select>
 
     <select id="getByCartItemId" resultMap="CartItemDtoResultMap">
+        WITH <include refid="statistic_total_product"/>
         SELECT ci.id as id,
         ci.quantity as quantity,
         p.product_image as productImage,
         p.name as productName,
         p.price as productPrice,
         p.id as productId,
+        p.sold as productSold,
+        stp.totalProductQuantity as quantityInStock
         CASE
         WHEN pr.start_time <![CDATA[<=]]> date(NOW()) AND pr.end_time <![CDATA[>=]]> date(NOW()) AND pr.is_active = true
         THEN p.price - pr.discount_price
@@ -44,6 +63,7 @@
         END AS productPriceAfterDiscount
         FROM cart_item ci
         INNER JOIN product p ON p.id = ci.product_id
+        LEFT JOIN statistic_total_product stp ON stp.productId = p.id
         LEFT JOIN promotion pr ON pr.product_id = p.id
         WHERE ci.id IN
         <foreach item="cartItemId" collection="listCartItemIds" separator="," open="(" close=")">

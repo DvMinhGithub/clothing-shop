@@ -13,4 +13,6 @@ public interface RevenueMapper {
     void updateRevenue(@Param("days") List<RevenueByDayDto> listRevenueByDayDto);
 
     void createDayForRevenue();
+
+    Boolean isDuplicateDayForRevenue();
 }

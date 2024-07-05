@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS techStore.`order_detail`
     `address`      varchar(255)                        NOT NULL,
     `created_at`   datetime(6)                         DEFAULT CURRENT_TIMESTAMP(6),
     `phone_number` varchar(255)                        NOT NULL,
-    `status`       enum ('CANCEL','SUCCESS','PENDING') NOT NULL,
+    `status`       enum ('CANCEL','SUCCESS','PENDING','RETURN') NOT NULL,
     `total_price`  double                              NOT NULL,
     `voucher_code` varchar(255) DEFAULT NULL,
     `user_id`      bigint                              NOT NULL,
