@@ -62,15 +62,65 @@ INSERT INTO techStore.category(id, description, name) VALUES(4, 'Đây là danh 
 
 INSERT INTO techStore.product
 (id, description, is_deleted, name, price, product_image, sold, `view`, brand_id)
-VALUES(1, 'description 1', 0, 'product 3', 1200.0, 'https://via.placeholder.com/300', 0, 2, 1);
+VALUES(1, 'Đây là laptop ACER ASPIRE 7 A715-76-53PJ (NH.QGESV.007) (I5 12450H/16GB RAM/512GB', 0, 'LAPTOP ACER ASPIRE 7 A715-76-53PJ (NH.QGESV.007) (I5 12450H/16GB RAM/512GB', 14000000, 'https://hanoicomputercdn.com/media/product/250_76816_laptop_acer_aspire_7_a715_76_53pj__nh_qgesv_007___1_.jpg', 0, 0, 1);
 
 INSERT INTO techStore.product
 (id, description, is_deleted, name, price, product_image, sold, `view`, brand_id)
-VALUES(2, 'description 1', 0, 'product 3', 1200.0, 'https://via.placeholder.com/300', 0, 15, 1);
+VALUES(2, 'Đây là laptop ACER ASPIRE LITE AL16-51P-55N7 (NX.KX0SV.001) (I5 1235U/16GB/512GB SSD/16', 0, 'LAPTOP ACER ASPIRE LITE AL16-51P-55N7 (NX.KX0SV.001) (I5 1235U/16GB/512GB SSD/16', 17000000, 'https://hanoicomputercdn.com/media/product/250_84394_laptop_acer_aspire_lite_al16_51p_55n7_nx_kx0sv__3_.jpg', 0, 0, 1);
 
 INSERT INTO techStore.product
 (id, description, is_deleted, name, price, product_image, sold, `view`, brand_id)
-VALUES(3, 'description 1', 0, 'product 3', 1200.0, 'https://via.placeholder.com/300', 0, 4, 1);
+VALUES(3, 'Đây là laptop ACER ASPIRE 7 A715-76-728X (NH.QGESV.008) (I7 12650H/16GB RAM/512GB', 0, 'laptop ACER ASPIRE 7 A715-76-728X (NH.QGESV.008) (I7 12650H/16GB RAM/512GB', 20000000, 'https://hanoicomputercdn.com/media/product/250_77583_laptop_acer_aspire_7_a715_76_728x__nh_qgesv_008__3.jpg', 0, 0, 1);
+
+INSERT INTO techStore.product
+(id, description, is_deleted, name, price, product_image, sold, `view`, brand_id)
+VALUES(4, 'Đây là laptop ACER ASPIRE 7 A715-76-728X (NH.QGESV.008) (I7 12650H/16GB RAM/512GB', 0, 'laptop ACER ASPIRE 7 A715-76-728X (NH.QGESV.008) (I7 12650H/16GB RAM/512GB', 20000000, 'https://hanoicomputercdn.com/media/product/250_77583_laptop_acer_aspire_7_a715_76_728x__nh_qgesv_008__3.jpg', 0, 0, 1);
+
+INSERT INTO techStore.product
+(id, description, is_deleted, name, price, product_image, sold, `view`, brand_id)
+VALUES(3, 'Đây là laptop ACER ASPIRE 7 A715-76-728X (NH.QGESV.008) (I7 12650H/16GB RAM/512GB', 0, 'laptop ACER ASPIRE 7 A715-76-728X (NH.QGESV.008) (I7 12650H/16GB RAM/512GB', 20000000, 'https://hanoicomputercdn.com/media/product/250_77583_laptop_acer_aspire_7_a715_76_728x__nh_qgesv_008__3.jpg', 0, 0, 1);
+
+INSERT INTO techStore.product
+(id, description, is_deleted, name, price, product_image, sold, `view`, brand_id)
+VALUES(3, 'Đây là laptop ACER ASPIRE 7 A715-76-728X (NH.QGESV.008) (I7 12650H/16GB RAM/512GB', 0, 'laptop ACER ASPIRE 7 A715-76-728X (NH.QGESV.008) (I7 12650H/16GB RAM/512GB', 20000000, 'https://hanoicomputercdn.com/media/product/250_77583_laptop_acer_aspire_7_a715_76_728x__nh_qgesv_008__3.jpg', 0, 0, 1);
+
+INSERT INTO techStore.product
+(id, description, is_deleted, name, price, product_image, sold, `view`, brand_id)
+VALUES(3, 'Đây là laptop ACER ASPIRE 7 A715-76-728X (NH.QGESV.008) (I7 12650H/16GB RAM/512GB', 0, 'laptop ACER ASPIRE 7 A715-76-728X (NH.QGESV.008) (I7 12650H/16GB RAM/512GB', 20000000, 'https://hanoicomputercdn.com/media/product/250_77583_laptop_acer_aspire_7_a715_76_728x__nh_qgesv_008__3.jpg', 0, 0, 1);
+
+INSERT INTO techStore.product
+(id, description, is_deleted, name, price, product_image, sold, `view`, brand_id)
+VALUES(3, 'Đây là laptop ACER ASPIRE 7 A715-76-728X (NH.QGESV.008) (I7 12650H/16GB RAM/512GB', 0, 'laptop ACER ASPIRE 7 A715-76-728X (NH.QGESV.008) (I7 12650H/16GB RAM/512GB', 20000000, 'https://hanoicomputercdn.com/media/product/250_77583_laptop_acer_aspire_7_a715_76_728x__nh_qgesv_008__3.jpg', 0, 0, 1);
+
+INSERT INTO techStore.product
+(id, description, is_deleted, name, price, product_image, sold, `view`, brand_id)
+VALUES(3, 'Đây là laptop ACER ASPIRE 7 A715-76-728X (NH.QGESV.008) (I7 12650H/16GB RAM/512GB', 0, 'laptop ACER ASPIRE 7 A715-76-728X (NH.QGESV.008) (I7 12650H/16GB RAM/512GB', 20000000, 'https://hanoicomputercdn.com/media/product/250_77583_laptop_acer_aspire_7_a715_76_728x__nh_qgesv_008__3.jpg', 0, 0, 1);
+
+INSERT INTO techStore.product
+(id, description, is_deleted, name, price, product_image, sold, `view`, brand_id)
+VALUES(3, 'Đây là laptop ACER ASPIRE 7 A715-76-728X (NH.QGESV.008) (I7 12650H/16GB RAM/512GB', 0, 'laptop ACER ASPIRE 7 A715-76-728X (NH.QGESV.008) (I7 12650H/16GB RAM/512GB', 20000000, 'https://hanoicomputercdn.com/media/product/250_77583_laptop_acer_aspire_7_a715_76_728x__nh_qgesv_008__3.jpg', 0, 0, 1);
+
+INSERT INTO techStore.product
+(id, description, is_deleted, name, price, product_image, sold, `view`, brand_id)
+VALUES(3, 'Đây là laptop ACER ASPIRE 7 A715-76-728X (NH.QGESV.008) (I7 12650H/16GB RAM/512GB', 0, 'laptop ACER ASPIRE 7 A715-76-728X (NH.QGESV.008) (I7 12650H/16GB RAM/512GB', 20000000, 'https://hanoicomputercdn.com/media/product/250_77583_laptop_acer_aspire_7_a715_76_728x__nh_qgesv_008__3.jpg', 0, 0, 1);
+
+INSERT INTO techStore.product
+(id, description, is_deleted, name, price, product_image, sold, `view`, brand_id)
+VALUES(3, 'Đây là laptop ACER ASPIRE 7 A715-76-728X (NH.QGESV.008) (I7 12650H/16GB RAM/512GB', 0, 'laptop ACER ASPIRE 7 A715-76-728X (NH.QGESV.008) (I7 12650H/16GB RAM/512GB', 20000000, 'https://hanoicomputercdn.com/media/product/250_77583_laptop_acer_aspire_7_a715_76_728x__nh_qgesv_008__3.jpg', 0, 0, 1);
+
+INSERT INTO techStore.product_attribute(id, attribute_name, attribute_value, product_id) VALUES(1, 'CPU', 'Intel® Core™ i5-12450H', 1)
+
+INSERT INTO techStore.product_attribute(id, attribute_name, attribute_value, product_id) VALUES(2, 'RAM', '16GB (8GBx2) DDR4 3200 MHz (Tối đa 32GB)', 1)
+
+INSERT INTO techStore.product_attribute(id, attribute_name, attribute_value, product_id) VALUES(3, 'Ổ cứng', '512GB SSD PCIe NVMe (Nâng cấp thay thế,tối đa 1TB)(Còn trống 1 khe)', 1)
+
+INSERT INTO techStore.product_attribute(id, attribute_name, attribute_value, product_id) VALUES(4, 'VGA', 'Intel® UHD Graphics', 1)
+
+INSERT INTO techStore.product_attribute(id, attribute_name, attribute_value, product_id) VALUES(1, 'RAM', '16GB (8GBx2) DDR4 3200 MHz (Tối đa 32GB)', 1)
+
+INSERT INTO techStore.product_attribute(id, attribute_name, attribute_value, product_id) VALUES(1, 'RAM', '16GB (8GBx2) DDR4 3200 MHz (Tối đa 32GB)', 1)
+
+INSERT INTO techStore.product_attribute(id, attribute_name, attribute_value, product_id) VALUES(1, 'RAM', '16GB (8GBx2) DDR4 3200 MHz (Tối đa 32GB)', 1)
 
 INSERT INTO techStore.product_inventory
 (id, import_price, quantity, product_id)

@@ -33,7 +33,7 @@
         p.price as productPrice,
         p.id as productId,
         p.sold as productSold,
-        stp.totalProductQuantity as quantityInStock
+        stp.totalProductQuantity as quantityInStock,
         CASE
         WHEN pr.start_time <![CDATA[<=]]> date(NOW()) AND pr.end_time <![CDATA[>=]]> date(NOW()) AND pr.is_active = true
         THEN p.price - pr.discount_price
@@ -55,7 +55,7 @@
         p.price as productPrice,
         p.id as productId,
         p.sold as productSold,
-        stp.totalProductQuantity as quantityInStock
+        stp.totalProductQuantity as quantityInStock,
         CASE
         WHEN pr.start_time <![CDATA[<=]]> date(NOW()) AND pr.end_time <![CDATA[>=]]> date(NOW()) AND pr.is_active = true
         THEN p.price - pr.discount_price
