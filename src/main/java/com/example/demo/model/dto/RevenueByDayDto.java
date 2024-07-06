@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class RevenueByDayDto {
     private String day;
 
-    private Double revenue;
+    private Long revenue;
 }

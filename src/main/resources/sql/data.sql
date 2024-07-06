@@ -22,16 +22,6 @@ VALUES (1, 1);
 INSERT INTO techStore.`user_role`(user_id, role_id)
 VALUES (2, 3);
 
-INSERT INTO techStore.revenue(`date`, total_revenue) VALUES('2024-07-01', 1000);
-
-INSERT INTO techStore.revenue(`date`, total_revenue) VALUES('2024-07-02', 2000);
-
-INSERT INTO techStore.revenue(`date`, total_revenue) VALUES('2024-07-03', 3000);
-
-INSERT INTO techStore.revenue(`date`, total_revenue) VALUES('2024-07-04', 4000);
-
-INSERT INTO techStore.revenue(`date`, total_revenue) VALUES('2024-07-05', 5000);
-
 INSERT INTO techStore.brand(id, description, name) VALUES(1, 'Đây là thuơng hệu ACER', 'ACER');
 
 INSERT INTO techStore.brand(id, description, name) VALUES(2, 'Đây là thuơng hiệu DELL', 'DELL');
@@ -634,6 +624,61 @@ INSERT INTO techStore.product_attribute(id, attribute_name, attribute_value, pro
 
 INSERT INTO techStore.product_attribute(id, attribute_name, attribute_value, product_id) VALUES(108, 'VGA', 'Intel® UHD Graphics', 27);
 
+INSERT INTO techStore.order_detail
+(id, order_code, address, created_at, phone_number, status, total_price, voucher_code, user_id, checkout_url)
+VALUES(1, '1234567890', 'Hà Nội','2024-07-05 03:12:11', '0823539326', 'SUCCESS', 14000000, null, 2, '');
+
+INSERT INTO techStore.order_detail
+(id, order_code, address, created_at, phone_number, status, total_price, voucher_code, user_id, checkout_url)
+VALUES(2, '1234567890', 'Hà Nội','2024-07-04 03:12:11', '0823539326', 'SUCCESS', 17000000, null, 2, '');
+
+INSERT INTO techStore.order_detail
+(id, order_code, address, created_at, phone_number, status, total_price, voucher_code, user_id, checkout_url)
+VALUES(3, '1234567890', 'Hà Nội','2024-07-03 03:12:11', '0823539326', 'SUCCESS', 20000000, null, 2, '');
+
+INSERT INTO techStore.order_detail
+(id, order_code, address, created_at, phone_number, status, total_price, voucher_code, user_id, checkout_url)
+VALUES(4, '1234567890', 'Hà Nội','2024-07-02 03:12:11', '0823539326', 'SUCCESS', 20000000, null, 2, '');
+
+INSERT INTO techStore.order_detail
+(id, order_code, address, created_at, phone_number, status, total_price, voucher_code, user_id, checkout_url)
+VALUES(5, '1234567890', 'Hà Nội','2024-07-01 03:12:11', '0823539326', 'SUCCESS', 22000000, null, 2, '');
+
+INSERT INTO techStore.order_detail
+(id, order_code, address, created_at, phone_number, status, total_price, voucher_code, user_id, checkout_url)
+VALUES(6, '1234567890', 'Hà Nội','2024-06-30 03:12:11', '0823539326', 'SUCCESS', 30000000, null, 2, '');
+
+INSERT INTO techStore.order_detail
+(id, order_code, address, created_at, phone_number, status, total_price, voucher_code, user_id, checkout_url)
+VALUES(7, '1234567890', 'Hà Nội','2024-05-30 03:12:11', '0823539326', 'SUCCESS', 22000000, null, 2, '');
+
+INSERT INTO techStore.order_item
+(id, price_at_order_time, quantity, order_id, product_id)
+VALUES(1, 14000000, 1, 1, 1);
+
+INSERT INTO techStore.order_item
+(id, price_at_order_time, quantity, order_id, product_id)
+VALUES(2, 17000000, 1, 2, 2);
+
+INSERT INTO techStore.order_item
+(id, price_at_order_time, quantity, order_id, product_id)
+VALUES(3, 20000000, 1, 3, 3);
+
+INSERT INTO techStore.order_item
+(id, price_at_order_time, quantity, order_id, product_id)
+VALUES(4, 20000000, 1, 4, 4);
+
+INSERT INTO techStore.order_item
+(id, price_at_order_time, quantity, order_id, product_id)
+VALUES(5, 22000000, 1, 5, 5);
+
+INSERT INTO techStore.order_item
+(id, price_at_order_time, quantity, order_id, product_id)
+VALUES(6, 30000000, 1, 6, 6);
+
+INSERT INTO techStore.order_item
+(id, price_at_order_time, quantity, order_id, product_id)
+VALUES(7, 22000000, 1, 7, 7);
 
 
 

@@ -3,19 +3,16 @@
 <mapper namespace="com.example.demo.mapper.RevenueMapper">
 
     <resultMap id="RevenueByDayDtoResultMap" type="com.example.demo.model.dto.RevenueByDayDto" autoMapping="true">
-        <id column="id" />
         <result column="day" property="day"/>
         <result column="revenue" property="revenue"/>
     </resultMap>
 
     <resultMap id="RevenueByMonthDtoResultMap" type="com.example.demo.model.dto.RevenueByMonthDto" autoMapping="true">
-        <id column="id" />
         <result column="month" property="month"/>
-        <result column="year" property="year"/>
         <result column="revenue" property="revenue"/>
     </resultMap>
 
-    <select id="getRevenueByDay" resultMap="RevenueByDayDtoResultMap">
+    <select id="getRevenueByOrder" resultMap="RevenueByDayDtoResultMap">
         SELECT CONVERT(od.created_at , DATE) AS day,
         sum(od.total_price) AS revenue
         FROM order_detail od
@@ -23,14 +20,22 @@
         GROUP BY CONVERT(od.created_at , DATE)
     </select>
 
-    <select id="getRevenueByMonth" resultMap="RevenueByMonthDtoResultMap">
-        SELECT YEAR(od.created_at) AS year,
-        MONTH(od.created_at) AS month,
-        SUM(od.total_price) AS revenue
-        FROM order_detail od
-        WHERE od.status = 'SUCCESS'
-        GROUP BY YEAR(od.created_at),
-        MONTH(od.created_at);
+    <select id="getRevenueByDay" resultMap="RevenueByDayDtoResultMap">
+        SELECT r.`date` as day,
+        r.total_revenue AS revenue
+        FROM revenue r
+        WHERE 1 = 1
+        <if test="startDate != null and endDate != null">
+            AND r.`date` BETWEEN #{startDate} and #{endDate}
+        </if>
+    </select>
+
+    <select id="getRevenueByYear" resultMap="RevenueByMonthDtoResultMap">
+        SELECT month(r.`date`) AS month,
+        sum(r.total_revenue) AS revenue
+        FROM revenue r
+        WHERE CONVERT(r.`date`, YEAR) = #{year}
+        GROUP BY year(r.`date`), month(r.`date`)
     </select>
 
    <insert id="updateRevenue">

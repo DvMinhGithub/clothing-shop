@@ -10,9 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RevenueByMonthDto {
-    private String month;
+    private Integer month;
 
-    private String year;
-
-    private Double revenue;
+    private Long revenue;
 }

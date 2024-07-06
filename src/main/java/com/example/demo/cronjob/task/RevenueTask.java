@@ -18,7 +18,7 @@ public class RevenueTask {
 
     public void updateRevenue(){
         log.info("Start schedule task for updateRevenue");
-        List<RevenueByDayDto> listRevenueByDayDto = revenueMapper.getRevenueByDay();
+        List<RevenueByDayDto> listRevenueByDayDto = revenueMapper.getRevenueByOrder();
         if(!listRevenueByDayDto.isEmpty()){
             revenueMapper.updateRevenue(listRevenueByDayDto);
         }
