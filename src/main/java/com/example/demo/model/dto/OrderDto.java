@@ -21,4 +21,6 @@ public class OrderDto {
     private String voucherCode;
     
     private Long userId;
+
+    private Long orderCode;
 }

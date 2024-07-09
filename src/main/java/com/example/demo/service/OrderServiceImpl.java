@@ -69,7 +69,9 @@ public class OrderServiceImpl implements OrderService {
                 .sum() - discountPrice);
 
         //Tạo order
+        long orderCode = Long.parseLong(MethodUtils.generateOrderCode());
         OrderDto orderDto = OrderDto.builder()
+                .orderCode(orderCode)
                 .address(createOrderRequest.getAddress())
                 .phoneNumber(createOrderRequest.getPhoneNumber())
                 .totalPrice(totalPrice)
@@ -79,7 +81,7 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.create(orderDto);
 
         CreatePaymentRequest createPaymentRequest = CreatePaymentRequest.builder()
-                .orderCode(Long.parseLong(MethodUtils.generateOrderCode()))
+                .orderCode(orderCode)
                 .amount((int) totalPrice)
                 .description(String.format("Payment for orderId %s", orderDto.getId()))
                 .build();

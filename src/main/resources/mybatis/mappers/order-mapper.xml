@@ -25,6 +25,7 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO order_detail(address,
+        order_code,
         created_at,
         phone_number,
         status,
@@ -32,6 +33,7 @@
         voucher_code,
         user_id)
         VALUES (#{orderInfo.address},
+        #{orderInfo.orderCode},
         NOW(),
         #{orderInfo.phoneNumber},
         'PENDING',
