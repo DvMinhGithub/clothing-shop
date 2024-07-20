@@ -99,10 +99,10 @@ public class AuthServiceImpl implements AuthService {
                     .refreshToken(refreshToken)
                     .build();
             log.info("End API: login");
-            return new ResponseEntity<>(new ResponseApi<>("Login success", loginDto), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseApi<>("Đăng nhập thành công", loginDto), HttpStatus.OK);
         } catch (BadCredentialsException e) {
             log.error("Error API: login with message: {}", e.getMessage());
-            return new ResponseEntity<>(new ResponseApi<>("Wrong email or password"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResponseApi<>("Sai email hoặc mật khẩu"), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             log.error("Error API: login with message: {}", e.getMessage());
             return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -158,7 +158,7 @@ public class AuthServiceImpl implements AuthService {
             RoleDto roleDto = roleMapper.getByName(UserRole.CUSTOMER);
             roleMapper.setRole(user.getId(), roleDto.getId());
             log.info("End API: register");
-            return new ResponseEntity<>(new ResponseApi<>("Register success"), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseApi<>("Đăng ký thành công"), HttpStatus.OK);
         } catch (EmailExistException | PhoneNumberExistException e) {
             log.error("Error API: register with message: {}", e.getMessage());
             return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.BAD_REQUEST);
