@@ -38,9 +38,9 @@ public class OrderController {
 
     @Operation(summary = "Cancel order", description = "Cancel order")
     @SecurityRequirement(name = "Bearer Authentication")
-    @PutMapping("/cancel/{orderId}")
-    public ResponseEntity<ResponseApi<?>> cancelOrder(@PathVariable("orderId") Long orderId) {
-        return orderService.cancelOrder(orderId);
+    @PutMapping("/cancel/{orderCode}")
+    public ResponseEntity<ResponseApi<?>> cancelOrder(@PathVariable("orderCode") Long orderCode) {
+        return orderService.cancelOrder(orderCode);
     }
 
     @Operation(summary = "Get list order", description = "Get list order")

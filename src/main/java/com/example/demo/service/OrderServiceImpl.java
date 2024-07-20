@@ -121,9 +121,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ResponseEntity<ResponseApi<?>> cancelOrder(Long orderId) {
-        log.info("Start API: cancelOrder with parameters: (id: {})", orderId);
-        orderMapper.changeOrderStatus(orderId, OrderStatus.CANCEL);
+    public ResponseEntity<ResponseApi<?>> cancelOrder(Long orderCode) {
+        log.info("Start API: cancelOrder with parameters: (orderCode: {})", orderCode);
+        orderMapper.changeOrderStatus(orderCode, OrderStatus.CANCEL);
         log.info("End API: cancelOrder");
         return new ResponseEntity<>(new ResponseApi<>("Change order status success"), HttpStatus.OK);
     }
