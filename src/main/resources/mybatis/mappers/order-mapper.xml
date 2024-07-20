@@ -62,7 +62,7 @@
     <update id="changeOrderStatus">
         UPDATE order_detail
         SET status = #{orderStatus}
-        WHERE id = #{orderId}
+        WHERE order_code = #{orderCode}
     </update>
 
     <select id="getListOrder" resultMap="OrderDetailDtoResultMap">

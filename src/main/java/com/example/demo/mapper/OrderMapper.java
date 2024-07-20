@@ -18,7 +18,7 @@ public interface OrderMapper {
 
     void createOrderItem(@Param("orderItemInfo") OrderItemDto orderItemDto);
 
-    void changeOrderStatus(@Param("orderId") Long orderId, @Param("orderStatus") OrderStatus orderStatus);
+    void changeOrderStatus(@Param("orderId") Long orderId, @Param("orderCode") OrderStatus orderStatus);
 
     List<OrderDetailDto> getListOrder(@Param("userId") Long userId, @Param("orderStatus") OrderStatus orderStatus);
 
