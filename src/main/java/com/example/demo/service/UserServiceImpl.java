@@ -21,9 +21,12 @@ public class UserServiceImpl implements UserService {
 
     private final SecurityUtils securityUtils;
 
-    public UserServiceImpl(UserMapper userMapper, SecurityUtils securityUtils) {
+    private final UploadService uploadService;
+
+    public UserServiceImpl(UserMapper userMapper, SecurityUtils securityUtils, UploadService uploadService) {
         this.userMapper = userMapper;
         this.securityUtils = securityUtils;
+        this.uploadService = uploadService;
     }
 
     @Override
@@ -31,6 +34,7 @@ public class UserServiceImpl implements UserService {
         log.info("Start API: updateProfile with parameters: ({})", userRequest);
         try {
             Long userId = securityUtils.getUserLoggedInId();
+            userRequest.setAvatar(uploadService.uploadFile(userRequest.getImage()));
             userMapper.updateProfile(userId, userRequest);
             log.info("End API: updateProfile");
             return new ResponseEntity<>(new ResponseApi<>("Update profile success"), HttpStatus.OK);
