@@ -31,4 +31,6 @@ public class OrderDetailDto {
     private String checkoutUrl;
 
     private List<OrderItemDto> listOrderItem;
+
+    private Long orderCode;
 }

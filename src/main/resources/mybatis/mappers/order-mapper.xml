@@ -11,6 +11,7 @@
         <result column="voucherCode" property="voucherCode"/>
         <result column="totalPrice" property="totalPrice"/>
         <result column="checkoutUrl" property="checkoutUrl"/>
+        <result column="orderCode" property="orderCode"/>
         <collection property="listOrderItem" ofType="com.example.demo.model.dto.OrderItemDto"
                     autoMapping="true" columnPrefix="o_">
             <id column="id"/>
@@ -74,6 +75,7 @@
         od.voucher_code AS voucherCode,
         od.total_price AS totalPrice,
         od.checkout_url AS checkoutUrl,
+        od.order_code AS orderCode,
         oi.id AS o_id,
         oi.price_at_order_time AS o_price,
         oi.quantity AS o_quantity,
@@ -99,6 +101,7 @@
         od.voucher_code AS voucherCode,
         od.total_price AS totalPrice,
         od.checkout_url AS checkoutUrl,
+        od.order_code AS orderCode,
         oi.id AS o_id,
         oi.price_at_order_time AS o_price,
         oi.quantity AS o_quantity,
