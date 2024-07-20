@@ -48,4 +48,12 @@ public class SupplierController {
     public ResponseEntity<ResponseApi<?>> updateSupplier(@PathVariable Long id, @RequestBody SupplierRequest supplierRequest) {
         return supplierService.updateSupplier(id, supplierRequest);
     }
+
+    @Operation(summary = "Delete supplier", description = "Delete supplier")
+    @SecurityRequirement(name = "Bearer Authentication")
+    @Secured({"EMPLOYEE", "ADMIN"})
+    @DeleteMapping(value = "/delete/{id}")
+    public ResponseEntity<ResponseApi<?>> deleteSupplier(@PathVariable Long supplierId) {
+        return supplierService.deleteSupplier(supplierId);
+    }
 }

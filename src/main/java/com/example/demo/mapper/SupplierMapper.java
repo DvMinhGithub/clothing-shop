@@ -14,4 +14,6 @@ public interface SupplierMapper {
     List<SupplierDto> getListSupplier();
 
     void updateSupplier(@Param("supplierId") Long supplierId, @Param("supplierInfo") SupplierRequest supplierRequest);
+
+    void deleteSupplier(@Param("supplierId")Long supplierId);
 }

@@ -15,6 +15,7 @@
         s.phone_number as phoneNumber,
         s.address as address
         FROM supplier s
+        WHERE s.is_deleted = false
     </select>
 
     <insert id="addSupplier">
@@ -31,6 +32,12 @@
         SET name = #{supplierInfo.name},
         phone_number = #{supplierInfo.phoneNumber},
         address = #{supplierInfo.address}
+        WHERE id = #{supplierId}
+    </update>
+
+    <update id="deleteSupplier">
+        UPDATE supplier
+        SET is_deleted = true
         WHERE id = #{supplierId}
     </update>
 </mapper>

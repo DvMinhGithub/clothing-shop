@@ -39,13 +39,13 @@ public class CartServiceImpl implements CartService {
                     cartMapper.updateCartItemQuantity(cartItem.getId(),
                             cartItem.getQuantity() + addToCartRequest.getQuantity());
                     log.info("End API: addToCart");
-                    return new ResponseEntity<>(new ResponseApi<>("Add to cart success"), HttpStatus.OK);
+                    return new ResponseEntity<>(new ResponseApi<>("Thêm vào giỏ hàng thành công"), HttpStatus.OK);
                 }
             }
 
             cartMapper.addToCart(userId, addToCartRequest);
             log.info("End API: addToCart");
-            return new ResponseEntity<>(new ResponseApi<>("Add to cart success"), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseApi<>("Thêm vào giỏ hàng thành công"), HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error API: addToCart with message: {}", e.getMessage());
             return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);

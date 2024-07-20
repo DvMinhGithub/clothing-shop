@@ -31,10 +31,10 @@ public class VoucherServiceImpl implements VoucherService {
                 throw new VoucherCodeExistException(String.format("Voucher code %s is already exist", voucherRequest.getCode()));
             voucherMapper.create(voucherRequest);
             log.info("End API: createVoucher");
-            return new ResponseEntity<>(new ResponseApi<>("Create voucher success"), HttpStatus.CREATED);
+            return new ResponseEntity<>(new ResponseApi<>("Thêm voucher thành công"), HttpStatus.CREATED);
         } catch (VoucherCodeExistException e) {
             log.error("Error API: createVoucher with message: {}", e.getMessage());
-            return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResponseApi<>("Voucher code đã tồn tại"), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             log.error("Error API: createVoucher with message: {}", e.getMessage());
             return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -74,10 +74,10 @@ public class VoucherServiceImpl implements VoucherService {
 //                throw new VoucherCodeExistException(String.format("Voucher code %s is already exist", voucherRequest.getCode()));
 //            voucherMapper.update(id, voucherRequest);
 //            log.info("End API: editVoucher");
-//            return new ResponseEntity<>(new ResponseApi<>("Edit voucher success"), HttpStatus.OK);
+//            return new ResponseEntity<>(new ResponseApi<>("Cập nhật voucher thành công"), HttpStatus.OK);
 //        } catch (VoucherCodeExistException e) {
 //            log.error("Error API: editVoucher with message: {}", e.getMessage());
-//            return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.BAD_REQUEST);
+//            return new ResponseEntity<>(new ResponseApi<>("Voucher code đã tồn tại"), HttpStatus.BAD_REQUEST);
 //        } catch (Exception e) {
 //            log.error("Error API: editVoucher with message: {}", e.getMessage());
 //            return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);

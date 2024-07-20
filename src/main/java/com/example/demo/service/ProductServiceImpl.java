@@ -67,7 +67,7 @@ public class ProductServiceImpl implements ProductService {
         }
 
         log.info("End API: createProduct");
-        return new ResponseEntity<>(new ResponseApi<>("Create product success"), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseApi<>("Thêm sản phâm thành công"), HttpStatus.OK);
     }
 
 
@@ -101,7 +101,7 @@ public class ProductServiceImpl implements ProductService {
             }
         }
         log.info("End API: updateProduct");
-        return new ResponseEntity<>(new ResponseApi<>("Update product success"), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseApi<>("Cập nhật sản phẩm thành công"), HttpStatus.OK);
     }
 
     @Override
@@ -143,7 +143,7 @@ public class ProductServiceImpl implements ProductService {
         try {
             productMapper.deleteProduct(id);
             log.info("End API: deleteProduct");
-            return new ResponseEntity<>(new ResponseApi<>("Delete product success"), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseApi<>("Xoá sản phẩm thành công"), HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error API: deleteProduct with message: {}", e.getMessage());
             return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);

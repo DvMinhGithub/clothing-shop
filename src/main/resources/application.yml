@@ -71,5 +71,5 @@ PayOS:
   clientId: 90e65cfd-2356-4143-88e6-503a6273df6b
   apiKey: 81c708f7-e2b3-4989-9a01-5ade55f69b80
   checkSumKey: 1cc9bf0a0ecf0799a26efb985774c5daca0884ff2b4e0faa146ed09c2b8caec7
-  returnUrl: "https://google.com"
-  cancelUrl: "https://google.com"
+  returnUrl: "http://160.22.107.28/"
+  cancelUrl: "http://160.22.107.28/"

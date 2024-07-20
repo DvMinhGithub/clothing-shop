@@ -29,7 +29,7 @@ public class SupplierServiceImpl implements SupplierService {
         log.info("Start API: addSupplier with parameters: ({})", supplierRequest);
         supplierMapper.addSupplier(supplierRequest);
         log.info("End API: addSupplier");
-        return new ResponseEntity<>(new ResponseApi<>("Add supplier success"), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseApi<>("Thêm nhà cung cấp thành công"), HttpStatus.OK);
     }
 
     @Override
@@ -46,6 +46,14 @@ public class SupplierServiceImpl implements SupplierService {
         log.info("Start API: updateSupplier with parameters: ({})", supplierRequest);
         supplierMapper.updateSupplier(id, supplierRequest);
         log.info("End API: updateSupplier");
-        return new ResponseEntity<>(new ResponseApi<>("Update supplier success"), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseApi<>("Cập nhật nhà cung cấp thành công"), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<ResponseApi<?>> deleteSupplier(Long supplierId) {
+        log.info("Start API: deleteSupplier with parameters: ({})", supplierId);
+        supplierMapper.deleteSupplier(supplierId);
+        log.info("End API: deleteSupplier");
+        return new ResponseEntity<>(new ResponseApi<>("Xoá nhà cung cấp thành công"), HttpStatus.OK);
     }
 }

@@ -127,6 +127,7 @@ CREATE TABLE IF NOT EXISTS techStore.`supplier`
     `name` varchar(255) NOT NULL,
     `phone_number` varchar(255) NOT NULL,
     `address` varchar(255) DEFAULT NULL,
+    `is_deleted`    bit(1) NOT NULL DEFAULT 0,
     PRIMARY KEY(`id`)
 );
 

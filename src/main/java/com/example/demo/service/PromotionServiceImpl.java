@@ -34,7 +34,7 @@ public class PromotionServiceImpl implements PromotionService {
             }
             promotionMapper.create(promotionRequest);
             log.info("End API: createPromotion");
-            return new ResponseEntity<>(new ResponseApi<>("Create promotion success"), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseApi<>("Thêm chương trình khuyến mãi thành công"), HttpStatus.OK);
         } catch (DuplicatePromotionException e) {
             log.error("Error API: createPromotion with message: {}", e.getMessage());
             return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.BAD_REQUEST);
@@ -59,7 +59,7 @@ public class PromotionServiceImpl implements PromotionService {
             }
             promotionMapper.update(id, promotionRequest);
             log.info("End API: updatePromotion");
-            return new ResponseEntity<>(new ResponseApi<>("Update promotion success"), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseApi<>("Cập nhật chương trình khuyến mãi thành công"), HttpStatus.OK);
         } catch (DuplicatePromotionException e) {
             log.error("Error API: updatePromotion with message: {}", e.getMessage());
             return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.BAD_REQUEST);

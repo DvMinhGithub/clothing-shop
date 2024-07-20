@@ -33,10 +33,10 @@ public class BrandServiceImpl implements BrandService {
             }
             brandMapper.create(brandRequest);
             log.info("End API: createBrand");
-            return new ResponseEntity<>(new ResponseApi<>("Create brand success"), HttpStatus.CREATED);
+            return new ResponseEntity<>(new ResponseApi<>("Thêm thương hiệu thành công"), HttpStatus.CREATED);
         } catch (BrandNameExistException e) {
             log.error("Error API: createBrand with message: {}", e.getMessage());
-            return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResponseApi<>("Tên thương hiệu đã tồn tại"), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             log.error("Error API: createBrand with message: {}", e.getMessage());
             return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -63,10 +63,10 @@ public class BrandServiceImpl implements BrandService {
             }
             brandMapper.update(id, brandRequest);
             log.info("End API: updateBrand");
-            return new ResponseEntity<>(new ResponseApi<>("Update brand success"), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseApi<>("Cập nhật thương hiệu thành công"), HttpStatus.OK);
         } catch (BrandNameExistException e) {
             log.error("Error API: updateBrand with message: {}", e.getMessage());
-            return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResponseApi<>("Tên thương hiệu đã tồn tại"), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             log.error("Error API: updateBrand with message: {}", e.getMessage());
             return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);

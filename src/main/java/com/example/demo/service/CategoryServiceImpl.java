@@ -32,10 +32,10 @@ public class CategoryServiceImpl implements CategoryService {
                 throw new CategoryNameExistException(String.format("Category name %s is already exist", categoryRequest.getName()));
             categoryMapper.create(categoryRequest);
             log.info("End API: createCategory");
-            return new ResponseEntity<>(new ResponseApi<>("Create category success"), HttpStatus.CREATED);
+            return new ResponseEntity<>(new ResponseApi<>("Thêm danh mục thành công"), HttpStatus.CREATED);
         } catch (CategoryNameExistException e) {
             log.error("Error API: createCategory with message: {}", e.getMessage());
-            return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResponseApi<>("Tên danh mục đã tồn tại"), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             log.error("Error API: createCategory with message: {}", e.getMessage());
             return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -59,10 +59,10 @@ public class CategoryServiceImpl implements CategoryService {
                 throw new CategoryNameExistException(String.format("Category name %s is already exist", categoryRequest.getName()));
             categoryMapper.update(id, categoryRequest);
             log.info("End API: updateCategory");
-            return new ResponseEntity<>(new ResponseApi<>("Update category success"), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseApi<>("Cập nhật danh mục thành công"), HttpStatus.OK);
         } catch (CategoryNameExistException e) {
             log.error("Error API: updateCategory with message: {}", e.getMessage());
-            return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResponseApi<>("Tên danh mục đã tồn tại"), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             log.error("Error API: updateCategory with message: {}", e.getMessage());
             return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);

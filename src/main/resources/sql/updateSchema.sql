@@ -1,5 +1,1 @@
-ALTER TABLE techStore.order_detail ADD COLUMN order_code varchar(255);
-
-ALTER TABLE techStore.revenue ADD UNIQUE (date);
-
-ALTER TABLE techStore.order_detail MODIFY status ENUM('CANCEL', 'PENDING', 'SUCCESS', 'RETURN');
+ALTER TABLE techStore.supplier ADD COLUMN is_deleted bit(1) DEFAULT 0;

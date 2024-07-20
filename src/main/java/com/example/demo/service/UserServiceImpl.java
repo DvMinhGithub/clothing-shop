@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
             }
             userMapper.updateProfile(userId, userRequest);
             log.info("End API: updateProfile");
-            return new ResponseEntity<>(new ResponseApi<>("Update profile success"), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseApi<>("Cập nhật thông tin cá nhân thành công"), HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error API: updateProfile with message {}", e.getMessage());
             return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
