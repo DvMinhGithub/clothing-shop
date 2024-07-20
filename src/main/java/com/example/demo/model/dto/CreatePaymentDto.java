@@ -64,7 +64,7 @@ public class CreatePaymentDto {
         /**
          * Mã đơn hàng từ cửa hàng
          */
-        private Integer orderCode;
+        private Long orderCode;
 
         /**
          * Trạng thái link thanh toán
