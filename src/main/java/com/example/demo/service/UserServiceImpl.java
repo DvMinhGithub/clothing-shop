@@ -34,7 +34,9 @@ public class UserServiceImpl implements UserService {
         log.info("Start API: updateProfile with parameters: ({})", userRequest);
         try {
             Long userId = securityUtils.getUserLoggedInId();
-            userRequest.setAvatar(uploadService.uploadFile(userRequest.getImage()));
+            if(!userRequest.getImage().isEmpty()){
+                userRequest.setAvatar(uploadService.uploadFile(userRequest.getImage()));
+            }
             userMapper.updateProfile(userId, userRequest);
             log.info("End API: updateProfile");
             return new ResponseEntity<>(new ResponseApi<>("Update profile success"), HttpStatus.OK);

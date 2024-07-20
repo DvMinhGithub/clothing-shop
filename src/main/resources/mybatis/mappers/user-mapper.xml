@@ -89,7 +89,9 @@
         address = #{userInfo.address},
         gender = #{userInfo.gender},
         dob = #{userInfo.dob},
-        avatar = #{userInfo.avatar}
+        <if test="userInfo.avatar != null">
+            avatar = #{userInfo.avatar}
+        </if>
         WHERE id = #{userId}
     </update>
 
