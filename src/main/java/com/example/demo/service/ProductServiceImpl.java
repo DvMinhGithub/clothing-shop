@@ -116,7 +116,7 @@ public class ProductServiceImpl implements ProductService {
                 listCategoryIds.add(Long.parseLong(categoryId));
             }
         }
-        listProduct = productMapper.getList(listCategoryIds, name, brandId);
+        listProduct = productMapper.getList(!listCategoryIds.isEmpty() ? listCategoryIds : null, name, brandId);
         log.info("End API: getListProducts");
         return new ResponseEntity<>(new ResponseApi<>("Get list products success", new PageInfo<>(listProduct)), HttpStatus.OK);
     }
