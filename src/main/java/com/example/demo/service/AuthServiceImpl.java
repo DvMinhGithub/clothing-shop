@@ -140,10 +140,10 @@ public class AuthServiceImpl implements AuthService {
             boolean emailExists = userMapper.existsByEmail(registerRequest.getEmail());
             boolean phoneNumberExists = userMapper.existsByPhoneNumber(registerRequest.getPhoneNumber());
             if (emailExists)
-                throw new EmailExistException(String.format("Email %s is already exist", registerRequest.getEmail()));
+                throw new EmailExistException("Email đã tồn tại");
 
             if (phoneNumberExists)
-                throw new PhoneNumberExistException(String.format("Phone number %s is already exist", registerRequest.getPhoneNumber()));
+                throw new PhoneNumberExistException("Số điện thoại đã tồn tại");
 
             UserDto user = UserDto.builder()
                     .dob(registerRequest.getDob())
