@@ -70,7 +70,6 @@ public class ProductController {
 
     @Operation(summary = "Change product status", description = "Change product status")
     @SecurityRequirement(name = "Bearer Authentication")
-    @Secured("CUSTOMER")
     @GetMapping("/top-sold")
     public ResponseEntity<ResponseApi<PageInfo<ProductDto>>> getTopSoldProduct(
             @RequestParam(value = "name", required = false) String name,
@@ -83,7 +82,6 @@ public class ProductController {
 
     @Operation(summary = "Change product status", description = "Change product status")
     @SecurityRequirement(name = "Bearer Authentication")
-    @Secured("CUSTOMER")
     @GetMapping("/top-view")
     public ResponseEntity<ResponseApi<PageInfo<ProductDto>>> getTopViewProduct(
             @RequestParam(value = "name", required = false) String name,

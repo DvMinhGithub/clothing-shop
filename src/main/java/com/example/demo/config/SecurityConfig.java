@@ -42,7 +42,10 @@ public class SecurityConfig {
             "/verifyUserAccount",
             "/test",
             "/image/**",
-            "/order/changeOrderStatus"
+            "/order/changeOrderStatus",
+            "/product/top-sold",
+            "/product/getListProduct",
+            "/product/top-view"
     };
 
     @Bean
