@@ -53,7 +53,7 @@ public class SupplierController {
     @SecurityRequirement(name = "Bearer Authentication")
     @Secured({"EMPLOYEE", "ADMIN"})
     @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<ResponseApi<?>> deleteSupplier(@PathVariable Long supplierId) {
+    public ResponseEntity<ResponseApi<?>> deleteSupplier(@PathVariable(name = "id") Long supplierId) {
         return supplierService.deleteSupplier(supplierId);
     }
 }
