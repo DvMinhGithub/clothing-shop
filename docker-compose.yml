@@ -37,7 +37,7 @@ services:
     networks:
       - techStore_network
     volumes:
-      - /home/loi/techstore-mybatis/redis:/data
+      - /home/loi/redis_db:/data
 networks:
   techStore_network:
     driver: bridge
