@@ -78,7 +78,7 @@ public class SecurityConfig {
                 "http://127.0.0.1:5173",
                 "http://localhost:5173",
                 "http://localhost",
-                "http://160.22.107.28:81"));
+                "http://160.22.107.28:81/"));
         corsConfiguration.setAllowedMethods(List.of("*"));
         corsConfiguration.setAllowCredentials(true);
         corsConfiguration.setAllowedHeaders(List.of("*"));
