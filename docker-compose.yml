@@ -25,7 +25,7 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=Loi65732102.1
     volumes:
-      - /home/loi/techstore-mybatis/mysql:/var/lib/mysql
+      - /home/loi/mysql_db:/var/lib/mysql
     networks:
       - techStore_network
   redis_db:
