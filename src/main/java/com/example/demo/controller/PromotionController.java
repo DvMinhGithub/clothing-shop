@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/promotion")
+@CrossOrigin
 public class PromotionController {
     private final PromotionService promotionService;
 

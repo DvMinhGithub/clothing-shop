@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/voucher")
+@CrossOrigin
 public class VoucherController {
 
     private final VoucherServiceImpl voucherService;
