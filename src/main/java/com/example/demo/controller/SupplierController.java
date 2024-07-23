@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/supplier")
-@CrossOrigin
 public class SupplierController {
     private final SupplierService supplierService;
 

@@ -17,7 +17,6 @@ import java.security.NoSuchAlgorithmException;
 
 @RestController
 @RequestMapping("/payment")
-@CrossOrigin
 public class PaymentController {
 
     private final PaymentService paymentService;
