@@ -98,7 +98,7 @@ public class SecurityConfig {
                 registry
                         .addMapping("/**")
                         .allowedOrigins("http://160.22.107.28:81")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
             }
