@@ -29,8 +29,11 @@ public class SecurityConfig {
 
     private final JWTFilter jwtFilter;
 
-    public SecurityConfig(JWTFilter jwtFilter) {
+    private final CorsFilter corsFilter;
+
+    public SecurityConfig(JWTFilter jwtFilter, CorsFilter corsFilter) {
         this.jwtFilter = jwtFilter;
+        this.corsFilter = corsFilter;
     }
 
     String[] publicEndpoints = new String[]{
@@ -70,7 +73,8 @@ public class SecurityConfig {
                         .requestMatchers(publicEndpoints).permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilter(corsFilter);
         return http.build();
     }
 
@@ -90,18 +94,18 @@ public class SecurityConfig {
 //        return source;
 //    }
 
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry
-                        .addMapping("/**")
-                        .allowedOrigins("*")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE")
-                        .allowedHeaders("*")
-                        .allowCredentials(true);
-            }
-        };
-    }
+//    @Bean
+//    public WebMvcConfigurer corsConfigurer() {
+//        return new WebMvcConfigurer() {
+//            @Override
+//            public void addCorsMappings(CorsRegistry registry) {
+//                registry
+//                        .addMapping("/**")
+//                        .allowedOrigins("*")
+//                        .allowedMethods("GET", "POST", "PUT", "DELETE")
+//                        .allowedHeaders("*")
+//                        .allowCredentials(true);
+//            }
+//        };
+//    }
 }
