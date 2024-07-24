@@ -16,6 +16,7 @@
         s.address as address
         FROM supplier s
         WHERE s.is_deleted = false
+        ORDER BY s.id desc
     </select>
 
     <insert id="addSupplier">

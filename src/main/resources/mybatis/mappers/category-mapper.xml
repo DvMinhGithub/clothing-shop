@@ -23,6 +23,7 @@
         c.name as name,
         c.description as description
         FROM category c
+        ORDER BY c.id desc
     </select>
 
     <select id="findById" resultMap="CategoryDtoResultMap">

@@ -54,6 +54,7 @@
         v.used_quantity as usedQuantity,
         v.is_active as isActive
         FROM voucher v
+        ORDER BY v.id desc
     </select>
 
     <select id="findVoucherValid" resultMap="VoucherDtoResultMap">
@@ -69,6 +70,7 @@
         v.is_active as isActive
         FROM voucher v
         WHERE v.start_time &gt;= NOW() AND v.end_time &lt;= NOW() AND v.is_active = true
+        ORDER BY v.id desc
     </select>
 
     <select id="findById" resultMap="VoucherDtoResultMap">

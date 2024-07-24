@@ -15,7 +15,7 @@ services:
     networks:
       - techStore_network
     volumes:
-      - /home/loi/techstore-mybatis/images:/images
+      - /home/loi/images:/images
   mysql_db:
     image: mysql:8.0.35
     container_name: mysql_db

@@ -25,6 +25,7 @@
         pr.is_active as isActive
         FROM promotion pr
         INNER JOIN product p ON p.id = pr.product_id
+        ORDER BY pr.id desc
     </select>
 
     <insert id="create">

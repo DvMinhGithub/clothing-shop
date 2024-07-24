@@ -24,6 +24,7 @@
         FROM product_batch pb
         INNER JOIN product p ON p.id = pb.product_id
         INNER JOIN supplier s ON s.id = pb.supplier_id
+        ORDER BY pb.id desc
     </select>
 
     <insert id="createBatch">

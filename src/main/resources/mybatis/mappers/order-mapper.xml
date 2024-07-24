@@ -90,6 +90,7 @@
         <if test="orderStatus != null">
             AND od.status = #{orderStatus}
         </if>
+        ORDER BY o.id desc
     </select>
 
     <select id="getOrderDetail" resultMap="OrderDetailDtoResultMap">

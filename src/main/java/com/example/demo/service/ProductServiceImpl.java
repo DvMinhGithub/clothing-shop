@@ -126,13 +126,7 @@ public class ProductServiceImpl implements ProductService {
         log.info("Start API: getProductById with parameters: (id: {})", id);
         Long userId = securityUtils.getUserLoggedInId();
         ProductDetailDto productDetailDto = productMapper.getById(userId, id);
-        List<UserRole> listUserRole = securityUtils.getUserLoggedInRoles();
-        boolean isCustomer = listUserRole.stream()
-                .anyMatch(role -> role.equals(UserRole.CUSTOMER));
-
-        if (isCustomer) {
-            productMapper.updateView(id);
-        }
+        productMapper.updateView(id);
         log.info("End API: getProductById");
         return new ResponseEntity<>(new ResponseApi<>("Get product success", productDetailDto), HttpStatus.OK);
     }

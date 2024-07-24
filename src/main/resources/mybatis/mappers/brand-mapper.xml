@@ -23,6 +23,7 @@
         b.name as name,
         b.description as description
         FROM brand b
+        ORDER BY b.id desc
     </select>
 
     <select id="findById" resultMap="BrandDtoResultMap">
@@ -31,6 +32,7 @@
         b.description as description
         FROM brand b
         WHERE b.id = #{brandId}
+        ORDER BY b.id desc
     </select>
 
     <update id="update">
