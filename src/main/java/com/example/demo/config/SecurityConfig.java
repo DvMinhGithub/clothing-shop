@@ -97,9 +97,10 @@ public class SecurityConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry
                         .addMapping("/**")
-                        .allowedOrigins("*")
+//                        .allowedOrigins("*")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
+                        .allowedOriginPatterns("http://160.22.107.28/**")
                         .allowCredentials(true);
             }
         };
