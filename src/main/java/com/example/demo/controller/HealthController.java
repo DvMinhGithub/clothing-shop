@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequestMapping("/")
 @RestController
-@CrossOrigin(origins = "*")
 public class HealthController {
     @Operation(summary = "Test api", description = "Test api")
     @GetMapping("/test")

@@ -14,7 +14,6 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin(origins = "*")
 public class UserController {
     private final UserService userService;
 

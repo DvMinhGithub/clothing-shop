@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/product-batch")
-@CrossOrigin(origins = "*")
 public class ProductBatchController {
     private final ProductBatchService productBatchService;
 

@@ -17,7 +17,6 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/product")
-@CrossOrigin(origins = "*")
 public class ProductController {
 
     private final ProductService productService;
