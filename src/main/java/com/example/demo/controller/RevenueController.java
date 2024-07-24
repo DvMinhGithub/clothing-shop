@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/revenue")
+@CrossOrigin(origins = "*")
 public class RevenueController {
     private final RevenueService revenueService;
 
