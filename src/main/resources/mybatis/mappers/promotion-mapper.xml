@@ -52,7 +52,7 @@
         product_id = #{promotionInfo.productId},
         end_time = #{promotionInfo.endTime},
         start_time = #{promotionInfo.startTime},
-        discount_price = #{promotionInfo.discountPrice},
+        discount_price = #{promotionInfo.discountPrice}
         WHERE id = #{promotionId}
     </update>
 
