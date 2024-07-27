@@ -36,22 +36,18 @@ public class OrderServiceImpl implements OrderService {
 
     private final SecurityUtils securityUtils;
 
-    private final RevenueMapper revenueMapper;
-
     public OrderServiceImpl(OrderMapper orderMapper,
                             CartMapper cartMapper,
                             ProductMapper productMapper,
                             PaymentService paymentService,
                             VoucherMapper voucherMapper,
-                            SecurityUtils securityUtils,
-                            RevenueMapper revenueMapper) {
+                            SecurityUtils securityUtils) {
         this.cartMapper = cartMapper;
         this.orderMapper = orderMapper;
         this.productMapper = productMapper;
         this.paymentService = paymentService;
         this.voucherMapper = voucherMapper;
         this.securityUtils = securityUtils;
-        this.revenueMapper = revenueMapper;
     }
 
     @Override
@@ -120,10 +116,6 @@ public class OrderServiceImpl implements OrderService {
     public ResponseEntity<ResponseApi<?>> changeOrderStatus(WebhookRequest webhookRequest) {
         log.info("Start API: changeOrderStatus with parameters: ({})", webhookRequest);
         orderMapper.changeOrderStatus(webhookRequest.getData().getOrderCode(), OrderStatus.SUCCESS);
-        List<RevenueByDayDto> listRevenueByDayDto = revenueMapper.getRevenueByOrder();
-        if(!listRevenueByDayDto.isEmpty()){
-            revenueMapper.updateRevenue(listRevenueByDayDto);
-        }
         log.info("End API: changeOrderStatus");
         return new ResponseEntity<>(new ResponseApi<>("Change order status success"), HttpStatus.OK);
     }

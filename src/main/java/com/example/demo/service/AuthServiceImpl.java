@@ -58,33 +58,34 @@ public class AuthServiceImpl implements AuthService {
         this.roleMapper = roleMapper;
     }
 
-//    @Override
-//    public ResponseEntity<ResponseApi<?>> register(RegisterRequest registerRequest) {
-//        log.info("Start API: register with parameters: ({})", registerRequest);
-//        try {
-//            boolean emailExists = userMapper.existsByEmail(registerRequest.getEmail());
-//            boolean phoneNumberExists = userMapper.existsByPhoneNumber(registerRequest.getPhoneNumber());
-//            if (emailExists)
-//                throw new EmailExistException(String.format("Email %s is already exist", registerRequest.getEmail()));
-//
-//            if (phoneNumberExists)
-//                throw new PhoneNumberExistException(String.format("Phone number %s is already exist", registerRequest.getPhoneNumber()));
-//
-//            String otp = MethodUtils.generateNumberOtp();
-//            MailRequest mailRequest = new MailRequest(registerRequest.getEmail(), "OTP for verification", otp);
-//            jedis.set(String.format("OTP:%s", registerRequest.getEmail()), otp);
-//            jedis.expire(String.format("OTP:%s", registerRequest.getEmail()), 1200);
-//            mailService.sendTextMessage(mailRequest);
-//            log.info("End API: register");
-//            return new ResponseEntity<>(new ResponseApi<>("Register success"), HttpStatus.OK);
-//        } catch (EmailExistException | PhoneNumberExistException e) {
-//            log.error("Error API: register with message: {}", e.getMessage());
-//            return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.BAD_REQUEST);
-//        } catch (Exception e) {
-//            log.error("Error API: register with message: {}", e.getMessage());
-//            return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
+    //Login with OTP
+    @Override
+    public ResponseEntity<ResponseApi<?>> register(RegisterRequest registerRequest) {
+        log.info("Start API: register with parameters: ({})", registerRequest);
+        try {
+            boolean emailExists = userMapper.existsByEmail(registerRequest.getEmail());
+            boolean phoneNumberExists = userMapper.existsByPhoneNumber(registerRequest.getPhoneNumber());
+            if (emailExists)
+                throw new EmailExistException(String.format("Email %s is already exist", registerRequest.getEmail()));
+
+            if (phoneNumberExists)
+                throw new PhoneNumberExistException(String.format("Phone number %s is already exist", registerRequest.getPhoneNumber()));
+
+            String otp = MethodUtils.generateNumberOtp();
+            MailRequest mailRequest = new MailRequest(registerRequest.getEmail(), "OTP for verification", otp);
+            jedis.set(String.format("OTP:%s", registerRequest.getEmail()), otp);
+            jedis.expire(String.format("OTP:%s", registerRequest.getEmail()), 1200);
+            mailService.sendTextMessage(mailRequest);
+            log.info("End API: register");
+            return new ResponseEntity<>(new ResponseApi<>("Register success"), HttpStatus.OK);
+        } catch (EmailExistException | PhoneNumberExistException e) {
+            log.error("Error API: register with message: {}", e.getMessage());
+            return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            log.error("Error API: register with message: {}", e.getMessage());
+            return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @Override
     public ResponseEntity<ResponseApi<LoginDto>> login(LoginRequest loginRequest) {
@@ -133,38 +134,39 @@ public class AuthServiceImpl implements AuthService {
         return new ResponseEntity<>(new ResponseApi<>("Verify success"), HttpStatus.CREATED);
     }
 
-    @Override
-    public ResponseEntity<ResponseApi<?>> register(RegisterRequest registerRequest) {
-        log.info("Start API: register with parameters: ({})", registerRequest);
-        try {
-            boolean emailExists = userMapper.existsByEmail(registerRequest.getEmail());
-            boolean phoneNumberExists = userMapper.existsByPhoneNumber(registerRequest.getPhoneNumber());
-            if (emailExists)
-                throw new EmailExistException("Email đã tồn tại");
-
-            if (phoneNumberExists)
-                throw new PhoneNumberExistException("Số điện thoại đã tồn tại");
-
-            UserDto user = UserDto.builder()
-                    .dob(registerRequest.getDob())
-                    .email(registerRequest.getEmail())
-                    .address(registerRequest.getAddress())
-                    .name(registerRequest.getName())
-                    .gender(registerRequest.getGender())
-                    .phoneNumber(registerRequest.getPhoneNumber())
-                    .password(passwordEncoder.encode(registerRequest.getPassword()))
-                    .build();
-            userMapper.register(user);
-            RoleDto roleDto = roleMapper.getByName(UserRole.CUSTOMER);
-            roleMapper.setRole(user.getId(), roleDto.getId());
-            log.info("End API: register");
-            return new ResponseEntity<>(new ResponseApi<>("Đăng ký thành công"), HttpStatus.OK);
-        } catch (EmailExistException | PhoneNumberExistException e) {
-            log.error("Error API: register with message: {}", e.getMessage());
-            return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            log.error("Error API: register with message: {}", e.getMessage());
-            return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+    //Login without OTP
+//    @Override
+//    public ResponseEntity<ResponseApi<?>> register(RegisterRequest registerRequest) {
+//        log.info("Start API: register with parameters: ({})", registerRequest);
+//        try {
+//            boolean emailExists = userMapper.existsByEmail(registerRequest.getEmail());
+//            boolean phoneNumberExists = userMapper.existsByPhoneNumber(registerRequest.getPhoneNumber());
+//            if (emailExists)
+//                throw new EmailExistException("Email đã tồn tại");
+//
+//            if (phoneNumberExists)
+//                throw new PhoneNumberExistException("Số điện thoại đã tồn tại");
+//
+//            UserDto user = UserDto.builder()
+//                    .dob(registerRequest.getDob())
+//                    .email(registerRequest.getEmail())
+//                    .address(registerRequest.getAddress())
+//                    .name(registerRequest.getName())
+//                    .gender(registerRequest.getGender())
+//                    .phoneNumber(registerRequest.getPhoneNumber())
+//                    .password(passwordEncoder.encode(registerRequest.getPassword()))
+//                    .build();
+//            userMapper.register(user);
+//            RoleDto roleDto = roleMapper.getByName(UserRole.CUSTOMER);
+//            roleMapper.setRole(user.getId(), roleDto.getId());
+//            log.info("End API: register");
+//            return new ResponseEntity<>(new ResponseApi<>("Đăng ký thành công"), HttpStatus.OK);
+//        } catch (EmailExistException | PhoneNumberExistException e) {
+//            log.error("Error API: register with message: {}", e.getMessage());
+//            return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.BAD_REQUEST);
+//        } catch (Exception e) {
+//            log.error("Error API: register with message: {}", e.getMessage());
+//            return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 }

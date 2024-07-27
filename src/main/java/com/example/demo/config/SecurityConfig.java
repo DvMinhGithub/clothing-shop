@@ -74,21 +74,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration corsConfiguration = new CorsConfiguration();
-//        corsConfiguration.setAllowedOrigins(List.of(
-//                "http://127.0.0.1:5173",
-//                "http://localhost:5173",
-//                "http://localhost",
-//                "http://160.22.107.28:81/"));
-//        corsConfiguration.setAllowedMethods(List.of("*"));
-//        corsConfiguration.setAllowCredentials(true);
-//        corsConfiguration.setAllowedHeaders(List.of("*"));
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", corsConfiguration);
-//        return source;
-//    }
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
@@ -97,11 +82,9 @@ public class SecurityConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry
                         .addMapping("/**")
-//                        .allowedOrigins("*")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
-                        .allowedOriginPatterns("http://160.22.107.28/**")
-                        .allowCredentials(true);
+                        .allowedOrigins("*");
             }
         };
     }
