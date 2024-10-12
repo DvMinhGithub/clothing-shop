@@ -5,12 +5,12 @@ import com.example.demo.exception.EmailExistException;
 import com.example.demo.exception.PhoneNumberExistException;
 import com.example.demo.mapper.RoleMapper;
 import com.example.demo.mapper.UserMapper;
+import com.example.demo.model.CustomPageable;
 import com.example.demo.model.dto.RoleDto;
 import com.example.demo.model.dto.UserDto;
 import com.example.demo.model.request.CreateEmployeeRequest;
+import com.example.demo.model.request.PageRequest;
 import com.example.demo.model.response.ResponseApi;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,14 +37,13 @@ public class ManageEmployeeServiceImpl implements ManageEmployeeService {
     }
 
     @Override
-    public ResponseEntity<ResponseApi<PageInfo<UserDto>>> getListEmployee(String name, int page, int limit) {
-        log.info("Start API: getListEmployee with parameters: (name: {}, page: {}, limit: {})", name, page, limit);
-        PageHelper.startPage(page, limit);
-        List<UserDto> listEmployee = name != null
-                ? userMapper.findEmployeeByName(name)
-                : userMapper.findEmployee();
+    public ResponseEntity<ResponseApi<CustomPageable<UserDto>>> getListEmployee(String name, PageRequest pageRequest) {
+        log.info("Start API: getListEmployee with parameters: (name: {}, pageRequest: {})", name, pageRequest);
+        List<UserDto> listEmployee = userMapper.getListEmployee(name);
+        Integer countListEmployee = userMapper.countListEmployee(name);
+        var result = new CustomPageable<>(listEmployee, countListEmployee, pageRequest);
         log.info("End API: getListEmployee");
-        return new ResponseEntity<>(new ResponseApi<>("Get list employee success", new PageInfo<>(listEmployee)), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseApi<>("Get list employee success", result), HttpStatus.OK);
     }
 
     @Override

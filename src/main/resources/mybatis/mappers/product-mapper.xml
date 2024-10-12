@@ -151,16 +151,26 @@
         FROM product p
         <if test="listCategoryIds.size > 0">
             INNER JOIN product_category cp ON p.id = cp.product_id
-            WHERE cp.category_id IN
+        </if>
+        WHERE p.is_deleted = false
+        <if test="listCategoryIds.size > 0">
+            AND cp.category_id IN
             <foreach item="categoryId" collection="listCategoryIds" open="(" separator="," close=")">
                 #{categoryId}
             </foreach>
-            GROUP BY p.id
         </if>
+        <if test="filter.name != null">
+            AND p.name LIKE CONCAT('%', #{filter.name}, '%')
+        </if>
+        <if test="filter.brandId != null">
+            AND p.brand_id = #{filter.brandId}
+        </if>
+        GROUP BY p.id
+        LIMIT #{pageRequest.limit} OFFSET #{pageRequest.offset}
         )
     </sql>
 
-    <select id="getList" resultMap="ProductDtoResultMap">
+    <select id="getListProduct" resultMap="ProductDtoResultMap">
         WITH
         <include refid="productFilter"/>,
         <include refid="statistic_product_priceAfterDiscount"/>,
@@ -179,14 +189,28 @@
         INNER JOIN productFilter pf ON p.id = pf.id
         LEFT JOIN statistic_product_priceAfterDiscount spp ON spp.productId = p.id
         LEFT JOIN statistic_product_quantity spq ON spq.productId = p.id
-        WHERE p.is_deleted = false
-        <if test="productName != null">
-            AND p.name like CONCAT("%", #{productName}, "%")
-        </if>
-        <if test="brandId != null">
-            AND p.brand_id = #{brandId}
-        </if>
         ORDER BY p.id desc
+    </select>
+
+    <select id="countListProduct" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM product p
+        <if test="listCategoryIds.size > 0">
+            INNER JOIN product_category cp ON p.id = cp.product_id
+        </if>
+        WHERE p.is_deleted = false
+        <if test="listCategoryIds.size > 0">
+            AND cp.category_id IN
+            <foreach item="categoryId" collection="listCategoryIds" open="(" separator="," close=")">
+                #{categoryId}
+            </foreach>
+        </if>
+        <if test="filter.name != null">
+            AND p.name LIKE CONCAT('%', #{filter.name}, '%')
+        </if>
+        <if test="filter.brandId != null">
+            AND p.brand_id = #{filter.brandId}
+        </if>
     </select>
 
     <select id="getTopSold" resultMap="ProductDtoResultMap">
@@ -205,13 +229,6 @@
         FROM product p
         INNER JOIN productFilter pf ON p.id = pf.id
         LEFT JOIN statistic_product_priceAfterDiscount spp ON spp.productId = p.id
-        WHERE p.is_deleted = false
-        <if test="productName != null">
-            AND p.name like CONCAT("%", #{productName}, "%")
-        </if>
-        <if test="brandId != null">
-            AND p.brand_id = #{brandId}
-        </if>
         ORDER BY p.sold DESC
     </select>
 
@@ -232,13 +249,6 @@
         FROM product p
         INNER JOIN productFilter pf ON p.id = pf.id
         LEFT JOIN statistic_product_priceAfterDiscount spp ON spp.productId = p.id
-        WHERE p.is_deleted = false
-        <if test="productName != null">
-            AND p.name like CONCAT("%", #{productName}, "%")
-        </if>
-        <if test="brandId != null">
-            AND p.brand_id = #{brandId}
-        </if>
         ORDER BY p.view DESC
     </select>
 

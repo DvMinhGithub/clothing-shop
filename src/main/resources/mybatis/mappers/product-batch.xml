@@ -25,6 +25,14 @@
         INNER JOIN product p ON p.id = pb.product_id
         INNER JOIN supplier s ON s.id = pb.supplier_id
         ORDER BY pb.id desc
+        LIMIT #{pageRequest.limit} OFFSET #{pageRequest.offset}
+    </select>
+
+    <select id="countListProductBatch" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM product_batch pb
+        INNER JOIN product p ON p.id = pb.product_id
+        INNER JOIN supplier s ON s.id = pb.supplier_id
     </select>
 
     <insert id="createBatch">

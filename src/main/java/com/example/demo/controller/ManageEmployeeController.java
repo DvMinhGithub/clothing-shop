@@ -1,10 +1,11 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.CustomPageable;
 import com.example.demo.model.dto.UserDto;
 import com.example.demo.model.request.CreateEmployeeRequest;
+import com.example.demo.model.request.PageRequest;
 import com.example.demo.model.response.ResponseApi;
 import com.example.demo.service.ManageEmployeeService;
-import com.github.pagehelper.PageInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
@@ -24,11 +25,8 @@ public class ManageEmployeeController {
     @SecurityRequirement(name = "Bearer Authentication")
     @Secured("ADMIN")
     @GetMapping("/get")
-    public ResponseEntity<ResponseApi<PageInfo<UserDto>>> getListEmployee(
-            @RequestParam(value = "name", required = false) String name,
-            @RequestParam(value = "page", defaultValue = "0", required = false) int page,
-            @RequestParam(value = "limit", defaultValue = "20", required = false) int limit) {
-        return manageEmployeeService.getListEmployee(name, page, limit);
+    public ResponseEntity<ResponseApi<CustomPageable<UserDto>>> getListEmployee(String name, PageRequest pageRequest) {
+        return manageEmployeeService.getListEmployee(name, pageRequest);
     }
 
     @Operation(summary = "Create employee", description = "Create employee")

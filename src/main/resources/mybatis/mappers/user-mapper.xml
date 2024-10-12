@@ -95,7 +95,7 @@
         WHERE id = #{userId}
     </update>
 
-    <select id="findEmployeeByName" resultMap="UserDtoResultMap">
+    <select id="getListEmployee" resultMap="UserDtoResultMap">
         SELECT u.id as id,
         u.address as address,
         u.avatar as avatar,
@@ -110,23 +110,20 @@
         INNER JOIN user_role ur ON u.id = ur.user_id
         INNER JOIN role r ON ur.role_id = r.id
         WHERE r.name = 'EMPLOYEE'
-        AND u.name LIKE CONCAT("%", #{employeeName}, "%")
+        <if test="employeeName != null">
+            AND u.name LIKE CONCAT("%", #{employeeName}, "%")
+        </if>
+        LIMIT #{pageRequest.limit} OFFSET #{pageRequest.offset}
     </select>
 
-    <select id="findEmployee" resultMap="UserDtoResultMap">
-        SELECT u.id as id,
-        u.address as address,
-        u.avatar as avatar,
-        u.dob as dob,
-        u.email as email,
-        u.gender as gender,
-        u.name as name,
-        u.password as password,
-        u.phone_number as phoneNumber,
-        r.name as roleName
+    <select id="countListEmployee" resultType="java.lang.Integer">
+        SELECT COUNT(1)
         FROM user u
         INNER JOIN user_role ur ON u.id = ur.user_id
         INNER JOIN role r ON ur.role_id = r.id
         WHERE r.name = 'EMPLOYEE'
+        <if test="employeeName != null">
+            AND u.name LIKE CONCAT("%", #{employeeName}, "%")
+        </if>
     </select>
 </mapper>

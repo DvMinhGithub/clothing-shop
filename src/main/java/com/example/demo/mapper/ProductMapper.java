@@ -2,6 +2,8 @@ package com.example.demo.mapper;
 
 import com.example.demo.model.dto.ProductDetailDto;
 import com.example.demo.model.dto.ProductDto;
+import com.example.demo.model.request.PageRequest;
+import com.example.demo.model.request.ProductFilterRequest;
 import com.example.demo.model.request.RatingRequest;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -16,17 +18,20 @@ public interface ProductMapper {
 
     void deleteCategory(@Param("productId") Long productId);
 
-    List<ProductDto> getList(@Param("listCategoryIds") List<Long> listCategoryIds,
-                             @Param("productName") String name,
-                             @Param("brandId") Long brandId);
+    List<ProductDto> getListProduct(@Param("pageRequest") PageRequest pageRequest,
+                             @Param("listCategoryIds") List<Long> listCategoryIds,
+                             @Param("filter")ProductFilterRequest productFilterRequest);
 
-    List<ProductDto> getTopSold(@Param("listCategoryIds") List<Long> listCategoryIds,
-                                @Param("productName") String name,
-                                @Param("brandId") Long brandId);
+    Integer countListProduct(@Param("listCategoryIds") List<Long> listCategoryIds,
+                             @Param("filter")ProductFilterRequest productFilterRequest);
 
-    List<ProductDto> getTopView(@Param("listCategoryIds") List<Long> listCategoryIds,
-                                @Param("productName") String name,
-                                @Param("brandId") Long brandId);
+    List<ProductDto> getTopSold(@Param("pageRequest") PageRequest pageRequest,
+                                @Param("listCategoryIds") List<Long> listCategoryIds,
+                                @Param("filter")ProductFilterRequest productFilterRequest);
+
+    List<ProductDto> getTopView(@Param("pageRequest") PageRequest pageRequest,
+                                @Param("listCategoryIds") List<Long> listCategoryIds,
+                                @Param("filter")ProductFilterRequest productFilterRequest);
 
     void deleteProduct(@Param("productId") Long productId);
 

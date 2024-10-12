@@ -1,6 +1,7 @@
 package com.example.demo.mapper;
 
 import com.example.demo.model.dto.SupplierDto;
+import com.example.demo.model.request.PageRequest;
 import com.example.demo.model.request.SupplierRequest;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -11,7 +12,9 @@ import java.util.List;
 public interface SupplierMapper {
     void addSupplier(@Param("supplierInfo") SupplierRequest supplierRequest);
 
-    List<SupplierDto> getListSupplier();
+    List<SupplierDto> getListSupplier(@Param("pageRequest")PageRequest pageRequest);
+
+    Integer countListSupplier();
 
     void updateSupplier(@Param("supplierId") Long supplierId, @Param("supplierInfo") SupplierRequest supplierRequest);
 

@@ -1,11 +1,11 @@
 package com.example.demo.service;
 
 import com.example.demo.mapper.SupplierMapper;
+import com.example.demo.model.CustomPageable;
 import com.example.demo.model.dto.SupplierDto;
+import com.example.demo.model.request.PageRequest;
 import com.example.demo.model.request.SupplierRequest;
 import com.example.demo.model.response.ResponseApi;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,12 +33,12 @@ public class SupplierServiceImpl implements SupplierService {
     }
 
     @Override
-    public ResponseEntity<ResponseApi<PageInfo<SupplierDto>>> getListSuppliers(String name, int page, int limit) {
-        log.info("Start API: getSupplier with parameters: (name: {}, page: {}, limit: {})", name, page, limit);
-        PageHelper.startPage(page, limit);
-        List<SupplierDto> listSupplier = supplierMapper.getListSupplier();
+    public ResponseEntity<ResponseApi<CustomPageable<SupplierDto>>> getListSuppliers(String name, PageRequest pageRequest) {
+        log.info("Start API: getSupplier with parameters: (name: {}, pageRequest: {})", name, pageRequest);
+        List<SupplierDto> listSupplier = supplierMapper.getListSupplier(pageRequest);
+        Integer countListSupplier = supplierMapper.countListSupplier();
         log.info("End API: getSupplier");
-        return new ResponseEntity<>(new ResponseApi<>("Get supplier success", new PageInfo<>(listSupplier)), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseApi<>("Get supplier success", new CustomPageable<>(listSupplier, countListSupplier, pageRequest)), HttpStatus.OK);
     }
 
     @Override

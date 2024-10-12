@@ -1,10 +1,11 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.CustomPageable;
 import com.example.demo.model.dto.PromotionDto;
+import com.example.demo.model.request.PageRequest;
 import com.example.demo.model.request.PromotionRequest;
 import com.example.demo.model.response.ResponseApi;
 import com.example.demo.service.PromotionService;
-import com.github.pagehelper.PageInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
@@ -32,10 +33,8 @@ public class PromotionController {
     @SecurityRequirement(name = "Bearer Authentication")
     @Secured({"EMPLOYEE", "ADMIN"})
     @GetMapping("/get")
-    public ResponseEntity<ResponseApi<PageInfo<PromotionDto>>> getListPromotions
-            (@RequestParam(value = "page", defaultValue = "0", required = false) int page,
-             @RequestParam(value = "limit", defaultValue = "20", required = false) int limit) {
-        return promotionService.getListPromotions(page, limit);
+    public ResponseEntity<ResponseApi<CustomPageable<PromotionDto>>> getListPromotions(PageRequest pageRequest) {
+        return promotionService.getListPromotions(pageRequest);
     }
 
     @Operation(summary = "Update promotion", description = "Update promotion")

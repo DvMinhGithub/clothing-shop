@@ -25,7 +25,14 @@
         pr.is_active as isActive
         FROM promotion pr
         INNER JOIN product p ON p.id = pr.product_id
-        ORDER BY pr.id desc
+        ORDER BY pr.id DESC
+        LIMIT #{pageRequest.limit} OFFSET #{pageRequest.offset}
+    </select>
+
+    <select id="countListPromotion" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM promotion pr
+        INNER JOIN product p ON p.id = pr.product_id
     </select>
 
     <insert id="create">

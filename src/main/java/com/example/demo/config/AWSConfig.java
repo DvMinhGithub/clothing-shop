@@ -20,7 +20,6 @@ public class AWSConfig {
 
     @Bean
     public AmazonS3 s3Client() {
-        //Khởi tạo aws
         AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
         return AmazonS3ClientBuilder
                 .standard()

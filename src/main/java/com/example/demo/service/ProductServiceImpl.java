@@ -3,16 +3,16 @@ package com.example.demo.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.demo.enums.UserRole;
 import com.example.demo.mapper.ProductMapper;
+import com.example.demo.model.CustomPageable;
 import com.example.demo.model.dto.ProductDetailDto;
 import com.example.demo.model.dto.ProductDto;
+import com.example.demo.model.request.PageRequest;
+import com.example.demo.model.request.ProductFilterRequest;
 import com.example.demo.model.request.ProductRequest;
 import com.example.demo.model.request.RatingRequest;
 import com.example.demo.model.response.ResponseApi;
 import com.example.demo.utils.SecurityUtils;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -105,20 +105,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<ResponseApi<PageInfo<ProductDto>>> getListProducts(String name, int page, int limit, String categoryIds, Long brandId) {
-        log.info("Start API: getListProducts with parameters: (name: {}, page: {}, limit: {}, categoryIds: {}, brandId: {})", name, page, limit, categoryIds, brandId);
-        PageHelper.startPage(page, limit);
+    public ResponseEntity<ResponseApi<CustomPageable<ProductDto>>> getListProducts(PageRequest pageRequest, ProductFilterRequest productFilterRequest) {
+        log.info("Start API: getListProducts with parameters: (pageRequest: {}, productFilterRequest: {})", pageRequest, productFilterRequest);
         List<ProductDto> listProduct;
         List<Long> listCategoryIds = new ArrayList<>();
-        if (categoryIds != null) {
-            String[] arrCategoryIds = categoryIds.split(",");
-            for (String categoryId : arrCategoryIds) {
-                listCategoryIds.add(Long.parseLong(categoryId));
-            }
+        if (productFilterRequest.getCategoryIds() != null) {
+            listCategoryIds = productFilterRequest.getCategoryIds().stream().map(categoryId -> Long.parseLong(categoryId)).toList();
         }
-        listProduct = productMapper.getList(listCategoryIds, name, brandId);
+        listProduct = productMapper.getListProduct(pageRequest ,listCategoryIds, productFilterRequest);
+        Integer countListProduct = productMapper.countListProduct(listCategoryIds, productFilterRequest);
         log.info("End API: getListProducts");
-        return new ResponseEntity<>(new ResponseApi<>("Get list products success", new PageInfo<>(listProduct)), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseApi<>("Get list products success", new CustomPageable<>(listProduct, countListProduct, pageRequest)), HttpStatus.OK);
     }
 
     @Override
@@ -145,37 +142,31 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<ResponseApi<PageInfo<ProductDto>>> getTopSoldProduct(String name, int page, int limit, String categoryIds, Long brandId) {
-        log.info("Start API: getTopSoldProduct with parameters: (page: {}, limit: {})", page, limit);
-        PageHelper.startPage(page, limit);
+    public ResponseEntity<ResponseApi<CustomPageable<ProductDto>>> getTopSoldProduct(PageRequest pageRequest, ProductFilterRequest productFilterRequest) {
+        log.info("Start API: getTopSoldProduct with parameters: (pageRequest: {}, productFilterRequest: {})", pageRequest, productFilterRequest);
         List<ProductDto> listProduct;
         List<Long> listCategoryIds = new ArrayList<>();
-        if (categoryIds != null) {
-            String[] arrCategoryIds = categoryIds.split(",");
-            for (String categoryId : arrCategoryIds) {
-                listCategoryIds.add(Long.parseLong(categoryId));
-            }
+        if (productFilterRequest.getCategoryIds() != null) {
+            listCategoryIds = productFilterRequest.getCategoryIds().stream().map(categoryId -> Long.parseLong(categoryId)).toList();
         }
-        listProduct = productMapper.getTopSold(listCategoryIds, name, brandId);
+        listProduct = productMapper.getTopSold(pageRequest ,listCategoryIds, productFilterRequest);
+        Integer countListProduct = productMapper.countListProduct(listCategoryIds, productFilterRequest);
         log.info("End API: getTopSoldProduct");
-        return new ResponseEntity<>(new ResponseApi<>("Get top sold product success", new PageInfo<>(listProduct)), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseApi<>("Get top sold product success", new CustomPageable<>(listProduct, countListProduct, pageRequest)), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<ResponseApi<PageInfo<ProductDto>>> getTopViewProduct(String name, int page, int limit, String categoryIds, Long brandId) {
-        log.info("Start API: getTopViewProduct with parameters: (page: {}, limit: {})", page, limit);
-        PageHelper.startPage(page, limit);
+    public ResponseEntity<ResponseApi<CustomPageable<ProductDto>>> getTopViewProduct(PageRequest pageRequest, ProductFilterRequest productFilterRequest) {
+        log.info("Start API: getTopViewProduct with parameters: (pageRequest: {}, productFilterRequest: {})", pageRequest, productFilterRequest);
         List<ProductDto> listProduct;
         List<Long> listCategoryIds = new ArrayList<>();
-        if (categoryIds != null) {
-            String[] arrCategoryIds = categoryIds.split(",");
-            for (String categoryId : arrCategoryIds) {
-                listCategoryIds.add(Long.parseLong(categoryId));
-            }
+        if (productFilterRequest.getCategoryIds() != null) {
+            listCategoryIds = productFilterRequest.getCategoryIds().stream().map(categoryId -> Long.parseLong(categoryId)).toList();
         }
-        listProduct = productMapper.getTopView(listCategoryIds, name, brandId);
+        listProduct = productMapper.getTopView(pageRequest ,listCategoryIds, productFilterRequest);
+        Integer countListProduct = productMapper.countListProduct(listCategoryIds, productFilterRequest);
         log.info("End API: getTopViewProduct");
-        return new ResponseEntity<>(new ResponseApi<>("Get top view product success", new PageInfo<>(listProduct)), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseApi<>("Get top view product success", new CustomPageable<>(listProduct, countListProduct, pageRequest)), HttpStatus.OK);
     }
 
     @Override

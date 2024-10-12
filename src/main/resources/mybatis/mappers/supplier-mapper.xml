@@ -17,6 +17,13 @@
         FROM supplier s
         WHERE s.is_deleted = false
         ORDER BY s.id desc
+        LIMIT #{pageRequest.limit} OFFSET #{pageRequest.offset}
+    </select>
+
+    <select id="countListSupplier" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM supplier s
+        WHERE s.is_deleted = false
     </select>
 
     <insert id="addSupplier">

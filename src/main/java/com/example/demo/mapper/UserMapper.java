@@ -19,9 +19,9 @@ public interface UserMapper {
 
     void deleteById(@Param("userId") Long userId);
 
-    List<UserDto> findEmployeeByName(@Param("employeeName") String employeeName);
+    List<UserDto> getListEmployee(@Param("employeeName") String employeeName);
 
-    List<UserDto> findEmployee();
+    Integer countListEmployee(@Param("employeeName")String employeeName);
 
     Boolean existsByPhoneNumber(@Param("phoneNumber") String phoneNumber);
 

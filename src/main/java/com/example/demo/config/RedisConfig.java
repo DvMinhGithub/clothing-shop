@@ -27,7 +27,6 @@ public class RedisConfig {
     @Value("${redis.isAuth}")
     private boolean redisAuth;
 
-    //Config for jedis
     @Bean
     public Jedis jedis() {
         try (JedisPool jedisPool = redisAuth ? new JedisPool(redisHost, redisPort, redisUsername, redisPassword) : new JedisPool(redisHost, redisPort)) {

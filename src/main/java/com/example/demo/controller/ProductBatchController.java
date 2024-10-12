@@ -1,10 +1,11 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.CustomPageable;
 import com.example.demo.model.dto.ProductBatchDto;
+import com.example.demo.model.request.PageRequest;
 import com.example.demo.model.request.ProductBatchRequest;
 import com.example.demo.model.response.ResponseApi;
 import com.example.demo.service.ProductBatchService;
-import com.github.pagehelper.PageInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
@@ -32,10 +33,8 @@ public class ProductBatchController {
     @SecurityRequirement(name = "Bearer Authentication")
     @Secured({"EMPLOYEE", "ADMIN"})
     @GetMapping("/get")
-    public ResponseEntity<ResponseApi<PageInfo<ProductBatchDto>>> getListProductBatch
-            (@RequestParam(value = "page", defaultValue = "0", required = false) int page,
-             @RequestParam(value = "limit", defaultValue = "20", required = false) int limit) {
-        return productBatchService.getListProductBatch(page, limit);
+    public ResponseEntity<ResponseApi<CustomPageable<ProductBatchDto>>> getListProductBatch(PageRequest pageRequest) {
+        return productBatchService.getListProductBatch(pageRequest);
     }
 
 }

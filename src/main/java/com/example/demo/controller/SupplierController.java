@@ -1,10 +1,12 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.CustomPageable;
+import com.example.demo.model.dto.PromotionDto;
 import com.example.demo.model.dto.SupplierDto;
+import com.example.demo.model.request.PageRequest;
 import com.example.demo.model.request.SupplierRequest;
 import com.example.demo.model.response.ResponseApi;
 import com.example.demo.service.SupplierService;
-import com.github.pagehelper.PageInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
@@ -33,12 +35,8 @@ public class SupplierController {
     @SecurityRequirement(name = "Bearer Authentication")
     @Secured({"EMPLOYEE", "ADMIN"})
     @GetMapping("/get")
-    public ResponseEntity<ResponseApi<PageInfo<SupplierDto>>> getListSuppliers
-            (@RequestParam(value = "name", required = false) String name,
-             @RequestParam(value = "page", defaultValue = "0", required = false) int page,
-             @RequestParam(value = "limit", defaultValue = "20", required = false) int limit
-            ) {
-        return supplierService.getListSuppliers(name, page, limit);
+    public ResponseEntity<ResponseApi<CustomPageable<SupplierDto>>> getListSuppliers(String name, PageRequest pageRequest) {
+        return supplierService.getListSuppliers(name, pageRequest);
     }
 
     @Operation(summary = "Update supplier", description = "Update supplier")

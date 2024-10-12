@@ -1,12 +1,14 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.CustomPageable;
 import com.example.demo.model.dto.ProductDetailDto;
 import com.example.demo.model.dto.ProductDto;
+import com.example.demo.model.request.PageRequest;
+import com.example.demo.model.request.ProductFilterRequest;
 import com.example.demo.model.request.ProductRequest;
 import com.example.demo.model.request.RatingRequest;
 import com.example.demo.model.response.ResponseApi;
 import com.example.demo.service.ProductService;
-import com.github.pagehelper.PageInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
@@ -44,13 +46,8 @@ public class ProductController {
     @Operation(summary = "Get list products", description = "Get list products")
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/getListProduct")
-    public ResponseEntity<ResponseApi<PageInfo<ProductDto>>> getListProducts
-            (@RequestParam(value = "name", required = false) String name,
-             @RequestParam(value = "page", defaultValue = "0", required = false) int page,
-             @RequestParam(value = "limit", defaultValue = "20", required = false) int limit,
-             @RequestParam(value = "categoryIds", required = false) String categoryIds,
-             @RequestParam(value = "brandId", required = false) Long brandId) {
-        return productService.getListProducts(name, page, limit, categoryIds, brandId);
+    public ResponseEntity<ResponseApi<CustomPageable<ProductDto>>> getListProducts(PageRequest pageRequest, ProductFilterRequest productFilterRequest) {
+        return productService.getListProducts(pageRequest, productFilterRequest);
     }
 
     @Operation(summary = "Get product by id", description = "Get product by id")
@@ -71,25 +68,17 @@ public class ProductController {
     @Operation(summary = "Change product status", description = "Change product status")
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/top-sold")
-    public ResponseEntity<ResponseApi<PageInfo<ProductDto>>> getTopSoldProduct(
-            @RequestParam(value = "name", required = false) String name,
-            @RequestParam(value = "page", defaultValue = "0", required = false) int page,
-            @RequestParam(value = "limit", defaultValue = "20", required = false) int limit,
-            @RequestParam(value = "categoryIds", required = false) String categoryIds,
-            @RequestParam(value = "brandId", required = false) Long brandId) {
-        return productService.getTopSoldProduct(name, page, limit, categoryIds, brandId);
+    public ResponseEntity<ResponseApi<CustomPageable<ProductDto>>> getTopSoldProduct(
+            PageRequest pageRequest, ProductFilterRequest productFilterRequest) {
+        return productService.getTopSoldProduct(pageRequest, productFilterRequest);
     }
 
     @Operation(summary = "Change product status", description = "Change product status")
     @SecurityRequirement(name = "Bearer Authentication")
     @GetMapping("/top-view")
-    public ResponseEntity<ResponseApi<PageInfo<ProductDto>>> getTopViewProduct(
-            @RequestParam(value = "name", required = false) String name,
-            @RequestParam(value = "page", defaultValue = "0", required = false) int page,
-            @RequestParam(value = "limit", defaultValue = "20", required = false) int limit,
-            @RequestParam(value = "categoryIds", required = false) String categoryIds,
-            @RequestParam(value = "brandId", required = false) Long brandId) {
-        return productService.getTopViewProduct(name, page, limit, categoryIds, brandId);
+    public ResponseEntity<ResponseApi<CustomPageable<ProductDto>>> getTopViewProduct(
+            PageRequest pageRequest, ProductFilterRequest productFilterRequest) {
+        return productService.getTopViewProduct(pageRequest, productFilterRequest);
     }
 
     @Operation(summary = "Rating product", description = "Rating")
