@@ -25,18 +25,18 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public ResponseEntity<ResponseApi<?>> createBrand(BrandRequest brandRequest) {
-        log.info("Start API: createBrand with parameters: ({})", brandRequest);
+        log.info("Start API: createBrand with parameters: (brandRequest: {})", brandRequest);
         try {
             boolean brandExists = brandMapper.existsByName(brandRequest.getName());
             if (brandExists) {
-                throw new BrandNameExistException(String.format("Brand name %s is already exist", brandRequest.getName()));
+                throw new BrandNameExistException(String.format("Brand name %s has already exist", brandRequest.getName()));
             }
             brandMapper.create(brandRequest);
             log.info("End API: createBrand");
-            return new ResponseEntity<>(new ResponseApi<>("Thêm thương hiệu thành công"), HttpStatus.CREATED);
+            return new ResponseEntity<>(new ResponseApi<>("Create brand success"), HttpStatus.CREATED);
         } catch (BrandNameExistException e) {
             log.error("Error API: createBrand with message: {}", e.getMessage());
-            return new ResponseEntity<>(new ResponseApi<>("Tên thương hiệu đã tồn tại"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResponseApi<>("Brand name has already exists"), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             log.error("Error API: createBrand with message: {}", e.getMessage());
             return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -54,19 +54,19 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public ResponseEntity<ResponseApi<?>> updateBrand(Long id, BrandRequest brandRequest) {
-        log.info("Start API: updateBrand with parameters: (id: {}, {})", id, brandRequest);
+        log.info("Start API: updateBrand with parameters: (id: {}, brandRequest: {})", id, brandRequest);
         try {
             BrandDto brandDto = brandMapper.findById(id);
             boolean brandNameExists = brandMapper.existsByName(brandRequest.getName());
             if (!brandDto.getName().equals(brandRequest.getName()) && brandNameExists) {
-                throw new BrandNameExistException(String.format("Brand name %s is already exist", brandRequest.getName()));
+                throw new BrandNameExistException(String.format("Brand name %s has already exist", brandRequest.getName()));
             }
             brandMapper.update(id, brandRequest);
             log.info("End API: updateBrand");
-            return new ResponseEntity<>(new ResponseApi<>("Cập nhật thương hiệu thành công"), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseApi<>("Update brand success"), HttpStatus.OK);
         } catch (BrandNameExistException e) {
             log.error("Error API: updateBrand with message: {}", e.getMessage());
-            return new ResponseEntity<>(new ResponseApi<>("Tên thương hiệu đã tồn tại"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResponseApi<>("Brand name has already exists"), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             log.error("Error API: updateBrand with message: {}", e.getMessage());
             return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);

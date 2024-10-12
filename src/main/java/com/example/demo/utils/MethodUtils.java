@@ -1,5 +1,6 @@
 package com.example.demo.utils;
 
+import com.google.gson.Gson;
 import org.apache.commons.codec.binary.Hex;
 
 import javax.crypto.Mac;
@@ -40,5 +41,13 @@ public class MethodUtils {
         SecretKeySpec secretKeySpec = new SecretKeySpec(checksumKey.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
         mac.init(secretKeySpec);
         return Hex.encodeHexString(mac.doFinal(data.getBytes(StandardCharsets.UTF_8)));
+    }
+
+    public static String convertToJson(Object object) {
+        return new Gson().toJson(object);
+    }
+
+    public static <T> T convertJsonToObject(String jsonString, Class<T> tClass) {
+        return new Gson().fromJson(jsonString, tClass);
     }
 }

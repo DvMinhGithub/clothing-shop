@@ -52,7 +52,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ResponseEntity<ResponseApi<?>> createOrder(CreateOrderRequest createOrderRequest) {
-        log.info("Start API: createOrder with parameters: ({})", createOrderRequest);
+        log.info("Start API: createOrder with parameters: (createOrderRequest: {})", createOrderRequest);
         Long userId = securityUtils.getUserLoggedInId();
         List<CartItemDto> listCartItem = cartMapper.getByCartItemId(createOrderRequest.getListCartItemId());
         listCartItem.forEach(item -> {
@@ -114,7 +114,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ResponseEntity<ResponseApi<?>> changeOrderStatus(WebhookRequest webhookRequest) {
-        log.info("Start API: changeOrderStatus with parameters: ({})", webhookRequest);
+        log.info("Start API: changeOrderStatus with parameters: (webhookRequest: {})", webhookRequest);
         orderMapper.changeOrderStatus(webhookRequest.getData().getOrderCode(), OrderStatus.SUCCESS);
         log.info("End API: changeOrderStatus");
         return new ResponseEntity<>(new ResponseApi<>("Change order status success"), HttpStatus.OK);

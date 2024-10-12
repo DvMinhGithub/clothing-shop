@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity<ResponseApi<?>> updateProfile(UserRequest userRequest) {
-        log.info("Start API: updateProfile with parameters: ({})", userRequest);
+        log.info("Start API: updateProfile with parameters: (userRequest: {})", userRequest);
         try {
             Long userId = securityUtils.getUserLoggedInId();
             if(!userRequest.getImage().isEmpty()){
@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
             }
             userMapper.updateProfile(userId, userRequest);
             log.info("End API: updateProfile");
-            return new ResponseEntity<>(new ResponseApi<>("Cập nhật thông tin cá nhân thành công"), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseApi<>("Update information success"), HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error API: updateProfile with message {}", e.getMessage());
             return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);

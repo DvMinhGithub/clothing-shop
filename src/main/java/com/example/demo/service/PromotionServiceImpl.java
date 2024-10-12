@@ -27,14 +27,14 @@ public class PromotionServiceImpl implements PromotionService {
 
     @Override
     public ResponseEntity<ResponseApi<?>> createPromotion(PromotionRequest promotionRequest) {
-        log.info("Start API: createPromotion with parameters: ({})", promotionRequest);
+        log.info("Start API: createPromotion with parameters: (promotionRequest: {})", promotionRequest);
         try {
             if (promotionMapper.isDuplicatePromotionTime(promotionRequest)) {
                 throw new DuplicatePromotionException("Duplicate promotion for this product");
             }
             promotionMapper.create(promotionRequest);
             log.info("End API: createPromotion");
-            return new ResponseEntity<>(new ResponseApi<>("Thêm chương trình khuyến mãi thành công"), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseApi<>("Create promotion success"), HttpStatus.OK);
         } catch (DuplicatePromotionException e) {
             log.error("Error API: createPromotion with message: {}", e.getMessage());
             return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.BAD_REQUEST);
@@ -52,14 +52,14 @@ public class PromotionServiceImpl implements PromotionService {
 
     @Override
     public ResponseEntity<ResponseApi<?>> updatePromotion(Long id, PromotionRequest promotionRequest) {
-        log.info("Start API: updatePromotion with parameters: (id: {}, {})", id, promotionRequest);
+        log.info("Start API: updatePromotion with parameters: (id: {}, promotionRequest: {})", id, promotionRequest);
         try {
             if (promotionMapper.isDuplicatePromotionTime(promotionRequest)) {
                 throw new DuplicatePromotionException("Duplicate promotion for this product");
             }
             promotionMapper.update(id, promotionRequest);
             log.info("End API: updatePromotion");
-            return new ResponseEntity<>(new ResponseApi<>("Cập nhật chương trình khuyến mãi thành công"), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseApi<>("Update promotion success"), HttpStatus.OK);
         } catch (DuplicatePromotionException e) {
             log.error("Error API: updatePromotion with message: {}", e.getMessage());
             return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.BAD_REQUEST);
@@ -68,7 +68,7 @@ public class PromotionServiceImpl implements PromotionService {
 
     @Override
     public ResponseEntity<ResponseApi<?>> updatePromotionStatus(Long id, PromotionRequest promotionRequest) {
-        log.info("Start API: updatePromotionStatus with parameters: (id: {}, {})", id, promotionRequest);
+        log.info("Start API: updatePromotionStatus with parameters: (id: {}, promotionRequest: {})", id, promotionRequest);
         try {
             promotionMapper.updatePromotionStatus(id, promotionRequest);
             log.info("End API: updatePromotionStatus");

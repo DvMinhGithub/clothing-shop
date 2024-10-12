@@ -29,7 +29,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public ResponseEntity<ResponseApi<?>> addToCart(AddToCartRequest addToCartRequest) {
-        log.info("Start API: addToCart with parameters: ({})", addToCartRequest);
+        log.info("Start API: addToCart with parameters: (addToCartRequest: {})", addToCartRequest);
         try {
             Long userId = securityUtils.getUserLoggedInId();
             List<CartItemDto> listCartItem = cartMapper.getByUserId(userId);
@@ -39,13 +39,13 @@ public class CartServiceImpl implements CartService {
                     cartMapper.updateCartItemQuantity(cartItem.getId(),
                             cartItem.getQuantity() + addToCartRequest.getQuantity());
                     log.info("End API: addToCart");
-                    return new ResponseEntity<>(new ResponseApi<>("Thêm vào giỏ hàng thành công"), HttpStatus.OK);
+                    return new ResponseEntity<>(new ResponseApi<>("Add to cart success"), HttpStatus.OK);
                 }
             }
 
             cartMapper.addToCart(userId, addToCartRequest);
             log.info("End API: addToCart");
-            return new ResponseEntity<>(new ResponseApi<>("Thêm vào giỏ hàng thành công"), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseApi<>("Add to cart success"), HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error API: addToCart with message: {}", e.getMessage());
             return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -63,7 +63,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public ResponseEntity<ResponseApi<?>> updateCartInformation(UpdateCartRequest updateCartRequest) {
-        log.info("Start API: updateCartInformation with parameters: ({})", updateCartRequest);
+        log.info("Start API: updateCartInformation with parameters: (updateCartRequest: {})", updateCartRequest);
         try {
             if (updateCartRequest.getQuantity() == 0) {
                 cartMapper.deleteCartItem(updateCartRequest.getCartItemId());

@@ -25,16 +25,16 @@ public class VoucherServiceImpl implements VoucherService {
 
     @Override
     public ResponseEntity<ResponseApi<?>> createVoucher(VoucherRequest voucherRequest) {
-        log.info("Start API: createVoucher with parameters: ({})", voucherRequest);
+        log.info("Start API: createVoucher with parameters: (voucherRequest: {})", voucherRequest);
         try {
             if (voucherMapper.existsByCode(voucherRequest.getCode()))
-                throw new VoucherCodeExistException(String.format("Voucher code %s is already exist", voucherRequest.getCode()));
+                throw new VoucherCodeExistException(String.format("Voucher code %s has already exist", voucherRequest.getCode()));
             voucherMapper.create(voucherRequest);
             log.info("End API: createVoucher");
-            return new ResponseEntity<>(new ResponseApi<>("Thêm voucher thành công"), HttpStatus.CREATED);
+            return new ResponseEntity<>(new ResponseApi<>("Create voucher success"), HttpStatus.CREATED);
         } catch (VoucherCodeExistException e) {
             log.error("Error API: createVoucher with message: {}", e.getMessage());
-            return new ResponseEntity<>(new ResponseApi<>("Voucher code đã tồn tại"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResponseApi<>("Voucher code has already exists"), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             log.error("Error API: createVoucher with message: {}", e.getMessage());
             return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -67,17 +67,17 @@ public class VoucherServiceImpl implements VoucherService {
 
 //    @Override
 //    public ResponseEntity<ResponseApi<?>> editVoucher(Long id, VoucherRequest voucherRequest) {
-//        log.info("Start API: editVoucher with parameters: (id: {}, {})", id, voucherRequest);
+//        log.info("Start API: editVoucher with parameters: (id: {}, voucherRequest: {})", id, voucherRequest);
 //        try {
 //            VoucherDto voucherDto = voucherMapper.findById(id);
 //            if (!voucherRequest.getCode().equals(voucherDto.getCode()) && voucherMapper.existsByCode(voucherRequest.getCode()))
-//                throw new VoucherCodeExistException(String.format("Voucher code %s is already exist", voucherRequest.getCode()));
+//                throw new VoucherCodeExistException(String.format("Voucher code %s has already exist", voucherRequest.getCode()));
 //            voucherMapper.update(id, voucherRequest);
 //            log.info("End API: editVoucher");
-//            return new ResponseEntity<>(new ResponseApi<>("Cập nhật voucher thành công"), HttpStatus.OK);
+//            return new ResponseEntity<>(new ResponseApi<>("Update voucher success"), HttpStatus.OK);
 //        } catch (VoucherCodeExistException e) {
 //            log.error("Error API: editVoucher with message: {}", e.getMessage());
-//            return new ResponseEntity<>(new ResponseApi<>("Voucher code đã tồn tại"), HttpStatus.BAD_REQUEST);
+//            return new ResponseEntity<>(new ResponseApi<>("Voucher code has already exists"), HttpStatus.BAD_REQUEST);
 //        } catch (Exception e) {
 //            log.error("Error API: editVoucher with message: {}", e.getMessage());
 //            return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);

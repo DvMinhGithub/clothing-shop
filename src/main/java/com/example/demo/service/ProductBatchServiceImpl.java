@@ -26,7 +26,7 @@ public class ProductBatchServiceImpl implements ProductBatchService {
 
     @Override
     public ResponseEntity<ResponseApi<?>> createProductBatch(ProductBatchRequest productBatchRequest) {
-        log.info("Start API: createProductBatch with parameters: ({})", productBatchRequest);
+        log.info("Start API: createProductBatch with parameters: (productBatchRequest: {})", productBatchRequest);
         productBatchMapper.createBatch(productBatchRequest);
         log.info("End API: createProductBatch");
         return new ResponseEntity<>(new ResponseApi<>("Create batch success"), HttpStatus.OK);

@@ -22,7 +22,7 @@ public class RevenueServiceImpl implements RevenueService{
 
     @Override
     public ResponseEntity<ResponseApi<List<RevenueByDayDto>>> getRevenueByWeek(String startDate, String endDate){
-        log.info("Start API: getRevenueByWeek with parameters: ({}, {})", startDate, endDate);
+        log.info("Start API: getRevenueByWeek with parameters: (startDate: {}, endDate: {})", startDate, endDate);
         List<RevenueByDayDto> listRevenueByDayDto = revenueMapper.getRevenueByDay(startDate, endDate);
         log.info("End API: getRevenueByWeek");
         return new ResponseEntity<>(new ResponseApi<>("Get revenue by week success", listRevenueByDayDto), HttpStatus.OK);
@@ -30,7 +30,7 @@ public class RevenueServiceImpl implements RevenueService{
 
     @Override
     public ResponseEntity<ResponseApi<List<RevenueByMonthDto>>> getRevenueByYear(String year){
-        log.info("Start API: getRevenueByYear with parameters: ({})", year);
+        log.info("Start API: getRevenueByYear with parameters: (year: {})", year);
         List<RevenueByMonthDto> listRevenueByMonthDto = revenueMapper.getRevenueByYear(year);
         log.info("End API: getRevenueByYear");
         return new ResponseEntity<>(new ResponseApi<>("Get revenue by year success", listRevenueByMonthDto), HttpStatus.OK);

@@ -26,16 +26,16 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public ResponseEntity<ResponseApi<?>> createCategory(CategoryRequest categoryRequest) {
-        log.info("Start API: createCategory with parameters: ({})", categoryRequest);
+        log.info("Start API: createCategory with parameters: (categoryRequest: {})", categoryRequest);
         try {
             if (categoryMapper.existsByName(categoryRequest.getName()))
-                throw new CategoryNameExistException(String.format("Category name %s is already exist", categoryRequest.getName()));
+                throw new CategoryNameExistException(String.format("Category name %s has already exist", categoryRequest.getName()));
             categoryMapper.create(categoryRequest);
             log.info("End API: createCategory");
-            return new ResponseEntity<>(new ResponseApi<>("Thêm danh mục thành công"), HttpStatus.CREATED);
+            return new ResponseEntity<>(new ResponseApi<>("Create category success"), HttpStatus.CREATED);
         } catch (CategoryNameExistException e) {
             log.error("Error API: createCategory with message: {}", e.getMessage());
-            return new ResponseEntity<>(new ResponseApi<>("Tên danh mục đã tồn tại"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResponseApi<>("Category name has already exists"), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             log.error("Error API: createCategory with message: {}", e.getMessage());
             return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -52,17 +52,17 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public ResponseEntity<ResponseApi<?>> updateCategory(Long id, CategoryRequest categoryRequest) {
-        log.info("Start API: updateCategory with parameters: (id: {}, {})", id, categoryRequest);
+        log.info("Start API: updateCategory with parameters: (id: {}, categoryRequest: {})", id, categoryRequest);
         try {
             CategoryDto categoryDto = categoryMapper.findById(id);
             if (!categoryDto.getName().equals(categoryRequest.getName()) && categoryMapper.existsByName(categoryRequest.getName()))
-                throw new CategoryNameExistException(String.format("Category name %s is already exist", categoryRequest.getName()));
+                throw new CategoryNameExistException(String.format("Category name %s has already exist", categoryRequest.getName()));
             categoryMapper.update(id, categoryRequest);
             log.info("End API: updateCategory");
-            return new ResponseEntity<>(new ResponseApi<>("Cập nhật danh mục thành công"), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseApi<>("Update category success"), HttpStatus.OK);
         } catch (CategoryNameExistException e) {
             log.error("Error API: updateCategory with message: {}", e.getMessage());
-            return new ResponseEntity<>(new ResponseApi<>("Tên danh mục đã tồn tại"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResponseApi<>("Category name has already exists"), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             log.error("Error API: updateCategory with message: {}", e.getMessage());
             return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);

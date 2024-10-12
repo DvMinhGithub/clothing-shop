@@ -61,15 +61,15 @@ public class AuthServiceImpl implements AuthService {
     //Login with OTP
     @Override
     public ResponseEntity<ResponseApi<?>> register(RegisterRequest registerRequest) {
-        log.info("Start API: register with parameters: ({})", registerRequest);
+        log.info("Start API: register with parameters: (registerRequest: {})", registerRequest);
         try {
             boolean emailExists = userMapper.existsByEmail(registerRequest.getEmail());
             boolean phoneNumberExists = userMapper.existsByPhoneNumber(registerRequest.getPhoneNumber());
             if (emailExists)
-                throw new EmailExistException(String.format("Email %s is already exist", registerRequest.getEmail()));
+                throw new EmailExistException(String.format("Email %s has already exist", registerRequest.getEmail()));
 
             if (phoneNumberExists)
-                throw new PhoneNumberExistException(String.format("Phone number %s is already exist", registerRequest.getPhoneNumber()));
+                throw new PhoneNumberExistException(String.format("Phone number %s has already exist", registerRequest.getPhoneNumber()));
 
             String otp = MethodUtils.generateNumberOtp();
             MailRequest mailRequest = new MailRequest(registerRequest.getEmail(), "OTP for verification", otp);
@@ -89,7 +89,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public ResponseEntity<ResponseApi<LoginDto>> login(LoginRequest loginRequest) {
-        log.info("Start API: login with parameters: ({})", loginRequest);
+        log.info("Start API: login with parameters: (loginRequest: {})", loginRequest);
         try {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
             List<UserRole> userRoleList = authentication.getAuthorities().stream().map(authority -> UserRole.valueOf(authority.getAuthority())).collect(Collectors.toList());
@@ -100,10 +100,10 @@ public class AuthServiceImpl implements AuthService {
                     .refreshToken(refreshToken)
                     .build();
             log.info("End API: login");
-            return new ResponseEntity<>(new ResponseApi<>("Đăng nhập thành công", loginDto), HttpStatus.OK);
+            return new ResponseEntity<>(new ResponseApi<>("Login success", loginDto), HttpStatus.OK);
         } catch (BadCredentialsException e) {
             log.error("Error API: login with message: {}", e.getMessage());
-            return new ResponseEntity<>(new ResponseApi<>("Sai email hoặc mật khẩu"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new ResponseApi<>("Wrong email or password"), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             log.error("Error API: login with message: {}", e.getMessage());
             return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -112,7 +112,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public ResponseEntity<ResponseApi<?>> verifyUserAccount(RegisterRequest registerRequest) {
-        log.info("Start API: verifyUserAccount with parameters: ({})", registerRequest);
+        log.info("Start API: verifyUserAccount with parameters: (registerRequest: {})", registerRequest);
         String userOTP = jedis.get(String.format("OTP:%s", registerRequest.getEmail()));
         if (!registerRequest.getOTP().equals(userOTP)) {
             return new ResponseEntity<>(new ResponseApi<>("OTP is incorrect, try again"), HttpStatus.BAD_REQUEST);
@@ -137,15 +137,15 @@ public class AuthServiceImpl implements AuthService {
     //Login without OTP
 //    @Override
 //    public ResponseEntity<ResponseApi<?>> register(RegisterRequest registerRequest) {
-//        log.info("Start API: register with parameters: ({})", registerRequest);
+//        log.info("Start API: register with parameters: (registerRequest: {})", registerRequest);
 //        try {
 //            boolean emailExists = userMapper.existsByEmail(registerRequest.getEmail());
 //            boolean phoneNumberExists = userMapper.existsByPhoneNumber(registerRequest.getPhoneNumber());
 //            if (emailExists)
-//                throw new EmailExistException("Email đã tồn tại");
+//                 throw new EmailExistException(String.format("Email %s has already exist", registerRequest.getEmail()));
 //
 //            if (phoneNumberExists)
-//                throw new PhoneNumberExistException("Số điện thoại đã tồn tại");
+//                throw new PhoneNumberExistException(String.format("Phone number %s has already exist", registerRequest.getPhoneNumber()));
 //
 //            UserDto user = UserDto.builder()
 //                    .dob(registerRequest.getDob())
@@ -160,7 +160,7 @@ public class AuthServiceImpl implements AuthService {
 //            RoleDto roleDto = roleMapper.getByName(UserRole.CUSTOMER);
 //            roleMapper.setRole(user.getId(), roleDto.getId());
 //            log.info("End API: register");
-//            return new ResponseEntity<>(new ResponseApi<>("Đăng ký thành công"), HttpStatus.OK);
+//            return new ResponseEntity<>(new ResponseApi<>("Register success"), HttpStatus.OK);
 //        } catch (EmailExistException | PhoneNumberExistException e) {
 //            log.error("Error API: register with message: {}", e.getMessage());
 //            return new ResponseEntity<>(new ResponseApi<>(e.getMessage()), HttpStatus.BAD_REQUEST);

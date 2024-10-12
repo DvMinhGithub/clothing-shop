@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseEntity<ResponseApi<?>> createProduct(ProductRequest productRequest) {
-        log.info("Start API: createProduct with parameters: ({})", productRequest);
+        log.info("Start API: createProduct with parameters: (productRequest: {})", productRequest);
         String productImage = null;
         if (productRequest.getImage() != null) {
             productImage = uploadService.uploadFile(productRequest.getImage());
@@ -67,13 +67,13 @@ public class ProductServiceImpl implements ProductService {
         }
 
         log.info("End API: createProduct");
-        return new ResponseEntity<>(new ResponseApi<>("Thêm sản phâm thành công"), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseApi<>("Create product success"), HttpStatus.OK);
     }
 
 
     @Override
     public ResponseEntity<ResponseApi<?>> updateProduct(Long id, ProductRequest productRequest) {
-        log.info("Start API: updateProduct with parameters: (id: {}, {})", id, productRequest);
+        log.info("Start API: updateProduct with parameters: (id: {}, productRequest: {})", id, productRequest);
         String productImage = null;
         if (productRequest.getImage() != null) {
             productImage = uploadService.uploadFile(productRequest.getImage());
@@ -101,7 +101,7 @@ public class ProductServiceImpl implements ProductService {
             }
         }
         log.info("End API: updateProduct");
-        return new ResponseEntity<>(new ResponseApi<>("Cập nhật sản phẩm thành công"), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseApi<>("Update product success"), HttpStatus.OK);
     }
 
     @Override
@@ -171,7 +171,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseEntity<ResponseApi<?>> ratingProduct(RatingRequest ratingRequest) {
-        log.info("Start API: ratingProduct with parameters: ({})", ratingRequest);
+        log.info("Start API: ratingProduct with parameters: (ratingRequest: {})", ratingRequest);
         Long userId = securityUtils.getUserLoggedInId();
         Boolean isRating = productMapper.isRating(userId, ratingRequest.getProductId());
         if (isRating) {

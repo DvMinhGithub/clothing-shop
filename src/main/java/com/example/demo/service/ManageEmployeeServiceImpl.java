@@ -48,13 +48,13 @@ public class ManageEmployeeServiceImpl implements ManageEmployeeService {
 
     @Override
     public ResponseEntity<ResponseApi<?>> createEmployee(CreateEmployeeRequest createEmployeeRequest) {
-        log.info("Start API: createEmployee with parameters: ({})", createEmployeeRequest);
+        log.info("Start API: createEmployee with parameters: (createEmployeeRequest: {})", createEmployeeRequest);
         try {
             if (userMapper.existsByEmail(createEmployeeRequest.getEmail()))
-                throw new EmailExistException(String.format("Email %s is already exist", createEmployeeRequest.getEmail()));
+                throw new EmailExistException(String.format("Email %s has already exist", createEmployeeRequest.getEmail()));
 
             if (userMapper.existsByPhoneNumber(createEmployeeRequest.getPhoneNumber()))
-                throw new PhoneNumberExistException(String.format("Phone number %s is already exist", createEmployeeRequest.getPhoneNumber()));
+                throw new PhoneNumberExistException(String.format("Phone number %s has already exist", createEmployeeRequest.getPhoneNumber()));
 
             UserDto user = UserDto.builder()
                     .dob(createEmployeeRequest.getDob())

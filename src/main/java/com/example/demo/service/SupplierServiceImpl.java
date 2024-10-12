@@ -26,10 +26,10 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public ResponseEntity<ResponseApi<?>> addSupplier(SupplierRequest supplierRequest) {
-        log.info("Start API: addSupplier with parameters: ({})", supplierRequest);
+        log.info("Start API: addSupplier with parameters: (supplierRequest: {})", supplierRequest);
         supplierMapper.addSupplier(supplierRequest);
         log.info("End API: addSupplier");
-        return new ResponseEntity<>(new ResponseApi<>("Thêm nhà cung cấp thành công"), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseApi<>("Create supplier success"), HttpStatus.OK);
     }
 
     @Override
@@ -43,17 +43,17 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Override
     public ResponseEntity<ResponseApi<?>> updateSupplier(Long id, SupplierRequest supplierRequest) {
-        log.info("Start API: updateSupplier with parameters: ({})", supplierRequest);
+        log.info("Start API: updateSupplier with parameters: (supplierRequest: {})", supplierRequest);
         supplierMapper.updateSupplier(id, supplierRequest);
         log.info("End API: updateSupplier");
-        return new ResponseEntity<>(new ResponseApi<>("Cập nhật nhà cung cấp thành công"), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseApi<>("Update supplier success"), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<ResponseApi<?>> deleteSupplier(Long supplierId) {
-        log.info("Start API: deleteSupplier with parameters: ({})", supplierId);
+        log.info("Start API: deleteSupplier with parameters: (supplierId: {})", supplierId);
         supplierMapper.deleteSupplier(supplierId);
         log.info("End API: deleteSupplier");
-        return new ResponseEntity<>(new ResponseApi<>("Xoá nhà cung cấp thành công"), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseApi<>("Delete supplier success"), HttpStatus.OK);
     }
 }
