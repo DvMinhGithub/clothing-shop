@@ -1,1 +1,0 @@
-ALTER TABLE techStore.supplier ADD COLUMN is_deleted bit(1) DEFAULT 0;

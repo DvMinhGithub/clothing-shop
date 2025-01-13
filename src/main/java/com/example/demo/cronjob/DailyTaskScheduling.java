@@ -29,7 +29,11 @@ public class DailyTaskScheduling {
 
     @PostConstruct
     public void runOnStartUp() {
-        revenueTask.updateRevenue();
-        revenueTask.createDayForRevenue();
+        try {
+            productTask.updateProductView();
+            revenueTask.createDayForRevenue();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
