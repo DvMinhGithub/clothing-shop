@@ -12,13 +12,13 @@ import java.util.List;
 public interface PromotionMapper {
     void create(@Param("promotionInfo") PromotionRequest promotionRequest);
 
-    List<PromotionDto> getListPromotion(@Param("pageRequest")PageRequest pageRequest);
+    List<PromotionDto> getListPromotion(@Param("pageRequest") PageRequest pageRequest);
 
     Integer countListPromotion();
 
     void update(@Param("promotionId") Long promotionId, @Param("promotionInfo") PromotionRequest promotionRequest);
 
-    Boolean isDuplicatePromotionTime(@Param("promotionInfo")PromotionRequest promotionRequest);
+    Boolean isDuplicatePromotionTime(@Param("promotionInfo") PromotionRequest promotionRequest);
 
     void updatePromotionStatus(@Param("promotionId") Long promotionId, @Param("promotionInfo") PromotionRequest promotionRequest);
 }

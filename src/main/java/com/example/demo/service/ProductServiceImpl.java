@@ -1,8 +1,5 @@
 package com.example.demo.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.example.demo.mapper.ProductMapper;
 import com.example.demo.model.CustomPageable;
 import com.example.demo.model.dto.ProductDetailDto;
@@ -18,6 +15,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -112,7 +112,7 @@ public class ProductServiceImpl implements ProductService {
         if (productFilterRequest.getCategoryIds() != null) {
             listCategoryIds = productFilterRequest.getCategoryIds().stream().map(categoryId -> Long.parseLong(categoryId)).toList();
         }
-        listProduct = productMapper.getListProduct(pageRequest ,listCategoryIds, productFilterRequest);
+        listProduct = productMapper.getListProduct(pageRequest, listCategoryIds, productFilterRequest);
         Integer countListProduct = productMapper.countListProduct(listCategoryIds, productFilterRequest);
         log.info("End API: getListProducts");
         return new ResponseEntity<>(new ResponseApi<>("Get list products success", new CustomPageable<>(listProduct, countListProduct, pageRequest)), HttpStatus.OK);
@@ -149,7 +149,7 @@ public class ProductServiceImpl implements ProductService {
         if (productFilterRequest.getCategoryIds() != null) {
             listCategoryIds = productFilterRequest.getCategoryIds().stream().map(categoryId -> Long.parseLong(categoryId)).toList();
         }
-        listProduct = productMapper.getTopSold(pageRequest ,listCategoryIds, productFilterRequest);
+        listProduct = productMapper.getTopSold(pageRequest, listCategoryIds, productFilterRequest);
         Integer countListProduct = productMapper.countListProduct(listCategoryIds, productFilterRequest);
         log.info("End API: getTopSoldProduct");
         return new ResponseEntity<>(new ResponseApi<>("Get top sold product success", new CustomPageable<>(listProduct, countListProduct, pageRequest)), HttpStatus.OK);
@@ -163,7 +163,7 @@ public class ProductServiceImpl implements ProductService {
         if (productFilterRequest.getCategoryIds() != null) {
             listCategoryIds = productFilterRequest.getCategoryIds().stream().map(categoryId -> Long.parseLong(categoryId)).toList();
         }
-        listProduct = productMapper.getTopView(pageRequest ,listCategoryIds, productFilterRequest);
+        listProduct = productMapper.getTopView(pageRequest, listCategoryIds, productFilterRequest);
         Integer countListProduct = productMapper.countListProduct(listCategoryIds, productFilterRequest);
         log.info("End API: getTopViewProduct");
         return new ResponseEntity<>(new ResponseApi<>("Get top view product success", new CustomPageable<>(listProduct, countListProduct, pageRequest)), HttpStatus.OK);

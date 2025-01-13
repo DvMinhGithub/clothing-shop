@@ -22,6 +22,6 @@ public class CustomPageable<T> {
         this.totalRecords = totalRecords;
         this.pageSize = pageRequest.getLimit();
         this.currentPage = pageRequest.getPage();
-        this.totalPage = (int) Math.ceil((double)totalRecords / pageSize);
+        this.totalPage = (int) Math.ceil((double) totalRecords / pageSize);
     }
 }

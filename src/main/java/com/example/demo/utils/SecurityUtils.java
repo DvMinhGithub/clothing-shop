@@ -16,13 +16,13 @@ public class SecurityUtils {
         this.userMapper = userMapper;
     }
 
-    public Long getUserLoggedInId(){
+    public Long getUserLoggedInId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
         return userMapper.getUserId(userName);
     }
 
-    public List<UserRole> getUserLoggedInRoles(){
+    public List<UserRole> getUserLoggedInRoles() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return authentication.getAuthorities().stream()
                 .map(authority -> UserRole.valueOf(authority.getAuthority()))

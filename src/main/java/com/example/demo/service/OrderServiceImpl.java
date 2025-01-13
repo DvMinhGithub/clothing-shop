@@ -2,19 +2,21 @@ package com.example.demo.service;
 
 import com.example.demo.enums.OrderStatus;
 import com.example.demo.exception.ProductNotAvailableToBuyException;
-import com.example.demo.mapper.*;
+import com.example.demo.mapper.CartMapper;
+import com.example.demo.mapper.OrderMapper;
+import com.example.demo.mapper.ProductMapper;
+import com.example.demo.mapper.VoucherMapper;
 import com.example.demo.model.dto.*;
+import com.example.demo.model.request.CreateOrderRequest;
 import com.example.demo.model.request.CreatePaymentRequest;
 import com.example.demo.model.request.WebhookRequest;
-import com.example.demo.model.request.CreateOrderRequest;
 import com.example.demo.model.response.ResponseApi;
-
 import com.example.demo.utils.MethodUtils;
 import com.example.demo.utils.SecurityUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -56,7 +58,7 @@ public class OrderServiceImpl implements OrderService {
         Long userId = securityUtils.getUserLoggedInId();
         List<CartItemDto> listCartItem = cartMapper.getByCartItemId(createOrderRequest.getListCartItemId());
         listCartItem.forEach(item -> {
-            if(item.getProductSold() + item.getQuantity() > item.getQuantityInStock()){
+            if (item.getProductSold() + item.getQuantity() > item.getQuantityInStock()) {
                 throw new ProductNotAvailableToBuyException(String.format("Product id%s is not enough to order", item.getProductId()));
             }
         });
@@ -146,7 +148,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ResponseEntity<ResponseApi<StatisticOrderDto>> getStatisticOrder(){
+    public ResponseEntity<ResponseApi<StatisticOrderDto>> getStatisticOrder() {
         log.info("Start API: getStatisticOrder");
         StatisticOrderDto statisticOrderDto = new StatisticOrderDto();
         statisticOrderDto.setTotalOrder(orderMapper.getTotalOrder());

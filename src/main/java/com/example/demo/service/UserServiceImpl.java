@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
         log.info("Start API: updateProfile with parameters: (userRequest: {})", userRequest);
         try {
             Long userId = securityUtils.getUserLoggedInId();
-            if(!userRequest.getImage().isEmpty()){
+            if (!userRequest.getImage().isEmpty()) {
                 userRequest.setAvatar(uploadService.uploadFile(userRequest.getImage()));
             }
             userMapper.updateProfile(userId, userRequest);

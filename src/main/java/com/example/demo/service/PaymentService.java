@@ -12,7 +12,7 @@ import java.net.URISyntaxException;
 public interface PaymentService {
     QRCodeDto generateQRCode(QRCodeRequest qrCodeRequest) throws URISyntaxException, IOException, InterruptedException;
 
-    CreatePaymentDto createPayment(CreatePaymentRequest createPaymentRequest) ;
+    CreatePaymentDto createPayment(CreatePaymentRequest createPaymentRequest);
 
     ConfirmWebhookDto confirmWebhook(ConfirmWebhookRequest confirmWebhookRequest) throws URISyntaxException, IOException,
             InterruptedException;

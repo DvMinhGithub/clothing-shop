@@ -12,7 +12,7 @@ import java.util.List;
 public interface ProductBatchMapper {
     void createBatch(@Param("productBatchInfo") ProductBatchRequest productBatchRequest);
 
-    List<ProductBatchDto> getListProductBatch(@Param("pageRequest")PageRequest pageRequest);
+    List<ProductBatchDto> getListProductBatch(@Param("pageRequest") PageRequest pageRequest);
 
     Integer countListProductBatch();
 }

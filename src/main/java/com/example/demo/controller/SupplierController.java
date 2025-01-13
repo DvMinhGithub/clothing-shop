@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.CustomPageable;
-import com.example.demo.model.dto.PromotionDto;
 import com.example.demo.model.dto.SupplierDto;
 import com.example.demo.model.request.PageRequest;
 import com.example.demo.model.request.SupplierRequest;

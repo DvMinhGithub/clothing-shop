@@ -9,7 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface RevenueMapper {
-    List<RevenueByDayDto> getRevenueByDay(@Param("startDate")String startDate, @Param("endDate")String endDate);
+    List<RevenueByDayDto> getRevenueByDay(@Param("startDate") String startDate, @Param("endDate") String endDate);
 
     List<RevenueByDayDto> getRevenueByOrder();
 
@@ -19,5 +19,5 @@ public interface RevenueMapper {
 
     Boolean isDuplicateDayForRevenue();
 
-    List<RevenueByMonthDto> getRevenueByYear(@Param("year")String year);
+    List<RevenueByMonthDto> getRevenueByYear(@Param("year") String year);
 }

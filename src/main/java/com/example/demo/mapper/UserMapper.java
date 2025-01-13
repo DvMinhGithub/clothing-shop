@@ -21,7 +21,7 @@ public interface UserMapper {
 
     List<UserDto> getListEmployee(@Param("employeeName") String employeeName);
 
-    Integer countListEmployee(@Param("employeeName")String employeeName);
+    Integer countListEmployee(@Param("employeeName") String employeeName);
 
     Boolean existsByPhoneNumber(@Param("phoneNumber") String phoneNumber);
 

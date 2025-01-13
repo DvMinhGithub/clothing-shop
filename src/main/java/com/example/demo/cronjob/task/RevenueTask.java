@@ -16,18 +16,18 @@ public class RevenueTask {
         this.revenueMapper = revenueMapper;
     }
 
-    public void updateRevenue(){
+    public void updateRevenue() {
         log.info("Start schedule task for updateRevenue");
         List<RevenueByDayDto> listRevenueByDayDto = revenueMapper.getRevenueByOrder();
-        if(!listRevenueByDayDto.isEmpty()){
+        if (!listRevenueByDayDto.isEmpty()) {
             revenueMapper.updateRevenue(listRevenueByDayDto);
         }
         log.info("End schedule task for updateRevenue");
     }
 
-    public void createDayForRevenue(){
+    public void createDayForRevenue() {
         log.info("Start schedule task for createDayForRevenue");
-        if(!revenueMapper.isDuplicateDayForRevenue()){
+        if (!revenueMapper.isDuplicateDayForRevenue()) {
             revenueMapper.createDayForRevenue();
         }
         log.info("End schedule task for createDayForRevenue");

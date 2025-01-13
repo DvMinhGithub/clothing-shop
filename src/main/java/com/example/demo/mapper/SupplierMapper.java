@@ -12,11 +12,11 @@ import java.util.List;
 public interface SupplierMapper {
     void addSupplier(@Param("supplierInfo") SupplierRequest supplierRequest);
 
-    List<SupplierDto> getListSupplier(@Param("pageRequest")PageRequest pageRequest);
+    List<SupplierDto> getListSupplier(@Param("pageRequest") PageRequest pageRequest);
 
     Integer countListSupplier();
 
     void updateSupplier(@Param("supplierId") Long supplierId, @Param("supplierInfo") SupplierRequest supplierRequest);
 
-    void deleteSupplier(@Param("supplierId")Long supplierId);
+    void deleteSupplier(@Param("supplierId") Long supplierId);
 }

@@ -8,7 +8,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -25,8 +28,8 @@ public class RevenueController {
     @SecurityRequirement(name = "Bearer Authentication")
     @Secured("ADMIN")
     @GetMapping("/get-by-week")
-    public ResponseEntity<ResponseApi<List<RevenueByDayDto>>> getRevenueByWeek(@RequestParam(name = "startDate")String startDate,
-                                                                               @RequestParam(name = "endDate")String endDate) {
+    public ResponseEntity<ResponseApi<List<RevenueByDayDto>>> getRevenueByWeek(@RequestParam(name = "startDate") String startDate,
+                                                                               @RequestParam(name = "endDate") String endDate) {
         return revenueService.getRevenueByWeek(startDate, endDate);
     }
 
@@ -34,7 +37,7 @@ public class RevenueController {
     @SecurityRequirement(name = "Bearer Authentication")
     @Secured("ADMIN")
     @GetMapping("/get-by-year")
-    public ResponseEntity<ResponseApi<List<RevenueByMonthDto>>> getRevenueByYear(@RequestParam(name = "year")String year) {
+    public ResponseEntity<ResponseApi<List<RevenueByMonthDto>>> getRevenueByYear(@RequestParam(name = "year") String year) {
         return revenueService.getRevenueByYear(year);
     }
 }

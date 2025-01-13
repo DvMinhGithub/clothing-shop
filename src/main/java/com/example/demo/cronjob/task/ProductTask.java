@@ -17,7 +17,7 @@ public class ProductTask {
         this.jedis = jedis;
     }
 
-    public void updateProductView(){
+    public void updateProductView() {
         log.info("Start scheduled task: updateProductView");
 //        productMapper.updateProductView();
         log.info("End scheduled task: updateProductView");

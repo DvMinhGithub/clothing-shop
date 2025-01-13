@@ -21,7 +21,7 @@ public class MethodUtils {
         return sb.toString();
     }
 
-    public static String generateOrderCode(){
+    public static String generateOrderCode() {
         Random random = new Random();
 
         int firstDigit = random.nextInt(9) + 1;

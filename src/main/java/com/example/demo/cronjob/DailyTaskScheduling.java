@@ -23,7 +23,7 @@ public class DailyTaskScheduling {
     }
 
     @Scheduled(cron = "0 0 * * * ?")
-    public void runTaskStartOfDay(){
+    public void runTaskStartOfDay() {
         revenueTask.createDayForRevenue();
     }
 

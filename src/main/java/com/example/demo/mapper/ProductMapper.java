@@ -19,19 +19,19 @@ public interface ProductMapper {
     void deleteCategory(@Param("productId") Long productId);
 
     List<ProductDto> getListProduct(@Param("pageRequest") PageRequest pageRequest,
-                             @Param("listCategoryIds") List<Long> listCategoryIds,
-                             @Param("filter")ProductFilterRequest productFilterRequest);
+                                    @Param("listCategoryIds") List<Long> listCategoryIds,
+                                    @Param("filter") ProductFilterRequest productFilterRequest);
 
     Integer countListProduct(@Param("listCategoryIds") List<Long> listCategoryIds,
-                             @Param("filter")ProductFilterRequest productFilterRequest);
+                             @Param("filter") ProductFilterRequest productFilterRequest);
 
     List<ProductDto> getTopSold(@Param("pageRequest") PageRequest pageRequest,
                                 @Param("listCategoryIds") List<Long> listCategoryIds,
-                                @Param("filter")ProductFilterRequest productFilterRequest);
+                                @Param("filter") ProductFilterRequest productFilterRequest);
 
     List<ProductDto> getTopView(@Param("pageRequest") PageRequest pageRequest,
                                 @Param("listCategoryIds") List<Long> listCategoryIds,
-                                @Param("filter")ProductFilterRequest productFilterRequest);
+                                @Param("filter") ProductFilterRequest productFilterRequest);
 
     void deleteProduct(@Param("productId") Long productId);
 
